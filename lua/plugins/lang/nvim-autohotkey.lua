@@ -1,0 +1,3 @@
+return {
+   "DasGandlaf/nvim-autohotkey",
+}
