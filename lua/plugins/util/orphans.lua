@@ -2,6 +2,9 @@ return {
   'ZWindL/orphans.nvim',
   event = 'VeryLazy',
   cmd = 'Orphans',
+  keys = {
+    { '<leader>po', '<cmd>Orphans<CR>', desc = 'Orphaned Plugins' },
+  },
   config = function()
     local Util = require 'config.utils'
     require('orphans').setup {

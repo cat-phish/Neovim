@@ -85,7 +85,7 @@ return {
     },
     { '<leader>Dt', '<cmd>TodoTrouble<cr>', desc = 'Todo (Trouble)' },
     { '<leader>DT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme (Trouble)' },
-    { '<leader>st', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
-    { '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
+    { '<leader>st', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
+    { '<leader>sT', '<cmd>TodoTelescope<cr>', desc = 'Todo Notes (All)' },
   },
 }

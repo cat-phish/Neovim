@@ -203,9 +203,9 @@ return {
         --
         -- This may be unwanted, since they displace some of your code
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-          map('<leader>th', function()
+          map('<leader>oh', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-          end, '[T]oggle Inlay [H]ints')
+          end, 'Toggle Inlay Hints')
         end
       end,
     })
@@ -374,6 +374,7 @@ return {
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
+        'alejandra', -- Nix formatter
         'beautysh', -- Bash formatter
         'black', -- Python formatter
         'codelldb', -- C++ debugger
@@ -382,7 +383,7 @@ return {
         'eslint_d', -- JS Linter
         'isort', -- Python import formatter
         'markdownlint', -- Markdown linter
-        'nixpkgs-fmt', -- Nix formatter
+        -- 'nixpkgs-fmt', -- Nix formatter
         'prettier', -- Prettier formatter for JS, Markdown, JSON, HTML, CSS, and more
         'prettierd', -- JS formatter
         'pylint', -- Python Linter

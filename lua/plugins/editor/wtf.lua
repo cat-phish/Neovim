@@ -35,7 +35,7 @@ return {
       function()
         require('wtf').ai()
       end,
-      desc = 'Debug diagnostic with AI',
+      desc = 'Debug Diagnostic with AI',
     },
     {
       mode = { 'n' },
@@ -43,7 +43,7 @@ return {
       function()
         require('wtf').search()
       end,
-      desc = 'Search diagnostic with Google',
+      desc = 'Search Diagnostic with Google',
     },
   },
   -- config = function()

@@ -6,15 +6,15 @@ local Util = require 'config.utils'
 
 -- Beginning and End of Line
 local function jump_to_line_start()
-   -- If cursor is at the first non-blank character, jump to the beginning of the line
-   -- Otherwise, jump to the first non-blank character
-   local col = vim.fn.col '.'
-   local first_non_blank = vim.fn.indent(vim.fn.line '.') + 1
-   if col == first_non_blank then
-      vim.cmd 'normal! 0'
-   else
-      vim.cmd 'normal! ^'
-   end
+  -- If cursor is at the first non-blank character, jump to the beginning of the line
+  -- Otherwise, jump to the first non-blank character
+  local col = vim.fn.col '.'
+  local first_non_blank = vim.fn.indent(vim.fn.line '.') + 1
+  if col == first_non_blank then
+    vim.cmd 'normal! 0'
+  else
+    vim.cmd 'normal! ^'
+  end
 end
 vim.keymap.set({ 'n', 'v' }, 'H', jump_to_line_start, { noremap = true, desc = 'Beginning of line' })
 -- vim.keymap.set({ 'n', 'v' }, 'H', '^', { desc = 'Beginning of Line' })
@@ -57,10 +57,10 @@ vim.keymap.set('v', '>', '>gv')
 
 -- Don't yank on dd on empty line
 vim.keymap.set('n', 'dd', function()
-   if vim.api.nvim_get_current_line():find '^%s*$' then
-      return '"_dd'
-   end
-   return 'dd'
+  if vim.api.nvim_get_current_line():find '^%s*$' then
+    return '"_dd'
+  end
+  return 'dd'
 end, { expr = true })
 
 -- Delete with C-l in insert to mirror default C-h backspace
@@ -114,13 +114,13 @@ vim.keymap.set('c', '<Tab>', '<C-n>', { noremap = true })
 -- Auto-Pairs
 -- NOTE: this mapping is dependent on plugins/editor/mini-pairs.lua
 vim.keymap.set('n', '<leader>op', function()
-   vim.g.minipairs_disable = not vim.g.minipairs_disable
-   if vim.g.minipairs_disable then
-      Util.warn('Disabled auto pairs', { title = 'Option' })
-   else
-      Util.info('Enabled auto pairs', { title = 'Option' })
-   end
-end, { desc = 'Toggle auto pairs' })
+  vim.g.minipairs_disable = not vim.g.minipairs_disable
+  if vim.g.minipairs_disable then
+    Util.warn('Disabled auto-pairs', { title = 'Option' })
+  else
+    Util.info('Enabled auto-pairs', { title = 'Option' })
+  end
+end, { desc = 'Toggle Auto-Pairs' })
 
 -- Replace in Multiple Files (Spectre)
 -- NOTE: below mapped in plugins/editor/nvim-spectre.lua
@@ -149,12 +149,12 @@ end, { desc = 'Toggle auto pairs' })
 
 -- Toggle Spelling
 vim.keymap.set('n', '<leader>os', function()
-   vim.wo.spell = not vim.wo.spell
-   if vim.wo.spell then
-      Util.info('Enabled spelling', { title = 'Option' })
-   else
-      Util.warn('Disabled spelling', { title = 'Option' })
-   end
+  vim.wo.spell = not vim.wo.spell
+  if vim.wo.spell then
+    Util.info('Enabled spelling', { title = 'Option' })
+  else
+    Util.warn('Disabled spelling', { title = 'Option' })
+  end
 end, { desc = 'Toggle Spelling' })
 
 --#################
@@ -206,11 +206,11 @@ vim.keymap.set('n', '<leader>cpd', '<cmd>Copilot disable<CR>', { desc = 'Copilot
 
 -- diagnostic
 local diagnostic_goto = function(next, severity)
-   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-   severity = severity and vim.diagnostic.severity[severity] or nil
-   return function()
-      go { severity = severity }
-   end
+  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    go { severity = severity }
+  end
 end
 vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
 vim.keymap.set('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
@@ -251,9 +251,7 @@ vim.keymap.set('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev Warning
 -- { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
 
 -- Last Buffer
-vim.keymap.set('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Last buffer' })
-vim.keymap.set('n', '<leader><space>', '<cmd>e #<cr>', { desc = 'Last buffer' })
-vim.keymap.set('n', '<leader>`', '<cmd>e #<cr>', { desc = 'Last buffer' })
+vim.keymap.set('n', '<leader><tab>', '<cmd>e #<cr>', { desc = 'Last buffer' })
 
 -- Move Buffer Left/Right
 -- NOTE: below mapped in core/bufferline.lua
@@ -463,7 +461,7 @@ vim.keymap.set('n', '<leader>wz', '<cmd>ZenMode<CR>', { desc = 'Zen Mode' })
 --##############
 
 -- quit
-vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit all' })
+vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 
 -- Dismiss Notifications
 -- NOTE: below mapped in plugins/ui/notify.lua
@@ -474,61 +472,61 @@ local temp_relnu_toggle = false
 
 -- Permanent Toggle Relative Line Numbers
 vim.keymap.set('n', '<leader>on', function()
-   if vim.opt_local.relativenumber:get() then
-      -- Switch to static line numbers
-      vim.opt_local.relativenumber = false
-      Util.info('Switched to absolute line numbers', { title = 'Option' })
-   else
-      -- Switch to relative line numbers
-      vim.opt_local.relativenumber = true
-      Util.info('Switched to relative line numbers', { title = 'Option' })
-   end
-end, { desc = 'Toggle relative/absolute line numbers' })
+  if vim.opt_local.relativenumber:get() then
+    -- Switch to static line numbers
+    vim.opt_local.relativenumber = false
+    Util.info('Switched to absolute line numbers', { title = 'Option' })
+  else
+    -- Switch to relative line numbers
+    vim.opt_local.relativenumber = true
+    Util.info('Switched to relative line numbers', { title = 'Option' })
+  end
+end, { desc = 'Toggle Relative/Absolute Line Numbers' })
 
 -- Temporary Toggle Relative Line Numbers
 vim.keymap.set('n', '<leader>n', function()
-   if vim.opt_local.relativenumber:get() then
-      -- Switch to static line numbers
-      vim.opt_local.relativenumber = false
-      temp_relnu_toggle = true
-      Util.info('Temporarily switched to absolute line numbers', { title = 'Option' })
-   else
-      -- Switch to relative line numbers
-      vim.opt_local.relativenumber = true
-      temp_relnu_toggle = false
-      Util.info('Switched to relative line numbers', { title = 'Option' })
-   end
+  if vim.opt_local.relativenumber:get() then
+    -- Switch to static line numbers
+    vim.opt_local.relativenumber = false
+    temp_relnu_toggle = true
+    Util.info('Temporarily switched to absolute line numbers', { title = 'Option' })
+  else
+    -- Switch to relative line numbers
+    vim.opt_local.relativenumber = true
+    temp_relnu_toggle = false
+    Util.info('Switched to relative line numbers', { title = 'Option' })
+  end
 end, { desc = 'Temp Toggle Rel/Abs Line Numbers' })
 -- Autocommand to re-enable relative line numbers if they were temporarily turned off
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave' }, {
-   callback = function()
-      if temp_relnu_toggle and not vim.opt_local.relativenumber:get() then
-         vim.opt_local.relativenumber = true
-         Util.info('Re-enabled relative line numbers', { title = 'Option' })
-         temp_relnu_toggle = false
-      end
-   end,
+  callback = function()
+    if temp_relnu_toggle and not vim.opt_local.relativenumber:get() then
+      vim.opt_local.relativenumber = true
+      Util.info('Re-enabled relative line numbers', { title = 'Option' })
+      temp_relnu_toggle = false
+    end
+  end,
 })
 
 -- Toggle Line Number Visibility
 vim.keymap.set('n', '<leader>oN', function()
-   if vim.opt_local.number:get() or vim.opt_local.relativenumber:get() then
-      nu = { number = vim.opt_local.number:get(), relativenumber = vim.opt_local.relativenumber:get() }
-      vim.opt_local.number = false
-      vim.opt_local.relativenumber = false
-      Util.warn('Disabled line numbers', { title = 'Option' })
-   else
-      vim.opt_local.number = nu.number
-      vim.opt_local.relativenumber = nu.relativenumber
-      Util.info('Enabled line numbers', { title = 'Option' })
-   end
-end, { desc = 'Toggle line number visibility' })
+  if vim.opt_local.number:get() or vim.opt_local.relativenumber:get() then
+    nu = { number = vim.opt_local.number:get(), relativenumber = vim.opt_local.relativenumber:get() }
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    Util.warn('Disabled line numbers', { title = 'Option' })
+  else
+    vim.opt_local.number = nu.number
+    vim.opt_local.relativenumber = nu.relativenumber
+    Util.info('Enabled line numbers', { title = 'Option' })
+  end
+end, { desc = 'Toggle Line Number Visibility' })
 
 -- Toggle Word Wrap
 vim.keymap.set('n', '<leader>ow', function()
-   vim.wo.wrap = not vim.wo.wrap
-   local status = vim.wo.wrap and 'enabled' or 'disabled'
-   Util.info('Word wrap ' .. status, { title = 'Option' })
+  vim.wo.wrap = not vim.wo.wrap
+  local status = vim.wo.wrap and 'enabled' or 'disabled'
+  Util.info('Word wrap ' .. status, { title = 'Option' })
 end, { desc = 'Toggle Word Wrap' })
 
 -- Biscuits Toggle
@@ -548,10 +546,10 @@ vim.keymap.set({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and 
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua
-vim.keymap.set('n', '<leader>ur', '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>', { desc = 'Redraw / clear hlsearch / diff update' })
+vim.keymap.set('n', '<leader>ur', '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>', { desc = 'Redraw / Clear hlsearch / Diff Update' })
 
 --keywordprg
-vim.keymap.set('n', '<leader>sK', '<cmd>norm! K<cr>', { desc = 'Keywordprg' })
+vim.keymap.set('n', '<leader>snK', '<cmd>norm! K<cr>', { desc = 'Keyword Under Cursor' })
 
 -- Flash
 -- NOTE: below mapped in plugins/editor/flash.lua
@@ -626,12 +624,12 @@ vim.keymap.set('t', '<c-_>', '<cmd>close<cr>', { desc = 'which_key_ignore' })
 -- vim.keymap.set("n", "<leader>um", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Markdown Preview" })
 -- Second Monitor Settings Toggle
 vim.keymap.set('n', '<leader>u2', function()
-   vim.opt.wrap = true
-   vim.opt.linebreak = true
-   vim.opt.scrolloff = 999
-   vim.opt.signcolumn = 'no'
-   vim.opt.relativenumber = false
-   vim.opt.number = false
+  vim.opt.wrap = true
+  vim.opt.linebreak = true
+  vim.opt.scrolloff = 999
+  vim.opt.signcolumn = 'no'
+  vim.opt.relativenumber = false
+  vim.opt.number = false
 end, { desc = 'Second Monitor Setting' })
 
 -- Treesitter

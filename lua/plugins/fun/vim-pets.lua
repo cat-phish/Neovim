@@ -19,7 +19,7 @@ return {
         vim.cmd 'PetsJoin cat [Haxan]'
       end,
       mode = { 'n' },
-      desc = 'Create garden with pets',
+      desc = 'Create Garden with Pets',
     },
     {
       '<leader>mpj',
@@ -27,7 +27,7 @@ return {
         vim.cmd 'PetsJoin'
       end,
       mode = { 'n' },
-      desc = 'Join pet to garden',
+      desc = 'Join Pet to Garden',
     },
     {
       '<leader>mpl',
@@ -35,7 +35,7 @@ return {
         vim.cmd 'PetsLeave'
       end,
       mode = { 'n' },
-      desc = 'Leave pet from garden',
+      desc = 'Leave Pet from Garden',
     },
     {
       '<leader>mpt',
@@ -43,7 +43,7 @@ return {
         vim.cmd 'PetsThrowBall'
       end,
       mode = { 'n' },
-      desc = 'Throw ball',
+      desc = 'Throw Ball',
     },
     {
       '<leader>mpC',
@@ -51,7 +51,7 @@ return {
         vim.cmd 'PetsClose'
       end,
       mode = { 'n' },
-      desc = 'Quit garden',
+      desc = 'Quit Garden',
     },
     {
       '<leader>mpw',
@@ -59,7 +59,7 @@ return {
         vim.cmd 'PetsWithYou'
       end,
       mode = { 'n' },
-      desc = 'Put pet around cursor',
+      desc = 'Put Pet Around Cursor',
     },
     {
       '<leader>mpW',
@@ -67,7 +67,7 @@ return {
         vim.cmd 'PetsWithYouClear'
       end,
       mode = { 'n' },
-      desc = 'Clear pets around cursor',
+      desc = 'Clear Pets Around Cursor',
     },
   },
 }
