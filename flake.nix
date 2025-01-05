@@ -221,6 +221,7 @@
             # duck # no nixpkg
             # hacker # no nixpkg
             # pets # no nixpkg
+            vim-pets
             # speedtyper # no nixpkg
           ];
           ui = [
