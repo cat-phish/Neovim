@@ -233,6 +233,7 @@ require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 
   { import = 'plugins.editor' },
   { import = 'plugins.fun' },
   { import = 'plugins.ui' },
+  { import = 'plugins.util' },
 }, lazyOptions)
 
 -- Set colorscheme

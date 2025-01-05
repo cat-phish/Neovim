@@ -229,6 +229,7 @@
           yanky-nvim
         ];
         fun = [
+          # beepboop # no nixpkg
           cellular-automaton-nvim
           # duck # no nixpkg
           # hacker # no nixpkg
@@ -263,6 +264,7 @@
           zen-mode-nvim
         ];
         util = [
+          # orphans # no nixpkg
           plenary-nvim # dependency for neo-tree, telescope
         ];
       };
