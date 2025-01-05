@@ -187,6 +187,13 @@ vim.api.nvim_create_autocmd({ 'WinEnter' }, {
   command = 'stopinsert',
 })
 
+vim.api.nvim_create_autocmd('WinResized', {
+  pattern = '*',
+  callback = function()
+    -- vim.opt.scrolloff = math.floor(vim.fn.winheight(0) / <uint>)
+  end,
+})
+
 -- Display time since last nvim config once per 8 hours
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = vim.fn.expand '~' .. '/.config/nvim/*',
