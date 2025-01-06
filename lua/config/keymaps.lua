@@ -2,9 +2,11 @@
 
 local Util = require 'config.utils'
 
--- [[ Navigation Maps ]]
+--#####################
+--####  Navigation ####
+--#####################
 
--- Beginning and End of Line
+-- NOTE: Beginning and End of Line
 local function jump_to_line_start()
   -- If cursor is at the first non-blank character, jump to the beginning of the line
   -- Otherwise, jump to the first non-blank character
@@ -20,13 +22,13 @@ vim.keymap.set({ 'n', 'v' }, 'H', jump_to_line_start, { noremap = true, desc = '
 -- vim.keymap.set({ 'n', 'v' }, 'H', '^', { desc = 'Beginning of Line' })
 vim.keymap.set({ 'n', 'v' }, 'L', '$', { desc = 'End of Line' })
 
--- better up/down
+-- NOTE: better up/down
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
--- Saner behavior of n and N
+-- NOTE: Saner behavior of n and N
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 vim.keymap.set('n', 'n', "'Nn'[v:searchforward].'zv'", { expr = true, desc = 'Next search result' })
 vim.keymap.set('x', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
@@ -35,27 +37,30 @@ vim.keymap.set('n', 'N', "'nN'[v:searchforward].'zv'", { expr = true, desc = 'Pr
 vim.keymap.set('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev search result' })
 vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev search result' })
 
--- Vim-Illuminate
--- NOTE: below mapped in plugins/editor/vim-illuminate.lua
+-- NOTE: Vim-Illuminate
+-- DOCS: below mapped in plugins/editor/vim-illuminate.lua
 -- { "]]", desc = "Next Reference" },
 -- { "[[", desc = "Prev Reference" },
 
--- [[ General Text Editing Maps ]]
+--NOTE:
+--##################
+--####  Editing ####
+--##################
 
--- Caps Lock
--- NOTE: below mapped in plugins/editor/capslock.lua
+-- NOTE: Software caps-lock
+-- DOCS: below mapped in plugins/editor/capslock.lua
 -- keys = {
 --    { "<C-a>", "<Plug>CapsLockToggle", mode = {"n", "i", "c"}, desc = "CapsLock Toggle" }
 -- }
 
--- save file
+-- NOTE: Save file with <C-s>
 vim.keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
 
--- better indenting
+-- NOTE: Better indenting
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 
--- Don't yank on dd on empty line
+-- NOTE: Don't Yank with `dd` on Empty Line
 vim.keymap.set('n', 'dd', function()
   if vim.api.nvim_get_current_line():find '^%s*$' then
     return '"_dd'
@@ -63,7 +68,7 @@ vim.keymap.set('n', 'dd', function()
   return 'dd'
 end, { expr = true })
 
--- Delete with C-l in insert to mirror default C-h backspace
+-- NOTE: Delete with C-l in insert to mirror default C-h backspace
 vim.keymap.set('i', '<C-l>', '<Del>', { desc = 'Delete' })
 
 -- Move Lines

@@ -221,6 +221,7 @@
           friendly-snippets # dependency for nvim-cmp
           persistence-nvim
           nvim-spectre
+          sqlite-lua # dependency for yanky
           # timber # no nixpkg
           todo-comments-nvim
           nvim-treesitter-context
