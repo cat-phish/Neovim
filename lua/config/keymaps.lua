@@ -47,16 +47,16 @@ vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev se
 --####  Editing ####
 --##################
 
--- NOTE: Software caps-lock
+-- NOTE: Software caps Lock
 -- DOCS: below mapped in plugins/editor/capslock.lua
 -- keys = {
 --    { "<C-a>", "<Plug>CapsLockToggle", mode = {"n", "i", "c"}, desc = "CapsLock Toggle" }
 -- }
 
--- NOTE: Save file with <C-s>
+-- NOTE: Save File with <C-s>
 vim.keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
 
--- NOTE: Better indenting
+-- NOTE: Better Indenting
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 

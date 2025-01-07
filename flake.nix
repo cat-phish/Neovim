@@ -261,6 +261,7 @@
           markdown-preview-nvim
           mini-animate
           mini-bufremove
+          neoscroll-nvim
           neo-tree-nvim
           noice-nvim
           nvim-notify # dependency for noice
