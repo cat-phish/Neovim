@@ -19,7 +19,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-
+    "plugins-capslock-nvim" = {
+      url = "github:barklan/capslock.nvim";
+      flake = false;
+    };
     # neovim-nightly-overlay = {
     #   url = "github:nix-community/neovim-nightly-overlay";
     # };
@@ -108,6 +111,7 @@
       # this section is for dependencies that should be available
       # at RUN TIME for plugins. Will be available to PATH within neovim terminal
       # this includes LSPs
+
       lspsAndRuntimeDeps = with pkgs; {
         # Inline comments next to tools below indicate the
         # name they are referred to in nvim for reference
@@ -121,6 +125,7 @@
           stdenv.cc.cc
           nix-doc
           nodePackages.nodejs
+          # neovimPlugins.capslock-nvim
         ];
         lsps = [
           bash-language-server # bashls
@@ -155,14 +160,19 @@
           delve # delve
           # codelldb # codelldb # no nixpkg
         ];
+        custom = [
+          # pkgs.neovimPlugins.capslock-nvim
+          # TODO: get custom plugins working, config build but it doesn't use the plugin
+          (pkgs.neovimPlugins.capslock-nvim.overrideAttrs {pname = "capslock.nvim";})
+        ];
       };
-
       # This is for plugins that will load at startup without using packadd:
       startupPlugins = with pkgs.vimPlugins; {
         general = [
           vim-sleuth
           lazy-nvim
           # mini-nvim
+          # (mkNvimPlugin inputs.capslock-nvim "capslock.nvim")
         ];
         colorschemes = [
           tokyonight-nvim
@@ -240,7 +250,7 @@
         ];
         ui = [
           bufferline-nvim
-          # nvim-colorizer # no nixpkg
+          nvim-colorizer-lua
           dressing-nvim
           edgy-nvim
           gitsigns-nvim
@@ -337,6 +347,7 @@
           # your alias may not conflict with your other packages.
           # aliases = ["nixcats"];
           # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+          # configDirName = "nixCats-nvim";
         };
         # and a set of categories that you want
         # (and other information to pass to lua)
@@ -352,6 +363,7 @@
           fun = true;
           ui = true;
           util = true;
+          custome = true;
 
           gitPlugins = true;
           test = true;
