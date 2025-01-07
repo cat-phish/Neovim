@@ -1,7 +1,0 @@
--- Tmux integration for Neovim
--- return {
---   'emilienlemaire/nvimux-navigator',
---   keys = {
---     { mode = 'n', key = '<leader>h', cmd = '<cmd>NvimuxOpenPane [-v]<CR>', desc = 'Create a new horizontal pane' },
---   },
--- }
