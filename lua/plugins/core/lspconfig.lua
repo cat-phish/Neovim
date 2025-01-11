@@ -217,7 +217,10 @@ return {
       for type, icon in pairs(signs) do
         diagnostic_signs[vim.diagnostic.severity[type]] = icon
       end
-      vim.diagnostic.config { signs = { text = diagnostic_signs } }
+      -- TODO: the first line below is set for tiny-inline-diagnostics
+      -- and the second line is the setting without tiny-inline-diagnostics
+      vim.diagnostic.config { virtual_text = false }
+      -- vim.diagnostic.config { signs = { text = diagnostic_signs } }
     end
 
     -- LSP servers and clients are able to communicate to each other what features they support.

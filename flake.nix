@@ -233,6 +233,7 @@
           nvim-spectre
           sqlite-lua # dependency for yanky
           # timber # no nixpkg
+          tiny-inline-diagnostic-nvim
           todo-comments-nvim
           nvim-treesitter-context
           trouble-nvim
