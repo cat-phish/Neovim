@@ -14,6 +14,7 @@ return {
         background = 'CursorLine', -- Can be a highlight or a hexadecimal color (#RRGGBB)
         mixing_color = 'None', -- Can be None or a hexadecimal color (#RRGGBB). Used to blend the background color with the diagnostic background color with another color.
       },
+      vim.diagnostic.config { virtual_text = false },
       options = {
         -- Show the source of the diagnostic.
         show_source = false,
@@ -99,6 +100,14 @@ return {
         -- does not works in your configuration, you may try to tweak it.
         overwrite_events = nil,
       },
+      vim.keymap.set('n', '<leader>od', "<cmd>lua require('tiny-inline-diagnostic').toggle()<CR>", { desc = 'Toggle Inline Diagnostics' }),
+      -- TODO: this couases errors
+      -- vim.keymap.set(
+      --   'n',
+      --   '<leader>dc',
+      --   "<cmd>lua require('tiny-inline-diagnostic').change_severities(severities)<CR>",
+      --   { desc = 'Cycle Diagnostic Severities' }
+      -- ),
     }
   end,
 }

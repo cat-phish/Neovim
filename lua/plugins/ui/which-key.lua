@@ -17,7 +17,7 @@ return {
       { '<leader>cp', group = '+copilot' },
       { '<leader>cpC', group = '+copilot chat' },
       { '<leader>d', group = '+debug' },
-      { '<leader>D', group = '+diagnostics/quickfix' },
+      { '<leader>d', group = '+diagnostics/quickfix' },
       { '<leader>E', group = '+editor' },
       { '<leader>f', group = '+find' },
       { '<leader>g', group = '+git' },

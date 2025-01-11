@@ -11,12 +11,12 @@ return {
     },
   },
   keys = {
-    { '<leader>Dd', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
-    { '<leader>Dd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer Diagnostics (Trouble)' },
-    { '<leader>Ds', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
-    { '<leader>DS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP References/Definitions/... (Trouble)' },
-    { '<leader>DL', '<cmd>Trouble loclist toggle<cr>', desc = 'Location List (Trouble)' },
-    { '<leader>DQ', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix List (Trouble)' },
+    { '<leader>dd', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
+    { '<leader>dd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer Diagnostics (Trouble)' },
+    { '<leader>ds', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
+    { '<leader>dS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP References/Definitions/... (Trouble)' },
+    { '<leader>dL', '<cmd>Trouble loclist toggle<cr>', desc = 'Location List (Trouble)' },
+    { '<leader>dQ', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix List (Trouble)' },
     {
       '[D',
       function()

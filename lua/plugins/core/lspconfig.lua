@@ -219,7 +219,7 @@ return {
       end
       -- TODO: the first line below is set for tiny-inline-diagnostics
       -- and the second line is the setting without tiny-inline-diagnostics
-      vim.diagnostic.config { virtual_text = false }
+      -- vim.diagnostic.config { virtual_text = false }
       -- vim.diagnostic.config { signs = { text = diagnostic_signs } }
     end
 

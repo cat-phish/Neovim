@@ -183,8 +183,8 @@ end, { desc = 'Toggle Spelling' })
 -- },
 
 -- Quickfix
-vim.keymap.set('n', '<leader>Dl', '<cmd>lopen<cr>', { desc = 'Location List' })
-vim.keymap.set('n', '<leader>Dq', '<cmd>copen<cr>', { desc = 'Quickfix List' })
+vim.keymap.set('n', '<leader>dl', '<cmd>lopen<cr>', { desc = 'Location List' })
+vim.keymap.set('n', '<leader>dq', '<cmd>copen<cr>', { desc = 'Quickfix List' })
 vim.keymap.set('n', '[q', vim.cmd.cprev, { desc = 'Previous quickfix' })
 vim.keymap.set('n', ']q', vim.cmd.cnext, { desc = 'Next quickfix' })
 
@@ -224,6 +224,8 @@ vim.keymap.set('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' 
 vim.keymap.set('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
 vim.keymap.set('n', ']w', diagnostic_goto(true, 'WARN'), { desc = 'Next Warning' })
 vim.keymap.set('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev Warning' })
+
+-- toggle diagnostics
 
 -- toggle options
 -- TODO: fix these Util calls
