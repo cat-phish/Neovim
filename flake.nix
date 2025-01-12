@@ -226,7 +226,6 @@
           mini-indentscope
           mini-pairs
           mini-surround
-          neorg
           nvim-cmp
           friendly-snippets # dependency for nvim-cmp
           persistence-nvim
@@ -249,6 +248,14 @@
           vim-pets
           # speedtyper # no nixpkg
         ];
+        norgmode = [
+          neorg
+        ];
+        orgmode = [
+          # org-roam # no nixpkg
+          orgmode
+          # telescope-orgmode # no nixpkg
+        ];
         ui = [
           bufferline-nvim
           nvim-colorizer-lua
@@ -268,6 +275,7 @@
           nvim-notify # dependency for noice
           nui-nvim # dependency for neo-tree, noice
           # reactive # no nixpkg
+          render-markdown-nvim
           telescope-nvim
           telescope-fzf-native-nvim # dependency for telescope
           telescope-ui-select-nvim # dependency for telescope
@@ -363,6 +371,8 @@
           core = true;
           editor = true;
           fun = true;
+          norgmode = true;
+          orgmode = true;
           ui = true;
           util = true;
           custome = true;
