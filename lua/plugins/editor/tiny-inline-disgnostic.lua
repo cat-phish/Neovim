@@ -100,7 +100,7 @@ return {
         -- does not works in your configuration, you may try to tweak it.
         overwrite_events = nil,
       },
-      vim.keymap.set('n', '<leader>od', "<cmd>lua require('tiny-inline-diagnostic').toggle()<CR>", { desc = 'Toggle Inline Diagnostics' }),
+      vim.keymap.set('n', '<leader>Od', "<cmd>lua require('tiny-inline-diagnostic').toggle()<CR>", { desc = 'Toggle Inline Diagnostics' }),
       -- TODO: this couases errors
       -- vim.keymap.set(
       --   'n',

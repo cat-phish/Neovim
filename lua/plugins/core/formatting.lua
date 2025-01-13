@@ -14,7 +14,7 @@ return {
       desc = 'Format Buffer',
     },
     {
-      '<leader>of',
+      '<leader>Of',
       function()
         if vim.b.disable_autoformat then
           vim.cmd 'FormatEnable'
@@ -30,7 +30,7 @@ return {
       desc = 'Toggle Auto Format (Buffer)',
     },
     {
-      '<leader>oF',
+      '<leader>OF',
       function()
         if vim.g.disable_autoformat then
           vim.cmd 'FormatEnable'

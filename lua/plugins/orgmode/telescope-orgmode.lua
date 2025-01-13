@@ -8,8 +8,14 @@ return {
   config = function()
     require('telescope').load_extension 'orgmode'
 
-    vim.keymap.set('n', '<localleader>r', require('telescope').extensions.orgmode.refile_heading)
-    vim.keymap.set('n', '<localleader>fh', require('telescope').extensions.orgmode.search_headings)
-    vim.keymap.set('n', '<localleader>li', require('telescope').extensions.orgmode.insert_link)
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'org',
+      group = vim.api.nvim_create_augroup('orgmode_telescope_nvim', { clear = true }),
+      callback = function()
+        vim.keymap.set('n', '<leader>or', require('telescope').extensions.orgmode.refile_heading, { desc = 'Refile Heading' })
+        vim.keymap.set('n', '<leader>ofh', require('telescope').extensions.orgmode.search_headings, { desc = 'Search Headings' })
+        vim.keymap.set('n', '<leader>oli', require('telescope').extensions.orgmode.insert_link, { desc = 'Insert Link' })
+      end,
+    })
   end,
 }

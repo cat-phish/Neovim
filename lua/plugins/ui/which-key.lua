@@ -34,7 +34,7 @@ return {
       { '<leader>mowaa', group = '+ah' },
       { '<leader>mowaaa', desc = 'ah' },
       { '<leader>mp', group = '+pets' },
-      { '<leader>o', group = '+options' },
+      { '<leader>O', group = '+options' },
       { '<leader>p', group = '+plugins' },
       { '<leader>q', group = '+quit/session' },
       { '<leader>s', group = '+search' },

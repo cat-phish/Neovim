@@ -118,7 +118,7 @@ vim.keymap.set('c', '<Tab>', '<C-n>', { noremap = true })
 
 -- Auto-Pairs
 -- NOTE: this mapping is dependent on plugins/editor/mini-pairs.lua
-vim.keymap.set('n', '<leader>op', function()
+vim.keymap.set('n', '<leader>Op', function()
   vim.g.minipairs_disable = not vim.g.minipairs_disable
   if vim.g.minipairs_disable then
     Util.warn('Disabled auto-pairs', { title = 'Option' })
@@ -153,7 +153,7 @@ end, { desc = 'Toggle Auto-Pairs' })
 -- { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
 
 -- Toggle Spelling
-vim.keymap.set('n', '<leader>os', function()
+vim.keymap.set('n', '<leader>Os', function()
   vim.wo.spell = not vim.wo.spell
   if vim.wo.spell then
     Util.info('Enabled spelling', { title = 'Option' })
@@ -478,7 +478,7 @@ vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 local temp_relnu_toggle = false
 
 -- Permanent Toggle Relative Line Numbers
-vim.keymap.set('n', '<leader>on', function()
+vim.keymap.set('n', '<leader>On', function()
   if vim.opt_local.relativenumber:get() then
     -- Switch to static line numbers
     vim.opt_local.relativenumber = false
@@ -516,7 +516,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave' }, {
 })
 
 -- Toggle Line Number Visibility
-vim.keymap.set('n', '<leader>oN', function()
+vim.keymap.set('n', '<leader>ON', function()
   if vim.opt_local.number:get() or vim.opt_local.relativenumber:get() then
     nu = { number = vim.opt_local.number:get(), relativenumber = vim.opt_local.relativenumber:get() }
     vim.opt_local.number = false
@@ -530,14 +530,14 @@ vim.keymap.set('n', '<leader>oN', function()
 end, { desc = 'Toggle Line Number Visibility' })
 
 -- Toggle Word Wrap
-vim.keymap.set('n', '<leader>ow', function()
+vim.keymap.set('n', '<leader>Ow', function()
   vim.wo.wrap = not vim.wo.wrap
   local status = vim.wo.wrap and 'enabled' or 'disabled'
   Util.info('Word wrap ' .. status, { title = 'Option' })
 end, { desc = 'Toggle Word Wrap' })
 
 -- Biscuits Toggle
-vim.keymap.set('n', '<leader>ob', "<cmd>lua require('nvim-biscuits').toggle_biscuits()<CR>", { desc = 'Toggle Biscuits' })
+vim.keymap.set('n', '<leader>Ob', "<cmd>lua require('nvim-biscuits').toggle_biscuits()<CR>", { desc = 'Toggle Biscuits' })
 
 -- highlights under cursor
 vim.keymap.set('n', '<leader>ui', vim.show_pos, { desc = 'Inspect Pos' })

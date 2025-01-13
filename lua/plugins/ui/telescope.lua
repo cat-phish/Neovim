@@ -30,7 +30,7 @@ return {
     {
       'isak102/telescope-git-file-history.nvim',
       dependencies = {
-        'tpope/vim-fugitive',
+        -- 'tpope/vim-fugitive',
         'nvim-lua/plenary.nvim',
       },
     },

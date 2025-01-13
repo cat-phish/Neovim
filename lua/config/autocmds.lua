@@ -163,10 +163,20 @@ vim.api.nvim_create_autocmd('VimEnter', {
       -- Open Neo-tree and focus it if the first argument is a directory
       vim.cmd('Neotree show dir=' .. args[1])
 
-      -- Simulate pressing <C-w>h after a short delay to focus the Neo-tree pane
+      -- -- Simulate pressing <C-w>h after a short delay to focus the Neo-tree pane
       vim.defer_fn(function()
         -- HACK: Send the literal keypresses <C-w>h because of neotree not showing correct background
         -- color until its manualy switched into when opening with dir argument
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
+      end, 10)
+
+      -- HACK: SUPER HACK switch out and back into neo-tree to avoid issue with background color and
+      -- opening weird split windows from neo-tree
+      -- TODO: Check back in with this, not made 2025-01-12
+      vim.defer_fn(function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>l', true, true, true), 'n', true)
+      end, 10)
+      vim.defer_fn(function()
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
       end, 10)
     else

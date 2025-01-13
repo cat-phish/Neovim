@@ -6,7 +6,7 @@ return {
    opts = { mode = "cursor", max_lines = 3 },
    keys = {
       {
-         "<leader>oc",
+         "<leader>Oc",
          function()
             local Util = require("config.utils")
             local tsc = require("treesitter-context")

@@ -279,6 +279,7 @@
           telescope-nvim
           telescope-fzf-native-nvim # dependency for telescope
           telescope-ui-select-nvim # dependency for telescope
+          toggleterm-nvim
           vim-illuminate
           # windows # no nixpkg # disabled
           which-key-nvim
