@@ -306,14 +306,14 @@ vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decreas
 vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
 
 -- Windows.nvim Window Maximizer
--- NOTE: the following are mapped in plugins/ui/windows.lua
+-- NOTE: the following are mugins/ui/windows.lua
 -- vim.keymap.set('n', '<leader>wm', '<cmd>WindowsMaximize<CR>', { desc = 'Maximize window' })
 -- vim.keymap.set('n', '<leader>wh', '<cmd>WindowsMaximizeHorizontally<CR>', { desc = 'Maximize window (H)' })
 -- vim.keymap.set('n', '<leader>wv', '<cmd>WindowsMaximizeVertically<CR>', { desc = 'Maximize window (V)' })
 -- vim.keymap.set('n', '<leader>w=', '<cmd>WindowsEqualize<CR>', { desc = 'Equalize windows' })
 
 -- Zen Mode
-vim.keymap.set('n', '<leader>wz', '<cmd>ZenMode<CR>', { desc = 'Zen Mode' })
+vim.keymap.set('n', '<leader>z', '<cmd>ZenMode<CR>', { desc = 'Zen Mode' })
 
 --##################
 --####  Search  ####

@@ -253,7 +253,7 @@
         ];
         orgmode = [
           # org-roam # no nixpkg
-          orgmode
+          # orgmode
           # telescope-orgmode # no nixpkg
         ];
         ui = [

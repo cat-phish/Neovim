@@ -1,4 +1,5 @@
 -- TODO: go through whole config and add all autocommands from other files as comments
+-- TODO: add autocommand for automatically disabling capslock on mode change or something
 
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
