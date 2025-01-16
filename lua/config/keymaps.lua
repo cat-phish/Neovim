@@ -7,20 +7,32 @@ local Util = require 'config.utils'
 --#####################
 
 -- NOTE: Beginning and End of Line
+-- local function jump_to_line_start()
+--   -- If cursor is at the first non-blank character, jump to the beginning of the line
+--   -- Otherwise, jump to the first non-blank character
+--   local col = vim.fn.col '.'
+--   local first_non_blank = vim.fn.indent(vim.fn.line '.') + 1
+--   if col == first_non_blank then
+--     vim.cmd 'normal! 0'
+--   else
+--     vim.cmd 'normal! ^'
+--   end
+-- end
+-- vim.keymap.set({ 'n', 'v' }, 'H', jump_to_line_start, { noremap = true, desc = 'Beginning of line' })
+-- vim.keymap.set({ 'n', 'v' }, 'L', '$', { desc = 'End of Line' })
 local function jump_to_line_start()
-  -- If cursor is at the first non-blank character, jump to the beginning of the line
-  -- Otherwise, jump to the first non-blank character
   local col = vim.fn.col '.'
   local first_non_blank = vim.fn.indent(vim.fn.line '.') + 1
   if col == first_non_blank then
-    vim.cmd 'normal! 0'
+    return '0' -- Jump to the beginning of the line
   else
-    vim.cmd 'normal! ^'
+    return '^' -- Jump to the first non-blank character
   end
 end
-vim.keymap.set({ 'n', 'v' }, 'H', jump_to_line_start, { noremap = true, desc = 'Beginning of line' })
--- vim.keymap.set({ 'n', 'v' }, 'H', '^', { desc = 'Beginning of Line' })
-vim.keymap.set({ 'n', 'v' }, 'L', '$', { desc = 'End of Line' })
+vim.keymap.set({ 'n', 'v', 'o' }, 'H', function()
+  return jump_to_line_start()
+end, { noremap = true, expr = true, desc = 'Beginning of line' })
+vim.keymap.set({ 'n', 'v', 'o' }, 'L', '$', { noremap = true, desc = 'End of Line' })
 
 -- NOTE: better up/down
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
