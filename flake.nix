@@ -23,9 +23,9 @@
       url = "github:barklan/capslock.nvim";
       flake = false;
     };
-    # neovim-nightly-overlay = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    # };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+    };
 
     # see :help nixCats.flake.inputs
     # If you want your plugin to be loaded by the standard overlay,
