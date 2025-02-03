@@ -7,9 +7,10 @@ return {
     plugins = { spelling = true },
     spec = {
       mode = { 'n', 'v' },
+      { 'cc', group = 'comment' },
       { 'g', group = '+goto' },
       { 'gs', group = '+surround' },
-      { 'x', group = '+comment' },
+      -- { 'x', group = '+comment' },
       { ']', group = '+next' },
       { '[', group = '+prev' },
       { '<leader>b', group = '+buffer' },

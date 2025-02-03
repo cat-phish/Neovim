@@ -154,42 +154,42 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 -- })
 
 -- Open Neo-tree on startup
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    local args = vim.fn.argv()
-    if #args == 0 then
-      -- Do nothing if no arguments are provided
-      return
-    elseif vim.fn.isdirectory(args[1]) == 1 then
-      -- Open Neo-tree and focus it if the first argument is a directory
-      vim.cmd('Neotree show dir=' .. args[1])
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   callback = function()
+--     local args = vim.fn.argv()
+--     if #args == 0 then
+--       -- Do nothing if no arguments are provided
+--       return
+--     elseif vim.fn.isdirectory(args[1]) == 1 then
+--       -- Open Neo-tree and focus it if the first argument is a directory
+--       vim.cmd('Neotree show dir=' .. args[1])
 
-      -- -- Simulate pressing <C-w>h after a short delay to focus the Neo-tree pane
-      vim.defer_fn(function()
-        -- HACK: Send the literal keypresses <C-w>h because of neotree not showing correct background
-        -- color until its manualy switched into when opening with dir argument
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
-      end, 10)
+--       -- -- Simulate pressing <C-w>h after a short delay to focus the Neo-tree pane
+--       vim.defer_fn(function()
+--         -- HACK: Send the literal keypresses <C-w>h because of neotree not showing correct background
+--         -- color until its manualy switched into when opening with dir argument
+--         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
+--       end, 10)
 
-      -- HACK: SUPER HACK switch out and back into neo-tree to avoid issue with background color and
-      -- opening weird split windows from neo-tree
-      -- TODO: Check back in with this, not made 2025-01-12
-      vim.defer_fn(function()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>l', true, true, true), 'n', true)
-      end, 10)
-      vim.defer_fn(function()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
-      end, 10)
-    else
-      -- Open Neo-tree alongside the file (if it's not a directory)
-      vim.defer_fn(function()
-        vim.cmd 'Neotree show'
-        -- Redraw to force UI to refresh
-        vim.cmd 'redraw'
-      end, 10)
-    end
-  end,
-})
+--       -- HACK: SUPER HACK switch out and back into neo-tree to avoid issue with background color and
+--       -- opening weird split windows from neo-tree
+--       -- TODO: Check back in with this, not made 2025-01-12
+--       vim.defer_fn(function()
+--         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>l', true, true, true), 'n', true)
+--       end, 10)
+--       vim.defer_fn(function()
+--         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
+--       end, 10)
+--     else
+--       -- Open Neo-tree alongside the file (if it's not a directory)
+--       vim.defer_fn(function()
+--         vim.cmd 'Neotree show'
+--         -- Redraw to force UI to refresh
+--         vim.cmd 'redraw'
+--       end, 10)
+--     end
+--   end,
+-- })
 
 -- Switch to Normal mode when Neo-Tree window is entered
 vim.api.nvim_create_autocmd({ 'WinEnter' }, {

@@ -357,7 +357,7 @@
           # IMPORTANT:
           # your alias may not conflict with your other packages.
           # aliases = ["nixcats"];
-          neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+          # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
           # configDirName = "nixCats-nvim";
         };
         # and a set of categories that you want

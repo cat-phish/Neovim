@@ -1,3 +1,5 @@
+-- NOTE: disabled in favor of neoscroll and smear-cursor. having this enabled created a buggy experience
+-- most notably jumping around when scrolling and animating windows.nvim splits even with animation disabled
 return {
    'echasnovski/mini.animate',
    event = 'VeryLazy',
