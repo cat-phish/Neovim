@@ -165,7 +165,7 @@ return {
   -- Optional dependencies
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   keys = {
-    { '<leader>e', "<cmd>lua require('oil').open_float('.')<CR>", desc = 'Explorer (Oil)' },
+    -- { 'leader>e', "<cmd>lua require('oil').open_float('.')<CR>", desc = 'Explorer (Oil)' },
     { '-', "<cmd>lua require('oil').open_float('.')<CR>", desc = 'Oil Explorer' },
   },
 }

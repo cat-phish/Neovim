@@ -130,7 +130,7 @@
         lsps = [
           bash-language-server # bashls
           clang-tools # clangd
-          eslint # eslint
+          # eslint # eslint
           vscode-langservers-extracted # html, jsonls
           lua-language-server # lua_ls
           marksman # marksman
@@ -230,6 +230,7 @@
           friendly-snippets # dependency for nvim-cmp
           persistence-nvim
           nvim-spectre
+          # snacks-nvim
           sqlite-lua # dependency for yanky
           # timber # no nixpkg
           tiny-inline-diagnostic-nvim

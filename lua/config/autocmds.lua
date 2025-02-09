@@ -153,6 +153,22 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 -- 	end,
 -- })
 
+-- -- Open Neo-tree on startup
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   callback = function()
+--     local args = vim.fn.argv()
+--     if #args == 0 then
+--       -- Do nothing if no arguments are provided
+--       return
+--     elseif vim.fn.isdirectory(args[1]) == 1 then
+--     else
+--       vim.schedule(function()
+--         vim.cmd 'Snacks.explorer()'
+--       end)
+--     end
+--   end,
+-- })
+
 -- Open Neo-tree on startup
 -- vim.api.nvim_create_autocmd('VimEnter', {
 --   callback = function()
