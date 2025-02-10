@@ -37,6 +37,7 @@ return {
     explorer = {
       enabled = true,
       layout = { preset = 'sidebar', preview = false },
+      replace_netrw = true,
     },
     git = { enabled = true },
     gitbrowse = { enabled = true },
