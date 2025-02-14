@@ -86,7 +86,21 @@ return {
     },
     { '<leader>dt', '<cmd>TodoTrouble<cr>', desc = 'Todo (Trouble)' },
     { '<leader>dT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme (Trouble)' },
-    { '<leader>st', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
-    { '<leader>sT', '<cmd>TodoTelescope<cr>', desc = 'Todo Notes (All)' },
+    {
+      '<leader>st',
+      function()
+        Snacks.picker.todo_comments { keywords = { 'TODO', 'FIX', 'FIXME' } }
+      end,
+      desc = 'Todo/Fix/Fixme',
+    },
+    {
+      '<leader>sT',
+      function()
+        Snacks.picker.todo_comments()
+      end,
+      desc = 'Todo/Notes (All)',
+    },
+    -- { '<leader>st', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
+    -- { '<leader>sT', '<cmd>TodoTelescope<cr>', desc = 'Todo Notes (All)' },
   },
 }

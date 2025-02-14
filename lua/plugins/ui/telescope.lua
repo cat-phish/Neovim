@@ -39,49 +39,49 @@ return {
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   keys = {
-    {
-      '<leader><space>',
-      '<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>',
-      desc = 'Find Buffer',
-    },
-    { '<leader>/', "<cmd>lua require'telescope.builtin'.live_grep{}<cr>", desc = 'Grep (cwd)' },
-    -- find
-    { '<leader>fb', '<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>', desc = 'Find Buffers' },
-    { '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files{}<cr>", desc = 'Find Files (cwd)' },
-    { '<leader>fg', '<cmd>Telescope git_files<cr>', desc = 'Find Git Files' },
-    { '<leader>fr', '<cmd>Telescope oldfiles<cr>', desc = 'Find Recent Files' },
-    -- git
-    { '<leader>gc', '<cmd>Telescope git_commits<CR>', desc = 'Commit History' },
-    { '<leader>gC', '<cmd>Telescope git_file_history<CR>', desc = 'Commit History (file)' },
-    { '<leader>gs', '<cmd>Telescope git_status<CR>', desc = 'Status' },
-    -- search
-    { '<leader>s"', '<cmd>Telescope registers<cr>', desc = 'Search Registers' },
-    { '<leader>sb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', desc = 'Search in Buffer' },
-    { '<leader>sd', '<cmd>Telescope diagnostics bufnr=0<cr>', desc = 'Document Diagnostics' },
-    { '<leader>sD', '<cmd>Telescope diagnostics<cr>', desc = 'Workspace Diagnostics' },
-    { '<leader>sH', '<cmd>Telescope highlights<cr>', desc = 'Search Highlight Groups' },
-    { '<leader>sm', '<cmd>Telescope marks<cr>', desc = 'Jump to Mark' },
-    { '<leader>sr', '<cmd>Telescope resume<cr>', desc = 'Resume Last Search' },
-    { '<leader>sw', "<cmd>lua require'telescope.builtin'.grep_string{}<cr>", desc = 'Word (cwd)' },
-    { '<leader>sw', "<cmd>lua require'telescope.builtin'.grep_string{}<cr>", mode = 'v', desc = 'Selection (cwd)' },
-    -- search neovim
-    { '<leader>sn:', '<cmd>Telescope command_history<cr>', desc = 'Command History' },
-    { '<leader>sna', '<cmd>Telescope autocommands<cr>', desc = 'Auto Commands' },
-    { '<leader>snc', '<cmd>Telescope commands<cr>', desc = 'Commands' },
-    { '<leader>snC', '<cmd>Telescope command_history<cr>', desc = 'Command History' },
-    { '<leader>snh', '<cmd>Telescope help_tags<cr>', desc = 'Help Pages' },
-    { '<leader>snk', '<cmd>Telescope keymaps<cr>', desc = 'Key Maps' },
-    { '<leader>snM', '<cmd>Telescope man_pages<cr>', desc = 'Man Pages' },
-    { '<leader>sno', '<cmd>Telescope vim_options<cr>', desc = 'Options' },
-    { '<leader>uc', "<cmd>lua require'telescope.builtin'colorscheme{}<cr>", desc = 'Colorscheme with Preview' },
-    -- Search Colorschemes with Preview
-    {
-      '<leader>uc',
-      function()
-        require('telescope.builtin').colorscheme { enable_preview = true }
-      end,
-      desc = 'Colorscheme with preview',
-    },
+    -- {
+    --   '<leader><space>',
+    --   '<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>',
+    --   desc = 'Find Buffer',
+    -- },
+    -- { '<leader>/', "<cmd>lua require'telescope.builtin'.live_grep{}<cr>", desc = 'Grep (cwd)' },
+    -- -- find
+    -- { '<leader>fb', '<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>', desc = 'Find Buffers' },
+    -- { '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files{}<cr>", desc = 'Find Files (cwd)' },
+    -- { '<leader>fg', '<cmd>Telescope git_files<cr>', desc = 'Find Git Files' },
+    -- { '<leader>fr', '<cmd>Telescope oldfiles<cr>', desc = 'Find Recent Files' },
+    -- -- git
+    -- { '<leader>gc', '<cmd>Telescope git_commits<CR>', desc = 'Commit History' },
+    -- { '<leader>gC', '<cmd>Telescope git_file_history<CR>', desc = 'Commit History (file)' },
+    -- { '<leader>gs', '<cmd>Telescope git_status<CR>', desc = 'Status' },
+    -- -- search
+    -- { '<leader>s"', '<cmd>Telescope registers<cr>', desc = 'Search Registers' },
+    -- { '<leader>sb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', desc = 'Search in Buffer' },
+    -- { '<leader>sd', '<cmd>Telescope diagnostics bufnr=0<cr>', desc = 'Document Diagnostics' },
+    -- { '<leader>sD', '<cmd>Telescope diagnostics<cr>', desc = 'Workspace Diagnostics' },
+    -- { '<leader>sH', '<cmd>Telescope highlights<cr>', desc = 'Search Highlight Groups' },
+    -- { '<leader>sm', '<cmd>Telescope marks<cr>', desc = 'Jump to Mark' },
+    -- { '<leader>sr', '<cmd>Telescope resume<cr>', desc = 'Resume Last Search' },
+    -- { '<leader>sw', "<cmd>lua require'telescope.builtin'.grep_string{}<cr>", desc = 'Word (cwd)' },
+    -- { '<leader>sw', "<cmd>lua require'telescope.builtin'.grep_string{}<cr>", mode = 'v', desc = 'Selection (cwd)' },
+    -- -- search neovim
+    -- { '<leader>sn:', '<cmd>Telescope command_history<cr>', desc = 'Command History' },
+    -- { '<leader>sna', '<cmd>Telescope autocommands<cr>', desc = 'Auto Commands' },
+    -- { '<leader>snc', '<cmd>Telescope commands<cr>', desc = 'Commands' },
+    -- { '<leader>snC', '<cmd>Telescope command_history<cr>', desc = 'Command History' },
+    -- { '<leader>snh', '<cmd>Telescope help_tags<cr>', desc = 'Help Pages' },
+    -- { '<leader>snk', '<cmd>Telescope keymaps<cr>', desc = 'Key Maps' },
+    -- { '<leader>snM', '<cmd>Telescope man_pages<cr>', desc = 'Man Pages' },
+    -- { '<leader>sno', '<cmd>Telescope vim_options<cr>', desc = 'Options' },
+    -- { '<leader>uc', "<cmd>lua require'telescope.builtin'colorscheme{}<cr>", desc = 'Colorscheme with Preview' },
+    -- -- Search Colorschemes with Preview
+    -- {
+    --   '<leader>uc',
+    --   function()
+    --     require('telescope.builtin').colorscheme { enable_preview = true }
+    --   end,
+    --   desc = 'Colorscheme with preview',
+    -- },
   },
   opts = function()
     local telescope = require 'telescope'

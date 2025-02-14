@@ -130,7 +130,7 @@
         lsps = [
           bash-language-server # bashls
           clang-tools # clangd
-          # eslint # eslint
+          eslint # eslint
           vscode-langservers-extracted # html, jsonls
           lua-language-server # lua_ls
           marksman # marksman
