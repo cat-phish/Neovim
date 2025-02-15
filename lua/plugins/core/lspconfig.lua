@@ -200,9 +200,7 @@ return {
         --
         -- This may be unwanted, since they displace some of your code
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-          map('<leader>Oh', function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-          end, 'Toggle Inlay Hints')
+          map('<leader>Oh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Toggle Inlay Hints')
         end
       end,
     })
@@ -268,7 +266,7 @@ return {
     }
     servers.clangd = { -- C/C++
       keys = {
-        { '<leader>cR', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
+        { '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
       },
       root_dir = function(fname)
         return require('lspconfig.util').root_pattern(

@@ -228,7 +228,6 @@
           mini-surround
           nvim-cmp
           friendly-snippets # dependency for nvim-cmp
-          persistence-nvim
           nvim-spectre
           # snacks-nvim
           sqlite-lua # dependency for yanky
@@ -288,6 +287,7 @@
         ];
         util = [
           # orphans # no nixpkg
+          persistence-nvim
           plenary-nvim # dependency for neo-tree, telescope
         ];
       };
