@@ -54,7 +54,7 @@ vim.g.have_nerd_font = nixCats 'have_nerd_font'
 --  For more options, you can see `:help option-list`
 
 -- [[ Load Nvim Options ]]
-require 'config.firenvim'
+-- require 'config.firenvim'
 require 'config.options'
 require 'config.keymaps'
 require 'config.autocmds'
