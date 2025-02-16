@@ -240,6 +240,9 @@ if vim.g.started_by_firenvim ~= true then
     { import = 'plugins.util' },
   }, lazyOptions)
 else
+  -- require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
+  --   import = { 'plugins.firenvim' },
+  -- }, lazyOptions)
   require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
     import = {
       'plugins.editor.flash',
