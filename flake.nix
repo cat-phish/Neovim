@@ -286,6 +286,7 @@
           zen-mode-nvim
         ];
         util = [
+          firenvim
           # orphans # no nixpkg
           persistence-nvim
           plenary-nvim # dependency for neo-tree, telescope

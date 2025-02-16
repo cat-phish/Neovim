@@ -54,6 +54,7 @@ vim.g.have_nerd_font = nixCats 'have_nerd_font'
 --  For more options, you can see `:help option-list`
 
 -- [[ Load Nvim Options ]]
+require 'config.firenvim'
 require 'config.options'
 require 'config.keymaps'
 require 'config.autocmds'
@@ -224,19 +225,28 @@ local lazyOptions = {
 -- NOTE: Here is where you install your plugins.
 -- NOTE: nixCats: this the lazy wrapper. Use it like require('lazy').setup() but with an extra
 -- argument, the path to lazy.nvim as downloaded by nix, or nil, before the normal arguments.
-require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
-  -- NOTE: nixCats: instead of uncommenting them, you can enable them
-  -- from the categories set in your packageDefinitions in your flake or other template!
-  -- This is because within them, we used nixCats to check if it should be loaded!
-  { import = 'plugins.core' },
-  { import = 'plugins.colorschemes' },
-  { import = 'plugins.editor' },
-  { import = 'plugins.fun' },
-  { import = 'plugins.norgmode' },
-  { import = 'plugins.orgmode' },
-  { import = 'plugins.ui' },
-  { import = 'plugins.util' },
-}, lazyOptions)
+if vim.g.started_by_firenvim ~= true then
+  require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
+    -- NOTE: nixCats: instead of uncommenting them, you can enable them
+    -- from the categories set in your packageDefinitions in your flake or other template!
+    -- This is because within them, we used nixCats to check if it should be loaded!
+    { import = 'plugins.core' },
+    { import = 'plugins.colorschemes' },
+    { import = 'plugins.editor' },
+    { import = 'plugins.fun' },
+    { import = 'plugins.norgmode' },
+    { import = 'plugins.orgmode' },
+    { import = 'plugins.ui' },
+    { import = 'plugins.util' },
+  }, lazyOptions)
+else
+  require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
+    require 'plugins.editor.flash.lua',
+    require 'plugins.editor.mini-surround',
+    require 'plugins.editor.yanky',
+    require 'plugins.ui.which-key',
+  }, lazyOptions)
+end
 
 -- Set colorscheme
 require 'config.colorscheme'
