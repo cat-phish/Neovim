@@ -245,6 +245,7 @@ else
     require 'plugins.editor.mini-surround',
     require 'plugins.editor.yanky',
     require 'plugins.ui.which-key',
+    require 'plugins.util.firenvim',
   }, lazyOptions)
 end
 
