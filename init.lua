@@ -225,34 +225,34 @@ local lazyOptions = {
 -- NOTE: Here is where you install your plugins.
 -- NOTE: nixCats: this the lazy wrapper. Use it like require('lazy').setup() but with an extra
 -- argument, the path to lazy.nvim as downloaded by nix, or nil, before the normal arguments.
-if vim.g.started_by_firenvim ~= true then
-  require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
-    -- NOTE: nixCats: instead of uncommenting them, you can enable them
-    -- from the categories set in your packageDefinitions in your flake or other template!
-    -- This is because within them, we used nixCats to check if it should be loaded!
-    { import = 'plugins.core' },
-    { import = 'plugins.colorschemes' },
-    { import = 'plugins.editor' },
-    { import = 'plugins.fun' },
-    { import = 'plugins.norgmode' },
-    { import = 'plugins.orgmode' },
-    { import = 'plugins.ui' },
-    { import = 'plugins.util' },
-  }, lazyOptions)
-else
-  -- require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
-  --   import = { 'plugins.firenvim' },
-  -- }, lazyOptions)
-  require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
-    import = {
-      'plugins.editor.flash',
-      'plugins.editor.mini-surround',
-      'plugins.editor.yanky',
-      'plugins.ui.which-key',
-      'plugins.util.firenvim',
-    },
-  }, lazyOptions)
-end
+-- if vim.g.started_by_firenvim ~= true then
+require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
+  -- NOTE: nixCats: instead of uncommenting them, you can enable them
+  -- from the categories set in your packageDefinitions in your flake or other template!
+  -- This is because within them, we used nixCats to check if it should be loaded!
+  { import = 'plugins.core' },
+  { import = 'plugins.colorschemes' },
+  { import = 'plugins.editor' },
+  { import = 'plugins.fun' },
+  { import = 'plugins.norgmode' },
+  { import = 'plugins.orgmode' },
+  { import = 'plugins.ui' },
+  { import = 'plugins.util' },
+}, lazyOptions)
+-- else
+--   -- require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
+--   --   import = { 'plugins.firenvim' },
+--   -- }, lazyOptions)
+--   require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
+--     import = {
+--       'plugins.editor.flash',
+--       'plugins.editor.mini-surround',
+--       'plugins.editor.yanky',
+--       'plugins.ui.which-key',
+--       'plugins.util.firenvim',
+--     },
+--   }, lazyOptions)
+-- end
 
 -- Set colorscheme
 require 'config.colorscheme'
