@@ -243,10 +243,10 @@ else
   require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
     import = {
       'plugins.editor.flash.lua',
-      'plugins.editor.mini-surround',
-      'plugins.editor.yanky',
-      'plugins.ui.which-key',
-      'plugins.util.firenvim',
+      'plugins.editor.mini-surround.lua',
+      'plugins.editor.yanky.lua',
+      'plugins.ui.which-key.lua',
+      'plugins.util.firenvim.lua',
     },
   }, lazyOptions)
 end
