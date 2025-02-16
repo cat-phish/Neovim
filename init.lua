@@ -241,12 +241,12 @@ if vim.g.started_by_firenvim ~= true then
   }, lazyOptions)
 else
   require('nixCatsUtils.lazyCat').setup(nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, {
-    spec = {
-      'plugins.editor.flash.lua',
-      'plugins.editor.mini-surround.lua',
-      'plugins.editor.yanky.lua',
-      'plugins.ui.which-key.lua',
-      'plugins.util.firenvim.lua',
+    import = {
+      'plugins.editor.flash',
+      'plugins.editor.mini-surround',
+      'plugins.editor.yanky',
+      'plugins.ui.which-key',
+      'plugins.util.firenvim',
     },
   }, lazyOptions)
 end
