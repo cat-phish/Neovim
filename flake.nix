@@ -122,6 +122,7 @@
           universal-ctags
           ripgrep
           fd
+          imagemagick
           stdenv.cc.cc
           nix-doc
           nodePackages.nodejs

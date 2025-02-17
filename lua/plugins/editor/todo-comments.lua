@@ -72,32 +72,24 @@ return {
   keys = {
     {
       ']t',
-      function()
-        require('todo-comments').jump_next()
-      end,
+      function() require('todo-comments').jump_next() end,
       desc = 'Next todo comment',
     },
     {
       '[t',
-      function()
-        require('todo-comments').jump_prev()
-      end,
+      function() require('todo-comments').jump_prev() end,
       desc = 'Previous todo comment',
     },
     { '<leader>dt', '<cmd>TodoTrouble<cr>', desc = 'Todo (Trouble)' },
     { '<leader>dT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme (Trouble)' },
     {
       '<leader>st',
-      function()
-        Snacks.picker.todo_comments { keywords = { 'TODO', 'FIX', 'FIXME' } }
-      end,
+      function() Snacks.picker.todo_comments { keywords = { 'TODO', 'FIX', 'FIXME' } } end,
       desc = 'Todo/Fix/Fixme',
     },
     {
       '<leader>sT',
-      function()
-        Snacks.picker.todo_comments()
-      end,
+      function() Snacks.picker.todo_comments() end,
       desc = 'Todo/Notes (All)',
     },
     -- { '<leader>st', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
