@@ -55,7 +55,7 @@ return {
         'webm',
         'pdf',
       },
-      force = true, -- try displaying the image, even if the terminal does not support it
+      force = false, -- try displaying the image, even if the terminal does not support it
       doc = {
         -- enable image viewer for documents
         -- a treesitter parser must be available for the enabled languages.
@@ -106,7 +106,7 @@ return {
     rename = { enabled = true },
     scope = { enabled = true },
     scratch = { enabled = true },
-    scroll = { enabled = true },
+    scroll = { enabled = false },
     statuscolumn = { enabled = true }, -- TODO: is this conflicting with another plugin?
     terminal = { enabled = false },
     toggle = { enabled = true },
