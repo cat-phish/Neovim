@@ -370,25 +370,27 @@ return {
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'alejandra', -- Nix formatter
-        'beautysh', -- Bash formatter
-        'black', -- Python formatter
-        'codelldb', -- C++ debugger
-        'clang-format', -- C/C++ formatter
-        'cpplint', -- C++ Linter
-        'eslint_d', -- JS Linter
-        'isort', -- Python import formatter
-        'markdownlint', -- Markdown linter
-        -- 'nixpkgs-fmt', -- Nix formatter
-        'prettier', -- Prettier formatter for JS, Markdown, JSON, HTML, CSS, and more
-        'prettierd', -- JS formatter
-        'pylint', -- Python Linter
-        'stylua', -- Lua formatter
-        'vint', -- Vimscript Linter
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      if vim.loop.os_uname().sysname ~= 'Windows_NT' then
+        local ensure_installed = vim.tbl_keys(servers or {})
+        vim.list_extend(ensure_installed, {
+          'alejandra', -- Nix formatter
+          'beautysh', -- Bash formatter
+          'black', -- Python formatter
+          'codelldb', -- C++ debugger
+          'clang-format', -- C/C++ formatter
+          'cpplint', -- C++ Linter
+          'eslint_d', -- JS Linter
+          'isort', -- Python import formatter
+          'markdownlint', -- Markdown linter
+          -- 'nixpkgs-fmt', -- Nix formatter
+          'prettier', -- Prettier formatter for JS, Markdown, JSON, HTML, CSS, and more
+          'prettierd', -- JS formatter
+          'pylint', -- Python Linter
+          'stylua', -- Lua formatter
+          'vint', -- Vimscript Linter
+        })
+        require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      end
 
       require('mason-lspconfig').setup {
         handlers = {
