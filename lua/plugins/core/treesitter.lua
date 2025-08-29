@@ -20,7 +20,7 @@ return { -- Highlight, edit, and navigate code
       'luap',
       'markdown',
       'markdown_inline',
-      'org',
+      --'org',
       'printf',
       'python',
       'query',
