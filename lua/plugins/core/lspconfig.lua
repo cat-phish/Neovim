@@ -28,7 +28,7 @@ return {
 
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-    { 'j-hui/fidget.nvim', opts = {} },
+    { 'j-hui/fidget.nvim',                   opts = {} },
 
     -- Allows extra capabilities provided by nvim-cmp
     'hrsh7th/cmp-nvim-lsp',
@@ -130,8 +130,10 @@ return {
           mode = mode or 'n'
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
-        require('clangd_extensions.inlay_hints').setup_autocmd()
-        require('clangd_extensions.inlay_hints').set_inlay_hints()
+
+        -- TODO: these were causing line formatting errors and were annoying, check for fix
+        -- require('clangd_extensions.inlay_hints').setup_autocmd()
+        -- require('clangd_extensions.inlay_hints').set_inlay_hints()
 
         -- TODO: Possibly remove these after fully migrating to snacks picker
         -- -- Jump to the definition of the word under your cursor.
@@ -200,7 +202,9 @@ return {
         --
         -- This may be unwanted, since they displace some of your code
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-          map('<leader>Oh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Toggle Inlay Hints')
+          map('<leader>Oh',
+            function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end,
+            'Toggle Inlay Hints')
         end
       end,
     })
@@ -316,10 +320,10 @@ return {
         },
       },
     }
-    servers.marksman = {} -- Markdown
-    servers.pyright = {} -- Python
+    servers.marksman = {}      -- Markdown
+    servers.pyright = {}       -- Python
     servers.rust_analyzer = {} -- Rust
-    servers.tailwindcss = { -- CSS
+    servers.tailwindcss = {    -- CSS
       classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
       includeLanguages = {
         eelixir = 'html-eex',
@@ -373,21 +377,21 @@ return {
       if vim.loop.os_uname().sysname ~= 'Windows_NT' then
         local ensure_installed = vim.tbl_keys(servers or {})
         vim.list_extend(ensure_installed, {
-          'alejandra', -- Nix formatter
-          'beautysh', -- Bash formatter
-          'black', -- Python formatter
-          'codelldb', -- C++ debugger
+          'alejandra',    -- Nix formatter
+          'beautysh',     -- Bash formatter
+          'black',        -- Python formatter
+          'codelldb',     -- C++ debugger
           'clang-format', -- C/C++ formatter
-          'cpplint', -- C++ Linter
-          'eslint_d', -- JS Linter
-          'isort', -- Python import formatter
+          'cpplint',      -- C++ Linter
+          'eslint_d',     -- JS Linter
+          'isort',        -- Python import formatter
           'markdownlint', -- Markdown linter
           -- 'nixpkgs-fmt', -- Nix formatter
-          'prettier', -- Prettier formatter for JS, Markdown, JSON, HTML, CSS, and more
-          'prettierd', -- JS formatter
-          'pylint', -- Python Linter
-          'stylua', -- Lua formatter
-          'vint', -- Vimscript Linter
+          'prettier',     -- Prettier formatter for JS, Markdown, JSON, HTML, CSS, and more
+          'prettierd',    -- JS formatter
+          'pylint',       -- Python Linter
+          'stylua',       -- Lua formatter
+          'vint',         -- Vimscript Linter
         })
         require('mason-tool-installer').setup { ensure_installed = ensure_installed }
       end
