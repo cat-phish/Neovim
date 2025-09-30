@@ -11,9 +11,14 @@ return {
     -- An alternative way to set your API key
     -- openai_api_key = '',
     -- ChatGPT Model
-    openai_model_id = 'gpt-3.5-turbo',
-    -- Send code as well as diagnostics
-    context = true,
+    providers = {
+      openai = {
+        model_id = 'gpt-3.5-turbo',
+      },
+    },
+    -- Send code as well as diagnostics NOTE: deprecated?
+    -- context = true,
+
     -- Set your preferred language for the response
     language = 'english',
     -- Any additional instructions
@@ -32,17 +37,13 @@ return {
     {
       '<leader>cD',
       mode = { 'n', 'x' },
-      function()
-        require('wtf').ai()
-      end,
+      function() require('wtf').ai() end,
       desc = 'Debug Diagnostic with AI',
     },
     {
       mode = { 'n' },
       '<leader>cG',
-      function()
-        require('wtf').search()
-      end,
+      function() require('wtf').search() end,
       desc = 'Search Diagnostic with Google',
     },
   },
