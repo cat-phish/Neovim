@@ -28,7 +28,7 @@ return {
 
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-    { 'j-hui/fidget.nvim',                   opts = {} },
+    { 'j-hui/fidget.nvim', opts = {} },
 
     -- Allows extra capabilities provided by nvim-cmp
     'hrsh7th/cmp-nvim-lsp',
@@ -202,9 +202,7 @@ return {
         --
         -- This may be unwanted, since they displace some of your code
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-          map('<leader>Oh',
-            function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end,
-            'Toggle Inlay Hints')
+          map('<leader>Oh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Toggle Inlay Hints')
         end
       end,
     })
@@ -273,7 +271,8 @@ return {
         { '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
       },
       root_dir = function(fname)
-        return require('lspconfig.util').root_pattern(
+        -- return require('lspconfig.util').root_pattern(
+        return vim.lsp.config.root_pattern(
           '.clangd',
           '.clang-tidy',
           '.clang-format',
@@ -320,10 +319,10 @@ return {
         },
       },
     }
-    servers.marksman = {}      -- Markdown
-    servers.pyright = {}       -- Python
+    servers.marksman = {} -- Markdown
+    servers.pyright = {} -- Python
     servers.rust_analyzer = {} -- Rust
-    servers.tailwindcss = {    -- CSS
+    servers.tailwindcss = { -- CSS
       classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
       includeLanguages = {
         eelixir = 'html-eex',
@@ -349,7 +348,8 @@ return {
     -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
     if require('nixCatsUtils').isNixCats then
       for server_name, _ in pairs(servers) do
-        require('lspconfig')[server_name].setup {
+        -- require('lspconfig')[server_name].setup {
+        vim.lsp.config[server_name].setup {
           capabilities = capabilities,
           settings = servers[server_name],
           filetypes = (servers[server_name] or {}).filetypes,
@@ -377,21 +377,21 @@ return {
       if vim.loop.os_uname().sysname ~= 'Windows_NT' then
         local ensure_installed = vim.tbl_keys(servers or {})
         vim.list_extend(ensure_installed, {
-          'alejandra',    -- Nix formatter
-          'beautysh',     -- Bash formatter
-          'black',        -- Python formatter
-          'codelldb',     -- C++ debugger
+          'alejandra', -- Nix formatter
+          'beautysh', -- Bash formatter
+          'black', -- Python formatter
+          'codelldb', -- C++ debugger
           'clang-format', -- C/C++ formatter
-          'cpplint',      -- C++ Linter
-          'eslint_d',     -- JS Linter
-          'isort',        -- Python import formatter
+          'cpplint', -- C++ Linter
+          'eslint_d', -- JS Linter
+          'isort', -- Python import formatter
           'markdownlint', -- Markdown linter
           -- 'nixpkgs-fmt', -- Nix formatter
-          'prettier',     -- Prettier formatter for JS, Markdown, JSON, HTML, CSS, and more
-          'prettierd',    -- JS formatter
-          'pylint',       -- Python Linter
-          'stylua',       -- Lua formatter
-          'vint',         -- Vimscript Linter
+          'prettier', -- Prettier formatter for JS, Markdown, JSON, HTML, CSS, and more
+          'prettierd', -- JS formatter
+          'pylint', -- Python Linter
+          'stylua', -- Lua formatter
+          'vint', -- Vimscript Linter
         })
         require('mason-tool-installer').setup { ensure_installed = ensure_installed }
       end
@@ -404,7 +404,8 @@ return {
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            -- require('lspconfig')[server_name].setup(server)
+            vim.lsp.config[server_name].setup(server)
           end,
         },
       }
