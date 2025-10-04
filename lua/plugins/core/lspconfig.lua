@@ -270,20 +270,20 @@ return {
       keys = {
         { '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
       },
-      root_dir = function(fname)
-        -- return require('lspconfig.util').root_pattern(
-        return vim.lsp.config.root_pattern(
-          '.clangd',
-          '.clang-tidy',
-          '.clang-format',
-          'compile_commands.json',
-          'compile_flags.txt',
-          'configure.ac' -- AutoTools
-        )(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
-      end,
-      capabilities = {
-        offsetEncoding = { 'utf-16' },
-      },
+      -- root_dir = function(fname)
+      --   -- return require('lspconfig.util').root_pattern(
+      --   return vim.lsp.config.root_pattern(
+      --     '.clangd',
+      --     '.clang-tidy',
+      --     '.clang-format',
+      --     'compile_commands.json',
+      --     'compile_flags.txt',
+      --     'configure.ac' -- AutoTools
+      --   )(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+      -- end,
+      -- capabilities = {
+      --   offsetEncoding = { 'utf-16' },
+      -- },
       cmd = {
         'clangd',
         '--background-index',
@@ -347,14 +347,21 @@ return {
     -- You could MAKE it work, using lspsAndRuntimeDeps and sharedLibraries in nixCats
     -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
     if require('nixCatsUtils').isNixCats then
-      for server_name, _ in pairs(servers) do
-        require('lspconfig')[server_name].setup {
-          capabilities = capabilities,
-          settings = servers[server_name],
-          filetypes = (servers[server_name] or {}).filetypes,
-          cmd = (servers[server_name] or {}).cmd,
-          root_pattern = (servers[server_name] or {}).root_pattern,
-        }
+      -- for server_name, _ in pairs(servers) do
+      --   require('lspconfig')[server_name].setup {
+      --   -- vim.lsp.config[server_name].setup {
+      --     capabilities = capabilities,
+      --     settings = servers[server_name],
+      --     filetypes = (servers[server_name] or {}).filetypes,
+      --     cmd = (servers[server_name] or {}).cmd,
+      --     root_pattern = (servers[server_name] or {}).root_pattern,
+      --   }
+      -- end
+      for server_name, cfg in pairs(servers) do
+        -- This gets provided a default configuration by nvim-lspconfig
+        --  -- and then ours gets tbl_deep_extend'ed into it
+        vim.lsp.config(server_name, cfg)
+        vim.lsp.enable(server_name)
       end
     else
       -- [[ Mason Setup ]]
@@ -403,7 +410,8 @@ return {
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            -- require('lspconfig')[server_name].setup(server)
+            vim.lsp.config[server_name].setup(server)
           end,
         },
       }
