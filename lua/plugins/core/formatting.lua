@@ -7,9 +7,7 @@ return {
   keys = {
     {
       '<leader>cf',
-      function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
-      end,
+      function() require('conform').format { async = true, lsp_format = 'fallback' } end,
       mode = '',
       desc = 'Format Buffer',
     },
@@ -49,9 +47,7 @@ return {
   opts = {
     notify_on_error = false,
     format_on_save = function(bufnr)
-      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-        return false
-      end
+      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return false end
       -- Disable "format_on_save lsp_fallback" for languages that don't
       -- have a well standardized coding style. You can add additional
       -- languages here or re-enable it for the disabled ones.
@@ -69,6 +65,7 @@ return {
     end,
     formatters_by_ft = {
       bash = { 'beautysh' },
+      c = { 'clang-format' },
       cpp = { 'clang-format' },
       css = { 'prettier' },
       graphql = { 'prettier' },

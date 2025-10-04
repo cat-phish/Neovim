@@ -348,8 +348,7 @@ return {
     -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
     if require('nixCatsUtils').isNixCats then
       for server_name, _ in pairs(servers) do
-        -- require('lspconfig')[server_name].setup {
-        vim.lsp.config[server_name].setup {
+        require('lspconfig')[server_name].setup {
           capabilities = capabilities,
           settings = servers[server_name],
           filetypes = (servers[server_name] or {}).filetypes,
@@ -404,8 +403,7 @@ return {
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            -- require('lspconfig')[server_name].setup(server)
-            vim.lsp.config[server_name].setup(server)
+            require('lspconfig')[server_name].setup(server)
           end,
         },
       }
