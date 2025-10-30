@@ -60,6 +60,8 @@ require 'config.keymaps'
 require 'config.autocmds'
 require 'config.utils'
 require 'config.health'
+-- require 'plugins.colors.base16'
+-- require 'plugins.colors.base16-atelier-sulphurpool'
 
 -- NOTE: nixCats: You might want to move the lazy-lock.json file
 local function getlockfilepath()

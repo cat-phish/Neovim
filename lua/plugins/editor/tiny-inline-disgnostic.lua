@@ -17,7 +17,7 @@ return {
       vim.diagnostic.config { virtual_text = false },
       options = {
         -- Show the source of the diagnostic.
-        show_source = false,
+        show_source = true,
 
         -- Use your defined signs in the diagnostic config table.
         use_icons_from_diagnostic = false,
