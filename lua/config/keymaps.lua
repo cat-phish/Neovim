@@ -29,9 +29,7 @@ local function jump_to_line_start()
     return '^' -- Jump to the first non-blank character
   end
 end
-vim.keymap.set({ 'n', 'v', 'o' }, 'H', function()
-  return jump_to_line_start()
-end, { noremap = true, expr = true, desc = 'Beginning of line' })
+vim.keymap.set({ 'n', 'v', 'o' }, 'H', function() return jump_to_line_start() end, { noremap = true, expr = true, desc = 'Beginning of line' })
 vim.keymap.set({ 'n', 'v', 'o' }, 'L', '$', { noremap = true, desc = 'End of Line' })
 
 -- NOTE: better up/down
@@ -74,9 +72,7 @@ vim.keymap.set('v', '>', '>gv')
 
 -- NOTE: Don't Yank with `dd` on Empty Line
 vim.keymap.set('n', 'dd', function()
-  if vim.api.nvim_get_current_line():find '^%s*$' then
-    return '"_dd'
-  end
+  if vim.api.nvim_get_current_line():find '^%s*$' then return '"_dd' end
   return 'dd'
 end, { expr = true })
 
@@ -201,8 +197,8 @@ vim.keymap.set('n', '[q', vim.cmd.cprev, { desc = 'Previous quickfix' })
 vim.keymap.set('n', ']q', vim.cmd.cnext, { desc = 'Next quickfix' })
 
 -- Copilot Toggle
-vim.keymap.set('n', '<leader>cpe', '<cmd>Copilot enable<CR>', { desc = 'Copilot Suggestions Enable' })
-vim.keymap.set('n', '<leader>cpd', '<cmd>Copilot disable<CR>', { desc = 'Copilot Suggestions Disable' })
+vim.keymap.set('n', '<leader>cPe', '<cmd>Copilot enable<CR>', { desc = 'Copilot Suggestions Enable' })
+vim.keymap.set('n', '<leader>cPd', '<cmd>Copilot disable<CR>', { desc = 'Copilot Suggestions Disable' })
 
 -- Copilot Completion
 -- NOTE: below mapped in plugins/editor/copilot.lua
@@ -225,9 +221,7 @@ vim.keymap.set('n', '<leader>cpd', '<cmd>Copilot disable<CR>', { desc = 'Copilot
 local diagnostic_goto = function(next, severity)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go { severity = severity }
-  end
+  return function() go { severity = severity } end
 end
 vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
 vim.keymap.set('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
@@ -480,7 +474,7 @@ vim.keymap.set('n', '<leader>z', '<cmd>ZenMode<CR>', { desc = 'Zen Mode' })
 --##############
 
 -- quit
-vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
+-- vim.keymap.set('n', '<leader>Sq', '<cmd>qa<cr>', { desc = 'Quit All' })
 
 -- Dismiss Notifications
 -- NOTE: below mapped in plugins/ui/notify.lua

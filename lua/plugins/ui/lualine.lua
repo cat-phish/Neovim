@@ -64,7 +64,7 @@ return {
         },
 
         lualine_x = {
-          { require('capslock').status_string },
+          -- { require('capslock').status_string },
           {
             function() return require('noice').api.status.command.get() end,
             cond = function() return package.loaded['noice'] and require('noice').api.status.command.has() end,

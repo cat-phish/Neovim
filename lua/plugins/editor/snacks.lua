@@ -172,7 +172,7 @@ return {
     { '<leader>su', function() Snacks.picker.undo() end, desc = 'Undo History' },
     { '<leader>snM', function() Snacks.picker.man() end, desc = 'Man Pages' },
     { '<leader>snp', function() Snacks.picker.lazy() end, desc = 'Search for Plugin Spec' },
-    { '<leader>uC', function() Snacks.picker.colorschemes() end, desc = 'Colorschemes' },
+    { '<leader>uc', function() Snacks.picker.colorschemes() end, desc = 'Colorschemes' },
     -- LSP
     { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
     { 'gD', function() Snacks.picker.lsp_declarations() end, desc = 'Goto Declaration' },
@@ -184,7 +184,7 @@ return {
     { '<leader>cs', function() Snacks.picker.lsp_symbols() end, desc = 'LSP Symbols' },
     { '<leader>cS', function() Snacks.picker.lsp_workspace_symbols() end, desc = 'LSP Workspace Symbols' },
     -- Other
-    { '<leader>uz', function() Snacks.zen() end, desc = 'Super Zen Mode' },
+    -- { '<leader>uz', function() Snacks.zen() end, desc = 'Super Zen Mode' },
     { '<leader>uZ', function() Snacks.zen.zoom() end, desc = 'Toggle Zoom' },
 
     { '<leader>un', function() Snacks.notifier.hide() end, desc = 'Dismiss All Notifications' },

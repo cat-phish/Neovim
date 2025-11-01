@@ -22,7 +22,7 @@ return {
       { '<leader>mowaaa', desc = 'ah' },
       { '<leader>O', group = '+options' },
       { '<leader>p', group = '+plugins' },
-      { '<leader>q', group = '+quit/session' },
+      { '<leader>S', group = '+session' },
       { '<leader>s', group = '+search' },
       { '<leader>sn', group = '+neovim' },
       { '<leader>u', group = '+ui' },

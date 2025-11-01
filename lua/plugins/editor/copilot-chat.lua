@@ -9,11 +9,11 @@ return {
     },
     build = require('nixCatsUtils').lazyAdd 'make tiktoken', -- Only on MacOS or Linux
     keys = {
-      { '<leader>cpc', '<Cmd>CopilotChatOpen<CR>', mode = { 'n' }, desc = 'Copilot Chat' },
-      { '<leader>cpCE', '<Cmd>CopilotChatExplain<CR>', mode = { 'n' }, desc = 'Copilot Chat Explain' },
-      { '<leader>cpCR', '<Cmd>CopilotChatReset<CR>', mode = { 'n' }, desc = 'Copilot Chat Reset' },
-      { '<leader>cpCS', ':CopilotChatSave ', mode = { 'n' }, desc = 'Copilot Chat Save' },
-      { '<leader>cpCL', ':CopilotChatLoad ', mode = { 'n' }, desc = 'Copilot Chat Load' },
+      { '<leader>cPc', '<Cmd>CopilotChatOpen<CR>', mode = { 'n' }, desc = 'Copilot Chat' },
+      { '<leader>cPCE', '<Cmd>CopilotChatExplain<CR>', mode = { 'n' }, desc = 'Copilot Chat Explain' },
+      { '<leader>cPCR', '<Cmd>CopilotChatReset<CR>', mode = { 'n' }, desc = 'Copilot Chat Reset' },
+      { '<leader>cPCS', ':CopilotChatSave ', mode = { 'n' }, desc = 'Copilot Chat Save' },
+      { '<leader>cPCL', ':CopilotChatLoad ', mode = { 'n' }, desc = 'Copilot Chat Load' },
     },
     opts = {
       -- See Configuration section for options

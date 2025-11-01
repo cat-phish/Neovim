@@ -66,9 +66,7 @@ return {
       },
     },
     template_placeholders = {
-      filename = function()
-        return vim.fn.expand '%:t'
-      end,
+      filename = function() return vim.fn.expand '%:t' end,
       -- Custom placeholder. For example, this can be used in log templates as %truncated_line
       -- truncated_line = function(ctx)
       --   local line = ctx.log_target:start()
@@ -92,16 +90,16 @@ return {
     keymaps = {
       -- Set to false to disable the default keymap for specific actions
       -- insert_log_below = false,
-      insert_log_below = 'glj',
-      insert_log_above = 'glk',
-      insert_plain_log_below = 'glo',
-      insert_plain_log_above = 'gl<S-o>',
-      insert_batch_log = 'glb',
-      add_log_targets_to_batch = 'gla',
-      insert_log_below_operator = 'g<S-l>j',
-      insert_log_above_operator = 'g<S-l>k',
-      insert_batch_log_operator = 'g<S-l>b',
-      add_log_targets_to_batch_operator = 'g<S-l>a',
+      -- insert_log_below = 'glj',
+      -- insert_log_above = 'glk',
+      insert_plain_log_below = '<leader>clo',
+      insert_plain_log_above = '<leader>clO',
+      insert_batch_log = '<leader>clb',
+      add_log_targets_to_batch = '<leader>cla',
+      -- insert_log_below_operator = 'g<S-l>j',
+      -- insert_log_above_operator = 'g<S-l>k',
+      -- insert_batch_log_operator = 'g<S-l>b',
+      -- add_log_targets_to_batch_operator = 'g<S-l>a',
     },
     -- Set to false to disable all default keymaps
     default_keymaps_enabled = true,

@@ -6,9 +6,9 @@ return {
   event = 'BufReadPre',
   opts = { options = vim.opt.sessionoptions:get() },
   keys = {
-    { '<leader>qd', function() require('persistence').stop() end, desc = "Don't Save Current Session" },
-    { '<leader>ql', function() require('persistence').load { last = true } end, desc = 'Restore Last Session' },
-    { '<leader>qs', function() require('persistence').load() end, desc = 'Restore Session' },
-    { '<leader>qS', function() require('persistence').select() end, desc = 'Select Session' },
+    { '<leader>Sd', function() require('persistence').stop() end, desc = "Don't Save Current Session" },
+    { '<leader>Sl', function() require('persistence').load { last = true } end, desc = 'Restore Last Session' },
+    { '<leader>Sr', function() require('persistence').load() end, desc = 'Restore Session' },
+    { '<leader>SS', function() require('persistence').select() end, desc = 'Select Session' },
   },
 }
