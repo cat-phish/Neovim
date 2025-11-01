@@ -25,7 +25,7 @@ return {
         base01 = '#000039',
         base02 = '#292e42',
         base03 = '#6887da',
-        base04 = '#6887da',
+        base04 = '#dfe2f1',
         base05 = '#d1d4dc',
         base06 = '#9d7cd8',
         base07 = '#6cc254',

@@ -6,6 +6,7 @@ return {
     'MunifTanjim/nui.nvim',
   },
   opts = {
+    chat_dir = vim.fn.stdpath('data'):gsub('/$', '') .. '/wtf_chats',
     -- Default AI popup type
     popup_type = 'popup',
     -- An alternative way to set your API key
@@ -25,6 +26,8 @@ return {
     additional_instructions = nil,
     -- Default search engine, can be overridden by passing an option to WtfSearch
     search_engine = 'google',
+    -- Picker
+    picker = 'snacks',
     -- Callbacks
     hooks = {
       request_started = nil,
@@ -37,7 +40,7 @@ return {
     {
       '<leader>cD',
       mode = { 'n', 'x' },
-      function() require('wtf').ai() end,
+      function() require('wtf').diagnose() end,
       desc = 'Debug Diagnostic with AI',
     },
     {
@@ -47,26 +50,4 @@ return {
       desc = 'Search Diagnostic with Google',
     },
   },
-  -- config = function()
-  --   -- HACK: Extremely hacky way to make sure wtf closes with q
-  --   -- Set a custom buffer variable when the wtf.nvim window is created
-  --   -- and change the filetype to work with the close with q autocmd.
-  --   -- Will close all floating windows with the filetype 'markdown'
-  --   -- with q
-  --   vim.api.nvim_create_autocmd('BufWinEnter', {
-  --     pattern = '*',
-  --     callback = function()
-  --       local filetype = vim.bo.filetype
-  --
-  --       if filetype == 'markdown' then
-  --         -- Check if the buffer is a floating window
-  --         local winid = vim.fn.win_getid()
-  --         local config = vim.api.nvim_win_get_config(winid)
-  --         if config.relative ~= '' then
-  --           vim.bo.filetype = 'markdown_floating_win'
-  --         end
-  --       end
-  --     end,
-  --   })
-  -- end,
 }

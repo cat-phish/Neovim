@@ -96,7 +96,7 @@ return {
     input = { enabled = true },
     layout = { enabled = false },
     lazygit = { enabled = true },
-    notifier = { enabled = false }, -- TODO: get rid of nvim-notify?
+    notifier = { enabled = true }, -- TODO: get rid of nvim-notify?
     picker = {
       enabled = true,
       hidden = true,
