@@ -5,18 +5,14 @@
 vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   group = vim.api.nvim_create_augroup('checktime', { clear = true }),
   callback = function()
-    if vim.o.buftype ~= 'nofile' then
-      vim.cmd 'checktime'
-    end
+    if vim.o.buftype ~= 'nofile' then vim.cmd 'checktime' end
   end,
 })
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight_yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+  callback = function() vim.highlight.on_yank() end,
 })
 
 -- resize splits if window got resized
@@ -35,15 +31,11 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   callback = function(event)
     local exclude = { 'gitcommit' }
     local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
-      return
-    end
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then return end
     vim.b[buf].lazyvim_last_loc = true
     local mark = vim.api.nvim_buf_get_mark(buf, '"')
     local lcount = vim.api.nvim_buf_line_count(buf)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
+    if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end
   end,
 })
 
@@ -88,9 +80,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
       -- Check if the buffer is a floating window
       local winid = vim.fn.win_getid()
       local config = vim.api.nvim_win_get_config(winid)
-      if config.relative ~= '' then
-        vim.bo.filetype = 'markdown_floating_win'
-      end
+      if config.relative ~= '' then vim.bo.filetype = 'markdown_floating_win' end
     end
   end,
 })
@@ -123,18 +113,14 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   group = vim.api.nvim_create_augroup('json_conceal', { clear = true }),
   pattern = { 'json', 'jsonc', 'json5' },
-  callback = function()
-    vim.opt_local.conceallevel = 0
-  end,
+  callback = function() vim.opt_local.conceallevel = 0 end,
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   group = vim.api.nvim_create_augroup('auto_create_dir', { clear = true }),
   callback = function(event)
-    if event.match:match '^%w%w+://' then
-      return
-    end
+    if event.match:match '^%w%w+://' then return end
     local file = vim.loop.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
   end,
@@ -153,63 +139,9 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 -- 	end,
 -- })
 
--- -- Open Neo-tree on startup
--- vim.api.nvim_create_autocmd('VimEnter', {
---   callback = function()
---     local args = vim.fn.argv()
---     if #args == 0 then
---       -- Do nothing if no arguments are provided
---       return
---     elseif vim.fn.isdirectory(args[1]) == 1 then
---     else
---       vim.schedule(function()
---         vim.cmd 'Snacks.explorer()'
---       end)
---     end
---   end,
--- })
-
--- Open Neo-tree on startup
--- vim.api.nvim_create_autocmd('VimEnter', {
---   callback = function()
---     local args = vim.fn.argv()
---     if #args == 0 then
---       -- Do nothing if no arguments are provided
---       return
---     elseif vim.fn.isdirectory(args[1]) == 1 then
---       -- Open Neo-tree and focus it if the first argument is a directory
---       vim.cmd('Neotree show dir=' .. args[1])
-
---       -- -- Simulate pressing <C-w>h after a short delay to focus the Neo-tree pane
---       vim.defer_fn(function()
---         -- HACK: Send the literal keypresses <C-w>h because of neotree not showing correct background
---         -- color until its manualy switched into when opening with dir argument
---         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
---       end, 10)
-
---       -- HACK: SUPER HACK switch out and back into neo-tree to avoid issue with background color and
---       -- opening weird split windows from neo-tree
---       -- TODO: Check back in with this, not made 2025-01-12
---       vim.defer_fn(function()
---         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>l', true, true, true), 'n', true)
---       end, 10)
---       vim.defer_fn(function()
---         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>h', true, true, true), 'n', true)
---       end, 10)
---     else
---       -- Open Neo-tree alongside the file (if it's not a directory)
---       vim.defer_fn(function()
---         vim.cmd 'Neotree show'
---         -- Redraw to force UI to refresh
---         vim.cmd 'redraw'
---       end, 10)
---     end
---   end,
--- })
-
 -- Switch to Normal mode when Neo-Tree window is entered
 vim.api.nvim_create_autocmd({ 'WinEnter' }, {
-  pattern = 'neo-tree*',
+  pattern = 'snacks*',
   group = vim.api.nvim_create_augroup('neotree_normal_mode', { clear = true }),
   command = 'stopinsert',
 })
