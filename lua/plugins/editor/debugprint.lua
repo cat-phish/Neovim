@@ -15,7 +15,7 @@ return {
         textobj_below = '<leader>cpo',
         textobj_above = '<leader>cpO',
         textobj_surround = '<leader>cpso',
-        toggle_comment_debug_prints = '<leader>cpt',
+        toggle_comment_debug_prints = '<leader>cpc',
         delete_debug_prints = '<leader>cpD',
       },
       insert = {
@@ -27,6 +27,19 @@ return {
         -- variable_above = 'g?V',
       },
     },
-    -- … Other options
+    -- filetypes = {
+    --   ['c'] = {
+    --     left = '// clang-format off\nstd::cerr << "',
+    --     right = '" << std::endl;\n// clang-format on',
+    --     mid_var = ' << ',
+    --     right_var = ' << std::endl;\n// clang-format on',
+    --   },
+    --   ['cpp'] = {
+    --     left = '// clang-format off\nstd::cerr << "',
+    --     right = '" << std::endl;\n// clang-format on',
+    --     mid_var = ' << ',
+    --     right_var = ' << std::endl;\n// clang-format on',
+    --   },
+    -- },
   },
 }

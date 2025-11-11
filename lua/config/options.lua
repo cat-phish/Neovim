@@ -14,7 +14,7 @@ vim.g.root_spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
 local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
-opt.clipboard = 'unnamed' -- Sync with system clipboard
+opt.clipboard = 'unnamedplus' -- Sync with system clipboard
 opt.completeopt = 'menu,menuone,noselect'
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
@@ -69,9 +69,7 @@ opt.fillchars = {
   eob = ' ',
 }
 
-if vim.fn.has 'nvim-0.10' == 1 then
-  opt.smoothscroll = true
-end
+if vim.fn.has 'nvim-0.10' == 1 then opt.smoothscroll = true end
 
 -- Folding
 vim.opt.foldlevel = 99
