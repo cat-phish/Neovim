@@ -27,6 +27,7 @@ return {
         -- variable_above = 'g?V',
       },
     },
+    highlight_lines = false,
     -- filetypes = {
     --   ['c'] = {
     --     left = '// clang-format off\nstd::cerr << "',
