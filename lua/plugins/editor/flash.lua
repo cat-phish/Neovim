@@ -73,8 +73,8 @@ return {
         -- `left` and `right` are always left and right.
         char_actions = function(motion)
           return {
-            [';'] = 'right', -- set to `right` to always go right (otherwise "next")
-            [','] = 'left', -- set to `left` to always go left (otherwise "prev")
+            [';'] = 'next', -- set to `right` to always go right (otherwise "next")
+            [','] = 'prev', -- set to `left` to always go left (otherwise "prev")
             -- clever-f style
             [motion:lower()] = 'next',
             [motion:upper()] = 'prev',
