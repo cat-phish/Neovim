@@ -14,7 +14,7 @@ return {
       -- search direction
       forward = true,
       -- when `false`, find only matches in the given direction
-      wrap = false,
+      wrap = true,
       -- Each mode will take ignorecase and smartcase into account.
       -- * exact: exact match
       -- * search: regular search
@@ -83,7 +83,7 @@ return {
             -- [motion:match("%l") and motion:upper() or motion:lower()] = "prev",
           }
         end,
-        search = { wrap = true },
+        search = { wrap = false },
         highlight = { backdrop = true },
         jump = { register = false },
       },
