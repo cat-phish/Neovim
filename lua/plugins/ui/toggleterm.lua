@@ -12,15 +12,15 @@ return {
   version = '*',
   opts = {
     -- size can be a number or function which is passed the current terminal
-    size = 10,
+    -- size = 10,
     -- size = 20 |
-    -- size = function(term)
-    --   if term.direction == 'horizontal' then
-    --     return 15
-    --   elseif term.direction == 'vertical' then
-    --     return vim.o.columns * 0.3
-    --   end
-    -- end,
+    size = function(term)
+      if term.direction == 'horizontal' then
+        return 15
+      elseif term.direction == 'vertical' then
+        return vim.o.columns * 0.3
+      end
+    end,
     open_mapping = [[<c-\>]], -- or { [[<c-\>]], [[<c-¥>]] } if you also use a Japanese keyboard.
     -- on_create = fun(t: Terminal), -- function to run when the terminal is first created
     -- on_open = fun(t: Terminal), -- function to run when the terminal opens
@@ -53,7 +53,7 @@ return {
     terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
     persist_size = true,
     persist_mode = false, -- if set to true (default) the previous terminal mode will be remembered
-    direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float',
+    direction = 'vertical', -- 'vertical' | 'horizontal' | 'tab' | 'float',
     close_on_exit = false, -- close the terminal window when the process exits
     clear_env = false, -- use only environmental variables from `env`, passed to jobstart()
     -- Change the default shell. Can be a string or a function returning a string

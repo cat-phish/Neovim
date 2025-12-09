@@ -4,7 +4,7 @@ return {
   opts = {
     -- Autocompletion: show `:h 'wildmenu'` as you type
     autocomplete = {
-      enable = true,
+      enable = false,
 
       -- Delay (in ms) after which to trigger completion
       -- Neovim>=0.12 is recommended for positive values
