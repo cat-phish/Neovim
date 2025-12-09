@@ -35,6 +35,8 @@ opt.pumheight = 10 -- Maximum number of entries in a popup
 opt.relativenumber = true -- Relative line numbers
 opt.scrolloff = 15 -- Lines of context
 opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
+vim.opt.shell = '/usr/bin/zsh'
+vim.opt.shell = '/home/jordan/.nix-profile/bin/zsh'
 opt.shiftround = true -- Round indent
 opt.shiftwidth = 2 -- Size of an indent
 opt.shortmess:append { W = true, I = true, c = true, C = true }

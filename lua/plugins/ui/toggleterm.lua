@@ -1,18 +1,26 @@
 return {
   -- { 'akinsho/toggleterm.nvim', version = '*', config = true },
+  -- {
+  --   'akinsho/toggleterm.nvim',
+  --   version = '*',
+  --   opts = {
+  --     direction = 'float',
+  --     close_on_exit = false,
+  --   },
+  -- },
   'akinsho/toggleterm.nvim',
   version = '*',
   opts = {
     -- size can be a number or function which is passed the current terminal
-    -- size = 10,
+    size = 10,
     -- size = 20 |
-    size = function(term)
-      if term.direction == 'horizontal' then
-        return 15
-      elseif term.direction == 'vertical' then
-        return vim.o.columns * 0.3
-      end
-    end,
+    -- size = function(term)
+    --   if term.direction == 'horizontal' then
+    --     return 15
+    --   elseif term.direction == 'vertical' then
+    --     return vim.o.columns * 0.3
+    --   end
+    -- end,
     open_mapping = [[<c-\>]], -- or { [[<c-\>]], [[<c-¥>]] } if you also use a Japanese keyboard.
     -- on_create = fun(t: Terminal), -- function to run when the terminal is first created
     -- on_open = fun(t: Terminal), -- function to run when the terminal opens
@@ -45,10 +53,11 @@ return {
     terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
     persist_size = true,
     persist_mode = false, -- if set to true (default) the previous terminal mode will be remembered
-    direction = 'vertical', -- 'vertical' | 'horizontal' | 'tab' | 'float',
-    close_on_exit = true, -- close the terminal window when the process exits
+    direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float',
+    close_on_exit = false, -- close the terminal window when the process exits
     clear_env = false, -- use only environmental variables from `env`, passed to jobstart()
     -- Change the default shell. Can be a string or a function returning a string
+    -- shell = '/home/jordan/.nix-profile/bin/zsh'
     -- shell = vim.o.shell,
     auto_scroll = true, -- automatically scroll to the bottom on terminal output
     -- This field is only relevant if direction is set to 'float'
@@ -67,12 +76,12 @@ return {
     --   -- zindex = <value>,
     --   title_pos = 'center', -- 'left' | 'center' | 'right', position of the title of the floating window
     -- },
-    winbar = {
-      enabled = false,
-      name_formatter = function(term) --  term: Terminal
-        return term.name
-      end,
-    },
+    -- winbar = {
+    --   enabled = false,
+    --   name_formatter = function(term) --  term: Terminal
+    --     return term.name
+    --   end,
+    -- },
     responsiveness = {
       -- breakpoint in terms of `vim.o.columns` at which terminals will start to stack on top of each other
       -- instead of next to each other
