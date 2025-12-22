@@ -99,8 +99,7 @@ return {
     notifier = { enabled = true }, -- TODO: get rid of nvim-notify?
     picker = {
       enabled = true,
-      hidden = true,
-      source = {
+      sources = {
         files = { hidden = true },
         grep = { hidden = true },
         explorer = { hidden = true },
