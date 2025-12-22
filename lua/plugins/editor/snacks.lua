@@ -100,10 +100,11 @@ return {
     picker = {
       enabled = true,
       hidden = true,
-      sources = {
+      source = {
         files = { hidden = true },
         grep = { hidden = true },
         explorer = { hidden = true },
+      },
     },
     profiler = { enabled = true },
     quickfile = { enabled = true },
