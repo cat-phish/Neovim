@@ -23,7 +23,7 @@ return {
       enabled = require('nixCatsUtils').lazyAdd(true, false),
     },
     -- TODO: check josean martinez video on how to implement this fileoperations plugin
-    -- TODO: nixCats: paclage doesn't exist
+    -- TODO: nixCats: package doesn't exist
     { 'antosha417/nvim-lsp-file-operations', config = true },
 
     -- Useful status updates for LSP.
@@ -48,6 +48,19 @@ return {
     {
       'kmonad/kmonad-vim',
       ft = 'kdb',
+    },
+    -- Adds better diagnostics for rust files
+    -- TODO: currently no nix package
+    {
+      'alexpasmantier/krust.nvim',
+      ft = 'rust',
+      opts = {
+        keymap = '<leader>ck',
+        float_win = {
+          border = 'rounded',
+          auto_focus = false,
+        },
+      },
     },
     -- Adds language features for autohotkey files
     -- TODO: nixCats: package doesn't exist

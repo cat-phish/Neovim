@@ -198,6 +198,7 @@
           lazydev-nvim
           kmonad-vim
           clangd_extensions-nvim
+          # krust.nvim # no nixpkg
 
           # from treesitter.lua
           nvim-treesitter.withAllGrammars
@@ -237,6 +238,7 @@
           todo-comments-nvim
           nvim-treesitter-context
           trouble-nvim
+          vscode-diff-nvim
           wtf-nvim
           yanky-nvim
         ];
@@ -274,7 +276,7 @@
           neo-tree-nvim
           noice-nvim
           nvim-notify # dependency for noice
-          nui-nvim # dependency for neo-tree, noice
+          nui-nvim # dependency for neo-tree, noice, vscode-diff-nvim
           # reactive # no nixpkg
           render-markdown-nvim
           telescope-nvim
