@@ -28,7 +28,7 @@ return {
     debug = { enabled = true },
     dim = { enabled = true },
     explorer = {
-      enabled = true,
+      enabled = false,
       layout = { preset = 'sidebar', preview = false },
       replace_netrw = true,
       hidden = true,
@@ -128,7 +128,7 @@ return {
     -- Top Pickers & Explorer
     { '<leader>,', function() Snacks.picker.smart() end, desc = 'Smart Find Files' },
     { '<leader><space>', function() Snacks.picker.buffers() end, desc = 'Find Buffers' },
-    { '<leader>/', function() Snacks.picker.grep() end, desc = 'Grep' },
+    { '<leader>/', function() Snacks.picker.lines { layout = { preview = 'main', preset = 'vertical', }, } end, desc = 'Grep in Buffer' },
     { '<leader>.', function() Snacks.scratch() end, desc = 'Scratch Buffer' },
     -- find
     { '<leader>fb', function() Snacks.picker.buffers() end, desc = 'Buffer' },
@@ -176,7 +176,7 @@ return {
     { '<leader>su', function() Snacks.picker.undo() end, desc = 'Undo History' },
     { '<leader>snM', function() Snacks.picker.man() end, desc = 'Man Pages' },
     { '<leader>snp', function() Snacks.picker.lazy() end, desc = 'Search for Plugin Spec' },
-    { '<leader>uc', function() Snacks.picker.colorschemes() end, desc = 'Colorschemes' },
+    { '<leader>uC', function() Snacks.picker.colorschemes() end, desc = 'Colorschemes' },
     -- LSP
     { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
     { 'gD', function() Snacks.picker.lsp_declarations() end, desc = 'Goto Declaration' },

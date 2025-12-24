@@ -141,7 +141,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 
 -- Switch to Normal mode when Neo-Tree window is entered
 vim.api.nvim_create_autocmd({ 'WinEnter' }, {
-  pattern = 'snacks*',
+  pattern = 'fyler',
   group = vim.api.nvim_create_augroup('neotree_normal_mode', { clear = true }),
   command = 'stopinsert',
 })
@@ -150,6 +150,129 @@ vim.api.nvim_create_autocmd('WinResized', {
   pattern = '*',
   callback = function()
     -- vim.opt.scrolloff = math.floor(vim.fn.winheight(0) / <uint>)
+  end,
+})
+
+-- open help in vertical split
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = '*',
+  callback = function()
+    if vim.bo.filetype == 'help' then
+      -- Move help window to the far right
+      vim.cmd 'wincmd L'
+
+      -- Optional but recommended
+      vim.wo.winfixwidth = true
+      vim.cmd 'vertical resize 80'
+    end
+  end,
+})
+
+-- no auto continue comments on new line
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('no_auto_comment', {}),
+  callback = function() vim.opt_local.formatoptions:remove { 'c', 'r', 'o' } end,
+})
+
+-- syntax highlighting for dotenv files
+vim.api.nvim_create_autocmd('BufRead', {
+  group = vim.api.nvim_create_augroup('dotenv_ft', { clear = true }),
+  pattern = { '.env', '.env.*' },
+  callback = function() vim.bo.filetype = 'dosini' end,
+})
+
+-- show cursorline only in active window enable
+vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('active_cursorline', { clear = true }),
+  callback = function() vim.opt_local.cursorline = true end,
+})
+-- show cursorline only in active window disable
+vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave' }, {
+  group = 'active_cursorline',
+  callback = function() vim.opt_local.cursorline = false end,
+})
+
+-- add to ctrl+o jump list when moving more than one line at a time
+local function jump_with_mark(key)
+  local count = vim.v.count1
+  if count > 1 then return 'm`' .. count .. key end
+  return key
+end
+vim.keymap.set('n', 'j', function() return jump_with_mark 'j' end, { expr = true, silent = true, desc = 'jump-aware down' })
+
+vim.keymap.set('n', 'k', function() return jump_with_mark 'k' end, { expr = true, silent = true, desc = 'jump-aware up' })
+
+-- TODO: this could probably replace vim-illuminate
+-- -- ide like highlight when stopping cursor
+-- vim.api.nvim_create_autocmd("CursorMoved", {
+-- 	group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
+-- 	desc = "Highlight references under cursor",
+-- 	callback = function()
+-- 		-- Only run if the cursor is not in insert mode
+-- 		if vim.fn.mode() ~= "i" then
+-- 			local clients = vim.lsp.get_clients({ bufnr = 0 })
+-- 			local supports_highlight = false
+-- 			for _, client in ipairs(clients) do
+-- 				if client.server_capabilities.documentHighlightProvider then
+-- 					supports_highlight = true
+-- 					break -- Found a supporting client, no need to check others
+-- 				end
+-- 			end
+--
+-- 			-- 3. Proceed only if an LSP is active AND supports the feature
+-- 			if supports_highlight then
+-- 				vim.lsp.buf.clear_references()
+-- 				vim.lsp.buf.document_highlight()
+-- 			end
+-- 		end
+-- 	end,
+-- })
+-- vim.api.nvim_create_autocmd("CursorMovedI", {
+-- 	group = "LspReferenceHighlight",
+-- 	desc = "Clear highlights when entering insert mode",
+-- 	callback = function()
+-- 		vim.lsp.buf.clear_references()
+-- 	end,
+-- })
+
+-- TODO: not working
+vim.api.nvim_create_autocmd('BufEnter', {
+  group = vim.api.nvim_create_augroup('WinFixBufRedirect', { clear = true }),
+  callback = function(args)
+    local win = vim.api.nvim_get_current_win()
+
+    -- 1. Check if the window is fixed
+    if not vim.wo[win].winfixbuf then return end
+
+    -- 2. Check if the buffer we are entering is different from the one
+    -- already 'locked' in this window.
+    -- (We use a variable to store the 'rightful' buffer for this window)
+    local fixed_buf = vim.t.last_fixed_buf or vim.api.nvim_win_get_buf(win)
+    local target_buf = args.buf
+
+    if target_buf ~= fixed_buf then
+      -- The switch is illegal!
+      -- First, restore the fixed window to its original buffer
+      vim.api.nvim_win_set_buf(win, fixed_buf)
+
+      -- Second, find a "safe" window to host the new buffer
+      local target_win = nil
+      for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if not vim.wo[w].winfixbuf and vim.api.nvim_win_get_config(w).relative == '' then
+          target_win = w
+          break
+        end
+      end
+
+      if target_win then
+        vim.api.nvim_set_current_win(target_win)
+        vim.api.nvim_win_set_buf(target_win, target_buf)
+      else
+        -- Fallback: split if no safe window exists
+        vim.cmd 'vsplit'
+        vim.api.nvim_win_set_buf(0, target_buf)
+      end
+    end
   end,
 })
 

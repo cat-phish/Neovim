@@ -3,20 +3,20 @@ return {
   opts = {
     keymaps = {
       normal = {
-        plain_below = '<leader>cpp',
-        plain_above = '<leader>cpP',
-        variable_below = '<leader>cpv',
-        variable_above = '<leader>cpV',
+        plain_below = '<leader>ipp',
+        plain_above = '<leader>ipP',
+        variable_below = '<leader>ipv',
+        variable_above = '<leader>ipV',
         variable_below_alwaysprompt = '',
         variable_above_alwaysprompt = '',
-        surround_plain = '<leader>cpsp',
-        surround_variable = '<leader>cpsv',
+        surround_plain = '<leader>ipsp',
+        surround_variable = '<leader>ipsv',
         surround_variable_alwaysprompt = '',
-        textobj_below = '<leader>cpo',
-        textobj_above = '<leader>cpO',
-        textobj_surround = '<leader>cpso',
-        toggle_comment_debug_prints = '<leader>cpc',
-        delete_debug_prints = '<leader>cpD',
+        textobj_below = '<leader>ipo',
+        textobj_above = '<leader>ipO',
+        textobj_surround = '<leader>ipso',
+        toggle_comment_debug_prints = '<leader>ipc',
+        delete_debug_prints = '<leader>ipD',
       },
       insert = {
         -- plain = '<C-G>p',
@@ -35,7 +35,7 @@ return {
     --     mid_var = ' << ',
     --     right_var = ' << std::endl;\n// clang-format on',
     --   },
-    --   ['cpp'] = {
+    --   ['ipp'] = {
     --     left = '// clang-format off\nstd::cerr << "',
     --     right = '" << std::endl;\n// clang-format on',
     --     mid_var = ' << ',

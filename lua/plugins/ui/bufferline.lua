@@ -29,7 +29,7 @@ return {
         right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
       -- BUG: this diagnostic line is causing an issue
       -- diagnostics = "nvim_lsp",
-      always_show_bufferline = false,
+      always_show_bufferline = true,
       offsets = {
         {
           filetype = 'neo-tree',
@@ -43,19 +43,59 @@ return {
           highlight = 'Directory',
           text_align = 'left',
         },
+        {
+          filetype = 'fyler',
+          text = 'Explorer',
+          highlight = 'Directory',
+          text_align = 'left',
+        },
       },
     },
   },
   -- TODO: figure out if this is necessary
-  -- config = function(_, opts)
-  -- 	require("bufferline").setup(opts)
-  -- 	-- Fix bufferline when restoring a session
-  -- 	vim.api.nvim_create_autocmd("BufAdd", {
-  -- 		callback = function()
-  -- 			vim.schedule(function()
-  -- 				pcall(nvim_bufferline)
-  -- 			end)
-  -- 		end,
-  -- 	})
-  -- end,
+  config = function(_, opts)
+    require('bufferline').setup(opts)
+    options = {
+      -- Other options...
+
+      --- @param buf_id number
+      --- @param click_type string
+      navigation_click_handler = function(buf_id, click_type)
+        -- Only handle left clicks for switching
+        if click_type == 'left' then
+          local current_win = vim.api.nvim_get_current_win()
+
+          -- Check if the current window is fixed
+          if vim.wo[current_win].winfixbuf then
+            -- Look for a window that isn't fixed
+            local target_win = nil
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+              if not vim.wo[win].winfixbuf then
+                target_win = win
+                break
+              end
+            end
+
+            if target_win then
+              vim.api.nvim_set_current_win(target_win)
+              vim.api.nvim_win_set_buf(target_win, buf_id)
+            else
+              -- Optional: If all windows are fixed, create a new split
+              vim.cmd 'vsplit'
+              vim.api.nvim_win_set_buf(0, buf_id)
+            end
+          else
+            -- If current window is NOT fixed, just switch normally
+            vim.api.nvim_win_set_buf(current_win, buf_id)
+          end
+        end
+      end,
+    }
+    -- Fix bufferline when restoring a session
+    vim.api.nvim_create_autocmd('BufAdd', {
+      callback = function()
+        vim.schedule(function() pcall(nvim_bufferline) end)
+      end,
+    })
+  end,
 }

@@ -24,6 +24,18 @@ return {
     open_mapping = [[<c-\>]], -- or { [[<c-\>]], [[<c-¥>]] } if you also use a Japanese keyboard.
     -- on_create = fun(t: Terminal), -- function to run when the terminal is first created
     -- on_open = fun(t: Terminal), -- function to run when the terminal opens
+    -- on_open = function(term)
+    --   -- Prevent other buffers from opening in this window
+    --   vim.wo[term.window].winfixbuf = true
+    -- end,
+    on_open = function(term)
+      -- Prevent other buffers from opening in this window
+      vim.wo[term.window].winfixbuf = true
+
+      -- Store the terminal window number
+      vim.g.toggleterm_window = term.window
+    end,
+    on_close = function() vim.g.toggleterm_window = nil end,
     -- on_close = fun(t: Terminal), -- function to run when the terminal closes
     -- on_stdout = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stdout
     -- on_stderr = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stderr
@@ -89,4 +101,11 @@ return {
       horizontal_breakpoint = 135,
     },
   },
+  -- vim.api.nvim_create_autocmd('TermOpen', {
+  --   pattern = 'term://*toggleterm#*',
+  --   callback = function()
+  --     vim.wo.winfixbuf = true
+  --     vim.bo.buflisted = false
+  --   end,
+  -- }),
 }

@@ -62,6 +62,11 @@ return {
         },
       },
     },
+    -- Adds diagnostics for bash scripts
+    {
+      'pablos123/shellcheck.nvim',
+      config = function() require('shellcheck-nvim').setup {} end,
+    },
     -- Adds language features for autohotkey files
     -- TODO: nixCats: package doesn't exist
     -- {

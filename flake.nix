@@ -217,6 +217,7 @@
           cmp-buffer # dependency for nvim-cmp
           cmp_luasnip # dependency for nvim-cmp
           cmp-path # dependency for nvim-cmp
+          # codeseparator.nvim # no nixpkg
           comment-nvim
           # copilot-chat # no nixpkg
           copilot-lua
@@ -261,9 +262,11 @@
         ];
         ui = [
           bufferline-nvim
+          csvview-nvim
           nvim-colorizer-lua
           dressing-nvim
           edgy-nvim
+          fyler-nvim
           gitsigns-nvim
           lualine-nvim
           nvim-web-devicons # dependency for lualine, neo-tree, telescope
@@ -289,6 +292,7 @@
           zen-mode-nvim
         ];
         util = [
+          # ex-colors.nvim # no nix pkg
           firenvim
           # orphans # no nixpkg
           persistence-nvim
