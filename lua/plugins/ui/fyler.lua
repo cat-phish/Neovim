@@ -142,20 +142,34 @@ return {
   config = function(_, opts)
     require('fyler').setup(opts)
 
-    vim.api.nvim_create_autocmd('VimEnter', {
+    -- automatically open fyler when nvim is opened with a directory
+    -- vim.api.nvim_create_autocmd('VimEnter', {
+    --   callback = function()
+    --     -- Only trigger for `nvim .`
+    --     if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+    --       -- Set cwd explicitly
+    --       vim.cmd('cd ' .. vim.fn.fnameescape(vim.fn.argv(0)))
+    --
+    --       -- Replace the directory buffer with a clean empty one
+    --       vim.cmd 'enew'
+    --       vim.bo.buflisted = false
+    --
+    --       -- Open Fyler (respects kind = split_left)
+    --       vim.cmd 'Fyler'
+    --     end
+    --   end,
+    -- })
+
+    -- this autocmd creates a special class of window for bufferline.nvim
+    -- to interact with so that it doesn't open normal buffers in fyler
+    local last_normal_win = nil
+    vim.api.nvim_create_autocmd('WinEnter', {
       callback = function()
-        -- Only trigger for `nvim .`
-        if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
-          -- Set cwd explicitly
-          vim.cmd('cd ' .. vim.fn.fnameescape(vim.fn.argv(0)))
+        local bt = vim.bo.buftype
+        local ft = vim.bo.filetype
 
-          -- Replace the directory buffer with a clean empty one
-          vim.cmd 'enew'
-          vim.bo.buflisted = false
-
-          -- Open Fyler (respects kind = split_left)
-          vim.cmd 'Fyler'
-        end
+        -- Normal, editable file buffers only
+        if bt == '' and ft ~= 'fyler' then last_normal_win = vim.api.nvim_get_current_win() end
       end,
     })
   end,

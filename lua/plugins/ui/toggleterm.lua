@@ -30,7 +30,8 @@ return {
     -- end,
     on_open = function(term)
       -- Prevent other buffers from opening in this window
-      vim.wo[term.window].winfixbuf = true
+      -- vim.wo[term.window].winfixbuf = true
+      vim.wo[term.window].winfixwidth = true
 
       -- Store the terminal window number
       vim.g.toggleterm_window = term.window

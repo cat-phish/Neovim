@@ -202,6 +202,21 @@ vim.keymap.set('n', 'j', function() return jump_with_mark 'j' end, { expr = true
 
 vim.keymap.set('n', 'k', function() return jump_with_mark 'k' end, { expr = true, silent = true, desc = 'jump-aware up' })
 
+-- try to handle errors with bufferline tabs and windows with winfixbuf set
+-- local last_normal_win = nil
+-- vim.api.nvim_create_autocmd('WinEnter', {
+--   callback = function()
+--     local bt = vim.bo.buftype
+--     if bt == '' then last_normal_win = vim.api.nvim_get_current_win() end
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   callback = function()
+--     local bt = vim.bo.buftype
+--     if bt ~= '' and last_normal_win and vim.api.nvim_win_is_valid(last_normal_win) then vim.api.nvim_set_current_win(last_normal_win) end
+--   end,
+-- })
+
 -- TODO: this could probably replace vim-illuminate
 -- -- ide like highlight when stopping cursor
 -- vim.api.nvim_create_autocmd("CursorMoved", {
@@ -231,50 +246,50 @@ vim.keymap.set('n', 'k', function() return jump_with_mark 'k' end, { expr = true
 -- 	group = "LspReferenceHighlight",
 -- 	desc = "Clear highlights when entering insert mode",
 -- 	callback = function()
--- 		vim.lsp.buf.clear_references()
+-- 		vim.lsp.buf.clear_references()CK:
 -- 	end,
 -- })
 
 -- TODO: not working
-vim.api.nvim_create_autocmd('BufEnter', {
-  group = vim.api.nvim_create_augroup('WinFixBufRedirect', { clear = true }),
-  callback = function(args)
-    local win = vim.api.nvim_get_current_win()
-
-    -- 1. Check if the window is fixed
-    if not vim.wo[win].winfixbuf then return end
-
-    -- 2. Check if the buffer we are entering is different from the one
-    -- already 'locked' in this window.
-    -- (We use a variable to store the 'rightful' buffer for this window)
-    local fixed_buf = vim.t.last_fixed_buf or vim.api.nvim_win_get_buf(win)
-    local target_buf = args.buf
-
-    if target_buf ~= fixed_buf then
-      -- The switch is illegal!
-      -- First, restore the fixed window to its original buffer
-      vim.api.nvim_win_set_buf(win, fixed_buf)
-
-      -- Second, find a "safe" window to host the new buffer
-      local target_win = nil
-      for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-        if not vim.wo[w].winfixbuf and vim.api.nvim_win_get_config(w).relative == '' then
-          target_win = w
-          break
-        end
-      end
-
-      if target_win then
-        vim.api.nvim_set_current_win(target_win)
-        vim.api.nvim_win_set_buf(target_win, target_buf)
-      else
-        -- Fallback: split if no safe window exists
-        vim.cmd 'vsplit'
-        vim.api.nvim_win_set_buf(0, target_buf)
-      end
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   group = vim.api.nvim_create_augroup('WinFixBufRedirect', { clear = true }),
+--   callback = function(args)
+--     local win = vim.api.nvim_get_current_win()
+--
+--     -- 1. Check if the window is fixed
+--     if not vim.wo[win].winfixbuf then return end
+--
+--     -- 2. Check if the buffer we are entering is different from the one
+--     -- already 'locked' in this window.
+--     -- (We use a variable to store the 'rightful' buffer for this window)
+--     local fixed_buf = vim.t.last_fixed_buf or vim.api.nvim_win_get_buf(win)
+--     local target_buf = args.buf
+--
+--     if target_buf ~= fixed_buf then
+--       -- The switch is illegal!
+--       -- First, restore the fixed window to its original buffer
+--       vim.api.nvim_win_set_buf(win, fixed_buf)
+--
+--       -- Second, find a "safe" window to host the new buffer
+--       local target_win = nil
+--       for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+--         if not vim.wo[w].winfixbuf and vim.api.nvim_win_get_config(w).relative == '' then
+--           target_win = w
+--           break
+--         end
+--       end
+--
+--       if target_win then
+--         vim.api.nvim_set_current_win(target_win)
+--         vim.api.nvim_win_set_buf(target_win, target_buf)
+--       else
+--         -- Fallback: split if no safe window exists
+--         vim.cmd 'vsplit'
+--         vim.api.nvim_win_set_buf(0, target_buf)
+--       end
+--     end
+--   end,
+-- })
 
 -- Display time since last nvim config once per 8 hours
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {

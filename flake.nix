@@ -282,6 +282,7 @@
           nui-nvim # dependency for neo-tree, noice, vscode-diff-nvim
           # reactive # no nixpkg
           render-markdown-nvim
+          # stickybuf.nvim # no nixpkg
           telescope-nvim
           telescope-fzf-native-nvim # dependency for telescope
           telescope-ui-select-nvim # dependency for telescope
