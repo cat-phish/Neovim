@@ -60,6 +60,10 @@ vim.keymap.set('n', '<A-j>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
 vim.keymap.set('n', '<A-k>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
 vim.keymap.set('v', '<A-j>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
 vim.keymap.set('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
+vim.keymap.set('n', '<A-h>', '<<', { desc = 'De-Indent' })
+vim.keymap.set('n', '<A-l>', '>>', { desc = 'Indent' })
+vim.keymap.set('v', '<A-h>', '<gv', { desc = 'De-Indent' })
+vim.keymap.set('v', '<A-l>', '>gv', { desc = 'Indent' })
 -- The mappings below are disabled because escaping to Normal mode and
 -- pressing j or k too quickly can cause lines to shift. Also, it's
 -- unnecessary to use these mappings when the above mappings are available.

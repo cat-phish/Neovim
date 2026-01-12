@@ -138,6 +138,7 @@
           nixd # nixd
           pyright # pyright
           rust-analyzer # rust-analyzer
+          shellcheck # bash analyzer
           tailwindcss-language-server # tailwindcss
           typos-lsp # typos_lsp
         ];
@@ -239,7 +240,7 @@
           todo-comments-nvim
           nvim-treesitter-context
           trouble-nvim
-          vscode-diff-nvim
+          # vscode-diff-nvim
           wtf-nvim
           yanky-nvim
         ];
@@ -386,8 +387,7 @@
           orgmode = true;
           ui = true;
           util = true;
-          custome = true;
-
+          custom = true;
           gitPlugins = true;
           test = true;
 
