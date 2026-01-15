@@ -162,15 +162,15 @@ return {
 
     -- this autocmd creates a special class of window for bufferline.nvim
     -- to interact with so that it doesn't open normal buffers in fyler
-    local last_normal_win = nil
-    vim.api.nvim_create_autocmd('WinEnter', {
-      callback = function()
-        local bt = vim.bo.buftype
-        local ft = vim.bo.filetype
-
-        -- Normal, editable file buffers only
-        if bt == '' and ft ~= 'fyler' then last_normal_win = vim.api.nvim_get_current_win() end
-      end,
-    })
+    -- local last_normal_win = nil
+    -- vim.api.nvim_create_autocmd('WinEnter', {
+    --   callback = function()
+    --     local bt = vim.bo.buftype
+    --     local ft = vim.bo.filetype
+    --
+    --     -- Normal, editable file buffers only
+    --     if bt == '' and ft ~= 'fyler' then last_normal_win = vim.api.nvim_get_current_win() end
+    --   end,
+    -- })
   end,
 }

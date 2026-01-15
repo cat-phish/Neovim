@@ -1,3 +1,5 @@
+-- TODO: come back to this when treesitter fix is implemented
+-- https://github.com/code-biscuits/nvim-biscuits/issues/60
 return {
   'code-biscuits/nvim-biscuits',
   -- event = 'VeryLazy',

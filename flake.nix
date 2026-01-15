@@ -202,7 +202,7 @@
           # krust.nvim # no nixpkg
 
           # from treesitter.lua
-          # nvim-treesitter.withAllGrammars
+          nvim-treesitter.withAllGrammars
           # This is for if you only want some of the grammars
           # (nvim-treesitter.withPlugins (
           #   plugins: with plugins; [
