@@ -127,6 +127,8 @@
           tree-sitter
           nix-doc
           nodePackages.nodejs
+          lua
+          luajitPackages.luarocks-nix
           # neovimPlugins.capslock-nvim
         ];
         lsps = [
