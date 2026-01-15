@@ -237,7 +237,7 @@ if vim.g.started_by_firenvim ~= true then
     { import = 'plugins.editor' },
     { import = 'plugins.fun' },
     { import = 'plugins.norgmode' },
-    -- { import = 'plugins.orgmode' },
+    { import = 'plugins.orgmode' },
     { import = 'plugins.ui' },
     { import = 'plugins.util' },
   }, lazyOptions)

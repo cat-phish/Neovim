@@ -165,19 +165,19 @@
         custom = [
           # pkgs.neovimPlugins.capslock-nvim
           # TODO: get custom plugins working, config build but it doesn't use the plugin
-          # (pkgs.neovimPlugins.capslock-nvim.overrideAttrs {pname = "capslock.nvim";})
+          (pkgs.neovimPlugins.capslock-nvim.overrideAttrs {pname = "capslock.nvim";})
         ];
       };
       # This is for plugins that will load at startup without using packadd:
       startupPlugins = with pkgs.vimPlugins; {
         general = [
-          # vim-sleuth
-          # lazy-nvim
+          vim-sleuth
+          lazy-nvim
           # mini-nvim
           # (mkNvimPlugin inputs.capslock-nvim "capslock.nvim")
         ];
         colorschemes = [
-          # tokyonight-nvim
+          tokyonight-nvim
         ];
         core = [
           # from debug.lua
@@ -187,22 +187,22 @@
           # nvim-nio
 
           # from formatting.lua
-          # conform-nvim
+          conform-nvim
 
           # from linting.lua
-          # nvim-lint
+          nvim-lint
 
           # from lspconfig.lua
-          # nvim-lspconfig
-          # cmp-nvim-lsp
-          # fidget-nvim
-          # lazydev-nvim
-          # kmonad-vim
-          # clangd_extensions-nvim
+          nvim-lspconfig
+          cmp-nvim-lsp
+          fidget-nvim
+          lazydev-nvim
+          kmonad-vim
+          clangd_extensions-nvim
           # krust.nvim # no nixpkg
 
           # from treesitter.lua
-          # nvim-treesitter.withAllGrammars
+          nvim-treesitter.withAllGrammars
           # This is for if you only want some of the grammars
           # (nvim-treesitter.withPlugins (
           #   plugins: with plugins; [
@@ -212,49 +212,49 @@
           # ))
         ];
         editor = [
-          # bigfile-nvim
-          # nvim-biscuits
+          bigfile-nvim
+          nvim-biscuits
           # capslock.nvim # no nixpkg
-          # cmp-buffer # dependency for nvim-cmp
-          # cmp_luasnip # dependency for nvim-cmp
-          # cmp-path # dependency for nvim-cmp
+          cmp-buffer # dependency for nvim-cmp
+          cmp_luasnip # dependency for nvim-cmp
+          cmp-path # dependency for nvim-cmp
           # codeseparator.nvim # no nixpkg
-          # comment-nvim
+          comment-nvim
           # copilot-chat # no nixpkg
-          # copilot-lua
-          # flash-nvim
+          copilot-lua
+          flash-nvim
           # indent-blankline-nvim # disabled
-          # luasnip
-          # lspkind-nvim # dependency for nvim-cmp
-          # mini-ai
-          # mini-indentscope
-          # mini-pairs
-          # mini-surround
-          # nvim-cmp
-          # friendly-snippets # dependency for nvim-cmp
-          # nvim-spectre
+          luasnip
+          lspkind-nvim # dependency for nvim-cmp
+          mini-ai
+          mini-indentscope
+          mini-pairs
+          mini-surround
+          nvim-cmp
+          friendly-snippets # dependency for nvim-cmp
+          nvim-spectre
           # snacks-nvim
-          # sqlite-lua # dependency for yanky
+          sqlite-lua # dependency for yanky
           # timber # no nixpkg
-          # tiny-inline-diagnostic-nvim
-          # todo-comments-nvim
-          # nvim-treesitter-context
-          # trouble-nvim
+          tiny-inline-diagnostic-nvim
+          todo-comments-nvim
+          nvim-treesitter-context
+          trouble-nvim
           # vscode-diff-nvim
-          # wtf-nvim
-          # yanky-nvim
+          wtf-nvim
+          yanky-nvim
         ];
         fun = [
           # beepboop # no nixpkg
-          # cellular-automaton-nvim
+          cellular-automaton-nvim
           # duck # no nixpkg
           # hacker # no nixpkg
           # pets # no nixpkg
-          # vim-pets
+          vim-pets
           # speedtyper # no nixpkg
         ];
         norgmode = [
-          # neorg
+          neorg
         ];
         orgmode = [
           # org-roam # no nixpkg
@@ -262,43 +262,43 @@
           # telescope-orgmode # no nixpkg
         ];
         ui = [
-          # bufferline-nvim
-          # csvview-nvim
-          # nvim-colorizer-lua
-          # dressing-nvim
-          # edgy-nvim
-          # fyler-nvim
-          # gitsigns-nvim
-          # lualine-nvim
-          # nvim-web-devicons # dependency for lualine, neo-tree, telescope
-          # copilot-lualine
+          bufferline-nvim
+          csvview-nvim
+          nvim-colorizer-lua
+          dressing-nvim
+          edgy-nvim
+          fyler-nvim
+          gitsigns-nvim
+          lualine-nvim
+          nvim-web-devicons # dependency for lualine, neo-tree, telescope
+          copilot-lualine
           # harpoon-lualine # no nixpkg
-          # markdown-preview-nvim
-          # mini-animate
-          # mini-bufremove
-          # neoscroll-nvim
-          # neo-tree-nvim
-          # noice-nvim
-          # nvim-notify # dependency for noice
-          # nui-nvim # dependency for neo-tree, noice, vscode-diff-nvim
+          markdown-preview-nvim
+          mini-animate
+          mini-bufremove
+          neoscroll-nvim
+          neo-tree-nvim
+          noice-nvim
+          nvim-notify # dependency for noice
+          nui-nvim # dependency for neo-tree, noice, vscode-diff-nvim
           # reactive # no nixpkg
-          # render-markdown-nvim
+          render-markdown-nvim
           # stickybuf.nvim # no nixpkg
-          # telescope-nvim
-          # telescope-fzf-native-nvim # dependency for telescope
-          # telescope-ui-select-nvim # dependency for telescope
-          # toggleterm-nvim
-          # vim-illuminate
+          telescope-nvim
+          telescope-fzf-native-nvim # dependency for telescope
+          telescope-ui-select-nvim # dependency for telescope
+          toggleterm-nvim
+          vim-illuminate
           # windows # no nixpkg # disabled
-          # which-key-nvim
-          # zen-mode-nvim
+          which-key-nvim
+          zen-mode-nvim
         ];
         util = [
           # ex-colors.nvim # no nix pkg
-          # firenvim
+          firenvim
           # orphans # no nixpkg
-          # persistence-nvim
-          # plenary-nvim # dependency for neo-tree, telescope
+          persistence-nvim
+          plenary-nvim # dependency for neo-tree, telescope
         ];
       };
 
