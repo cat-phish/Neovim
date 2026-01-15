@@ -124,6 +124,7 @@
           fd
           imagemagick
           stdenv.cc.cc
+          tree-sitter
           nix-doc
           nodePackages.nodejs
           # neovimPlugins.capslock-nvim
