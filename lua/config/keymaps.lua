@@ -135,6 +135,26 @@ vim.keymap.set('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error'
 vim.keymap.set('n', ']w', diagnostic_goto(true, 'WARN'), { desc = 'Next Warning' })
 vim.keymap.set('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev Warning' })
 
+-- insert new commented line from current
+vim.keymap.set('i', '<C-CR>', function()
+  -- 1. Get current indentation
+  local line = vim.api.nvim_get_current_line()
+  local indent = line:match '^%s*'
+  -- get the comment prefix
+  local cms = vim.bo.commentstring
+  if cms == '' then cms = '# %s' end -- fallback
+  -- extract everything before "%s" and trim trailing whitespace
+  local prefix = cms:gsub('%%s.*', '')
+  -- construct the new line: indent + comment prefix
+  local new_line = indent .. prefix
+  -- insert the line below the current one
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  vim.api.nvim_buf_set_lines(0, row, row, false, { new_line })
+  -- move cursor to the end of the new line and stay in insert mode
+  vim.api.nvim_win_set_cursor(0, { row + 1, #new_line })
+  vim.cmd 'startinsert!'
+end, { desc = 'New indented commented line' })
+
 -- toggle diagnostics
 
 -- toggle options
