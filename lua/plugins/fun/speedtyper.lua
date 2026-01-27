@@ -1,7 +1,7 @@
 return {
-   'NStefan002/speedtyper.nvim',
-   cmd = 'SpeedTyper',
-   keys = {
-      { '<leader>ms', '<cmd>SpeedTyper<cr>', desc = 'Speedtyper' },
-   },
+  'NStefan002/speedtyper.nvim',
+  cmd = 'SpeedTyper',
+  keys = {
+    { '<leader>Ms', '<cmd>SpeedTyper<cr>', desc = 'Speedtyper' },
+  },
 }

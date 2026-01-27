@@ -11,7 +11,7 @@ return {
   end,
   keys = {
     {
-      '<leader>mpc',
+      '<leader>Mpc',
       function()
         vim.cmd 'Pets'
         -- vim.cmd 'PetsLeave dog'
@@ -22,50 +22,38 @@ return {
       desc = 'Create Garden with Pets',
     },
     {
-      '<leader>mpj',
-      function()
-        vim.cmd 'PetsJoin'
-      end,
+      '<leader>Mpj',
+      function() vim.cmd 'PetsJoin' end,
       mode = { 'n' },
       desc = 'Join Pet to Garden',
     },
     {
-      '<leader>mpl',
-      function()
-        vim.cmd 'PetsLeave'
-      end,
+      '<leader>Mpl',
+      function() vim.cmd 'PetsLeave' end,
       mode = { 'n' },
       desc = 'Leave Pet from Garden',
     },
     {
-      '<leader>mpt',
-      function()
-        vim.cmd 'PetsThrowBall'
-      end,
+      '<leader>Mpt',
+      function() vim.cmd 'PetsThrowBall' end,
       mode = { 'n' },
       desc = 'Throw Ball',
     },
     {
-      '<leader>mpC',
-      function()
-        vim.cmd 'PetsClose'
-      end,
+      '<leader>MpC',
+      function() vim.cmd 'PetsClose' end,
       mode = { 'n' },
       desc = 'Quit Garden',
     },
     {
-      '<leader>mpw',
-      function()
-        vim.cmd 'PetsWithYou'
-      end,
+      '<leader>Mpw',
+      function() vim.cmd 'PetsWithYou' end,
       mode = { 'n' },
       desc = 'Put Pet Around Cursor',
     },
     {
-      '<leader>mpW',
-      function()
-        vim.cmd 'PetsWithYouClear'
-      end,
+      '<leader>MpW',
+      function() vim.cmd 'PetsWithYouClear' end,
       mode = { 'n' },
       desc = 'Clear Pets Around Cursor',
     },
