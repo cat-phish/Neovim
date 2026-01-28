@@ -9,12 +9,12 @@ return {
     notify = true,
     notify_on_mark = true,
     notify_on_jump = true,
-    keymaps = {
-      mark = '<leader>m',
-      jump = "<leader>'",
-      list = '<leader>fm',
-      clear = '<leader>mc',
-    },
+    -- keymaps = {
+    --   mark = '<leader>m',
+    --   jump = "<leader>'",
+    --   list = '<leader>fm',
+    --   clear = '<leader>mc',
+    -- },
   },
   -- call setup manually
   -- config = function()
