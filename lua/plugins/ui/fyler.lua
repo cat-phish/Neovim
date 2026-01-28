@@ -18,6 +18,8 @@ return {
         confirm_simple = false,
         default_explorer = true,
         delete_to_trash = false,
+        -- columns_order = { "permission", "size", "git", "diagnostic" },
+        columns_order = { 'git', 'diagnostic' },
         columns = {
           git = {
             enabled = true,
@@ -31,6 +33,21 @@ return {
               Conflict = '!',
               Ignored = '#',
             },
+          },
+          diagnostic = {
+            enabled = true,
+            symbols = {
+              Error = 'E',
+              Warn = 'W',
+              Info = 'I',
+              Hint = 'H',
+            },
+          },
+          permission = {
+            enabled = true,
+          },
+          size = {
+            enabled = true,
           },
         },
         icon = {
@@ -50,9 +67,9 @@ return {
           ['q'] = 'CloseView',
           ['<CR>'] = 'Select',
           ['<2-LeftMouse>'] = 'Select',
-          ['<C-t>'] = 'SelectTab',
-          ['|'] = 'SelectVSplit',
-          ['-'] = 'SelectSplit',
+          -- ['<C-t>'] = 'SelectTab',
+          -- ['|'] = 'SelectVSplit',
+          -- ['-'] = 'SelectSplit',
           ['^'] = 'GotoParent',
           ['='] = 'GotoCwd',
           ['.'] = 'GotoNode',
@@ -66,7 +83,7 @@ return {
         },
         follow_current_file = true,
         watcher = {
-          enabled = false,
+          enabled = true,
         },
         win = {
           border = vim.o.winborder == '' and 'single' or vim.o.winborder,
@@ -91,6 +108,9 @@ return {
             replace = {},
             split_above = {
               height = '70%',
+              win_opts = {
+                winfixheight = true,
+              },
             },
             split_above_all = {
               height = '70%',
@@ -100,6 +120,9 @@ return {
             },
             split_below = {
               height = '70%',
+              win_opts = {
+                winfixheight = true,
+              },
             },
             split_below_all = {
               height = '70%',
@@ -108,16 +131,22 @@ return {
               },
             },
             split_left = {
-              width = '15%',
+              width = '17%',
+              win_opts = {
+                winfixwidth = true,
+              },
             },
             split_left_most = {
-              width = '15%',
+              width = '17%',
               win_opts = {
                 winfixwidth = true,
               },
             },
             split_right = {
               width = '30%',
+              win_opts = {
+                winfixwidth = true,
+              },
             },
             split_right_most = {
               width = '30%',
@@ -127,7 +156,7 @@ return {
             },
           },
           win_opts = {
-            winfixbuf = true,
+            -- winfixbuf = true,
             concealcursor = 'nvic',
             conceallevel = 3,
             cursorline = false,
@@ -143,40 +172,41 @@ return {
   },
   keys = {
     -- { '<leader>e', '<Cmd>Fyler<Cr>', desc = 'Open Fyler View' },
-    { '<leader>e', function() require('fyler').toggle { kind = 'split_left_most' } end, desc = 'Smart Find Files' },
+    { '<leader>e', function() require('fyler').toggle { kind = 'split_left' } end, desc = 'Explorer Toggle' },
+    { '-', function() require('fyler').open { kind = 'float' } end, desc = 'Explorer Float' },
   },
-  config = function(_, opts)
-    require('fyler').setup(opts)
-
-    -- automatically open fyler when nvim is opened with a directory
-    -- vim.api.nvim_create_autocmd('VimEnter', {
-    --   callback = function()
-    --     -- Only trigger for `nvim .`
-    --     if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
-    --       -- Set cwd explicitly
-    --       vim.cmd('cd ' .. vim.fn.fnameescape(vim.fn.argv(0)))
-    --
-    --       -- Replace the directory buffer with a clean empty one
-    --       vim.cmd 'enew'
-    --       vim.bo.buflisted = false
-    --
-    --       -- Open Fyler (respects kind = split_left)
-    --       vim.cmd 'Fyler'
-    --     end
-    --   end,
-    -- })
-
-    -- this autocmd creates a special class of window for bufferline.nvim
-    -- to interact with so that it doesn't open normal buffers in fyler
-    -- local last_normal_win = nil
-    -- vim.api.nvim_create_autocmd('WinEnter', {
-    --   callback = function()
-    --     local bt = vim.bo.buftype
-    --     local ft = vim.bo.filetype
-    --
-    --     -- Normal, editable file buffers only
-    --     if bt == '' and ft ~= 'fyler' then last_normal_win = vim.api.nvim_get_current_win() end
-    --   end,
-    -- })
-  end,
+  -- config = function(_, opts)
+  --   require('fyler').setup(opts)
+  --
+  --   -- automatically open fyler when nvim is opened with a directory
+  --   -- vim.api.nvim_create_autocmd('VimEnter', {
+  --   --   callback = function()
+  --   --     -- Only trigger for `nvim .`
+  --   --     if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+  --   --       -- Set cwd explicitly
+  --   --       vim.cmd('cd ' .. vim.fn.fnameescape(vim.fn.argv(0)))
+  --   --
+  --   --       -- Replace the directory buffer with a clean empty one
+  --   --       vim.cmd 'enew'
+  --   --       vim.bo.buflisted = false
+  --   --
+  --   --       -- Open Fyler (respects kind = split_left)
+  --   --       vim.cmd 'Fyler'
+  --   --     end
+  --   --   end,
+  --   -- })
+  --
+  --   -- this autocmd creates a special class of window for bufferline.nvim
+  --   -- to interact with so that it doesn't open normal buffers in fyler
+  --   -- local last_normal_win = nil
+  --   -- vim.api.nvim_create_autocmd('WinEnter', {
+  --   --   callback = function()
+  --   --     local bt = vim.bo.buftype
+  --   --     local ft = vim.bo.filetype
+  --   --
+  --   --     -- Normal, editable file buffers only
+  --   --     if bt == '' and ft ~= 'fyler' then last_normal_win = vim.api.nvim_get_current_win() end
+  --   --   end,
+  --   -- })
+  -- end,
 }
