@@ -73,6 +73,11 @@ local function getlockfilepath()
 end
 local lazyOptions = {
   lockfile = getlockfilepath(),
+  dev = {
+    path = '~/source/nvim-plugins',
+    patterns = { 'cat-phish' },
+    fallback = true,
+  },
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
