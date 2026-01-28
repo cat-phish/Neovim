@@ -9,6 +9,7 @@ return {
     notify = true,
     notify_on_mark = true,
     notify_on_jump = false,
+    which_key = true,
     keymaps = {
       --   mark = '<leader>m',
       jump = '<leader><space>',
