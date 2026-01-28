@@ -120,14 +120,15 @@ return {
   },
   -- stylua: ignore
   keys = {
-    { '<leader>e', function() Snacks.explorer() end, desc = 'File Explorer' },
+    -- { '<leader>e', function() Snacks.explorer() end, desc = 'File Explorer' }, -- disabled in favor of fyler
+
+    -- Buffer Manipulation
     { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
     { '<leader>bD', function() Snacks.bufdelete.other() end, desc = 'Delete Other Buffers' },
-
     -- Pickers
     -- Top Pickers & Explorer
     { '<leader>,', function() Snacks.picker.smart() end, desc = 'Smart Find Files' },
-    { '<leader><space>', function() Snacks.picker.buffers() end, desc = 'Find Buffers' },
+    -- { '<leader><space>', function() Snacks.picker.buffers() end, desc = 'Find Buffers' }, -- disabled in favor of buffer-marks jump
     { '<leader>/', function() Snacks.picker.lines { layout = { preview = 'main', preset = 'vertical', }, } end, desc = 'Grep in Buffer' },
     { '<leader>.', function() Snacks.scratch() end, desc = 'Scratch Buffer' },
     -- find
@@ -135,7 +136,7 @@ return {
     { '<leader>fc', function() Snacks.picker.files { cwd = vim.fn.stdpath 'config' } end, desc = 'Config File' },
     { '<leader>ff', function() Snacks.picker.files() end, desc = 'File' },
     { '<leader>fg', function() Snacks.picker.git_files() end, desc = 'Git File' },
-    { '<leader>fp', function() Snacks.picker.projects() end, desc = 'Find Project' },
+    { '<leader>fp', function() Snacks.picker.projects() end, desc = 'Project' },
     { '<leader>fr', function() Snacks.picker.recent() end, desc = 'Recent' },
     { '<leader>fs', function() Snacks.scratch.select() end, desc = 'Scratch Buffer' },
     -- git
