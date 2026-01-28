@@ -1,7 +1,7 @@
 return {
   'A7Lavinraj/fyler.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  branch = 'stable',
+  branch = 'main',
   lazy = false,
   opts = {
     hooks = {},
@@ -41,7 +41,10 @@ return {
         indentscope = {
           enabled = true,
           group = 'FylerIndentMarker',
-          marker = '│',
+          markers = {
+            { '│', 'FylerIndentMarker' },
+            { '└', 'FylerIndentMarker' },
+          },
         },
         mappings = {
           ['q'] = 'CloseView',
@@ -68,12 +71,14 @@ return {
         win = {
           border = vim.o.winborder == '' and 'single' or vim.o.winborder,
           buf_opts = {
-            filetype = 'fyler',
-            syntax = 'fyler',
+            bufhidden = 'hide',
             buflisted = false,
             buftype = 'acwrite',
             expandtab = true,
+            filetype = 'fyler',
             shiftwidth = 2,
+            syntax = 'fyler',
+            swapfile = false,
           },
           kind = 'split_left_most',
           kinds = {
@@ -137,7 +142,8 @@ return {
     },
   },
   keys = {
-    { '<leader>e', '<Cmd>Fyler<Cr>', desc = 'Open Fyler View' },
+    -- { '<leader>e', '<Cmd>Fyler<Cr>', desc = 'Open Fyler View' },
+    { '<leader>e', function() require('fyler').toggle { kind = 'split_left_most' } end, desc = 'Smart Find Files' },
   },
   config = function(_, opts)
     require('fyler').setup(opts)
