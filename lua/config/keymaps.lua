@@ -6,6 +6,43 @@ local Util = require 'config.utils'
 --####  Navigation ####
 --#####################
 
+-- Function to jump to a global mark's buffer but at last cursor position
+local function jump_to_mark_buffer_last_position()
+  -- Get the mark character from user input
+  local mark = vim.fn.getchar()
+  local mark_char = vim.fn.nr2char(mark)
+
+  -- Only work with uppercase letters (global marks are A-Z)
+  if not mark_char:match '[A-Z]' then
+    vim.notify('Please use an uppercase letter (A-Z) for global marks', vim.log.levels.WARN)
+    return
+  end
+
+  -- Get mark information
+  local mark_pos = vim.fn.getpos("'" .. mark_char)
+
+  -- mark_pos structure: [bufnum, lnum, col, off]
+  local bufnum = mark_pos[1]
+
+  if bufnum == 0 then
+    vim.notify("Mark '" .. mark_char .. "' is not set", vim.log.levels.WARN)
+    return
+  end
+
+  -- Jump to the buffer - nvim automatically restores the last cursor position
+  vim.cmd('buffer ' .. bufnum)
+
+  -- Center the screen
+  vim.cmd 'normal! zz'
+end
+
+-- Set up the keymap
+vim.keymap.set('n', "<leader>'", jump_to_mark_buffer_last_position, {
+  desc = "Jump to global mark's buffer at last cursor position",
+  noremap = true,
+  silent = true,
+})
+
 -- NOTE: Beginning and End of Line
 local function jump_to_line_start()
   local col = vim.fn.col '.'

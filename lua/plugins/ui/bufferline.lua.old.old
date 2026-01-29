@@ -1,5 +1,3 @@
--- This is what powers LazyVim's fancy-looking
--- tabs, which include filetype icons and close buttons.
 return {
   'akinsho/bufferline.nvim',
   event = 'VeryLazy',
@@ -27,41 +25,10 @@ return {
         close_command = function(n) require("mini.bufremove").delete(n, false) end,
         -- stylua: ignore
         right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
-      navigation_click_handler = function(buf_id, click_type)
-        if click_type ~= 'left' then return end
 
-        local current_win = vim.api.nvim_get_current_win()
-
-        -- If we're in a fixed window, redirect
-        if vim.wo[current_win].winfixbuf then
-          if last_normal_win and vim.api.nvim_win_is_valid(last_normal_win) then
-            vim.api.nvim_set_current_win(last_normal_win)
-            vim.api.nvim_win_set_buf(last_normal_win, buf_id)
-            return
-          end
-
-          -- Fallback: find any non-fixed window
-          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-            if not vim.wo[win].winfixbuf then
-              vim.api.nvim_set_current_win(win)
-              vim.api.nvim_win_set_buf(win, buf_id)
-              return
-            end
-          end
-
-          -- Absolute last resort
-          vim.cmd 'vsplit'
-          vim.api.nvim_win_set_buf(0, buf_id)
-          return
-        end
-
-        -- Normal behavior
-        vim.api.nvim_win_set_buf(current_win, buf_id)
-      end,
-
-      -- BUG: this diagnostic line is causing an issue
-      -- diagnostics = "nvim_lsp",
+      diagnostics = false, -- Disabled to avoid session restore issues
       always_show_bufferline = true,
+
       offsets = {
         {
           filetype = 'neo-tree',
@@ -71,7 +38,6 @@ return {
         },
         {
           filetype = 'snacks_layout_box',
-          -- text = 'Explorer',
           highlight = 'Directory',
           text_align = 'left',
         },
@@ -82,16 +48,36 @@ return {
           text_align = 'left',
         },
       },
+
+      -- Custom filter to prevent special buffers from showing
+      custom_filter = function(buf_number)
+        local buftype = vim.bo[buf_number].buftype
+        local filetype = vim.bo[buf_number].filetype
+
+        -- Filter out fyler and other special buffers
+        if filetype == 'fyler' then return false end
+
+        -- Filter out special buffer types
+        if buftype == 'terminal' or buftype == 'quickfix' then return false end
+
+        return true
+      end,
     },
   },
-  -- TODO: figure out if this is necessary
-  -- config = function(_, opts)
-  --   require('bufferline').setup(opts)
-  --   -- Fix bufferline when restoring a session
-  --   vim.api.nvim_create_autocmd('BufAdd', {
-  --     callback = function()
-  --       vim.schedule(function() pcall(nvim_bufferline) end)
-  --     end,
-  --   })
-  -- end,
+
+  config = function(_, opts)
+    require('bufferline').setup(opts)
+
+    -- Track last normal window for navigation
+    _G.last_normal_win = nil
+    vim.api.nvim_create_autocmd('WinEnter', {
+      callback = function()
+        local bt = vim.bo.buftype
+        local ft = vim.bo.filetype
+
+        -- Normal, editable file buffers only
+        if bt == '' and ft ~= 'fyler' then _G.last_normal_win = vim.api.nvim_get_current_win() end
+      end,
+    })
+  end,
 }
