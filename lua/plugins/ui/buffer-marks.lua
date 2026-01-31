@@ -21,4 +21,4 @@ return {
   --     -- your config here
   --   })
   -- end,
--- }
+}

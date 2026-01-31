@@ -18,8 +18,6 @@ return {
   },
   keys = {
     { '<leader>Sd', function() require('persistence').stop() end, desc = "Don't Save Current Session" },
-
-    -- Restore Last Session (with close_fyler hook)
     {
       '<leader>Sl',
       function()
@@ -28,8 +26,6 @@ return {
       end,
       desc = 'Restore Last Session',
     },
-
-    -- Restore Session (with close_fyler hook)
     {
       '<leader>Sr',
       function()
@@ -38,7 +34,13 @@ return {
       end,
       desc = 'Restore Session',
     },
-
-    { '<leader>SS', function() require('persistence').select() end, desc = 'Select Session' },
+    {
+      '<leader>SS',
+      function()
+        close_fyler()
+        require('persistence').select()
+      end,
+      desc = 'Select Session',
+    },
   },
 }
