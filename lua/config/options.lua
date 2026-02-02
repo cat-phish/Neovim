@@ -13,6 +13,7 @@ vim.g.root_spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
 
 local opt = vim.opt
 
+opt.autoindent = true
 opt.autowrite = true -- Enable auto write
 opt.clipboard = 'unnamedplus' -- Sync with system clipboard
 opt.completeopt = 'menu,menuone,noselect'
@@ -24,6 +25,7 @@ opt.cursorline = true -- Enable highlighting of the current line
 opt.diffopt = 'filler,internal,closeoff,algorithm:histogram,context:5,linematch:60'
 -- opt.diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
 opt.expandtab = true -- Use spaces instead of tabs
+-- opt.fixendofline = false
 opt.formatoptions = 'jcroqlnt' -- tcqj
 opt.grepformat = '%f:%l:%c:%m'
 opt.grepprg = 'rg --vimgrep'
@@ -47,7 +49,7 @@ opt.showmode = false -- Dont show mode since we have a statusline
 opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = 'yes' -- Always show the signcolumn, otherwise it would shift the text each time
 opt.smartcase = true -- Don't ignore case with capitals
-opt.smartindent = true -- Insert indents automatically
+-- opt.smartindent = true -- Insert indents automatically
 opt.softtabstop = 2 -- Number of spaces tabs count for
 opt.spelllang = { 'en' }
 opt.splitbelow = true -- Put new windows below current
