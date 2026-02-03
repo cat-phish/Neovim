@@ -11,8 +11,7 @@ return {
     notify_on_jump = false,
     keymaps = {
       --   mark = '<leader>m',
-      jump = '<leader><space>',
-      --   list = '<leader>fm',
+      -- jump = '<leader><space>',
       --   clear = '<leader>mc',
     },
   },

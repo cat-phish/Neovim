@@ -139,11 +139,12 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 -- 	end,
 -- })
 
--- Switch to Normal mode when Neo-Tree window is entered
-vim.api.nvim_create_autocmd({ 'WinEnter' }, {
-  pattern = 'fyler',
-  group = vim.api.nvim_create_augroup('neotree_normal_mode', { clear = true }),
-  command = 'stopinsert',
+-- Switch to Normal mode when Fyler window is entered
+vim.api.nvim_create_autocmd('WinEnter', {
+  group = vim.api.nvim_create_augroup('fyler_normal_mode', { clear = true }),
+  callback = function()
+    if vim.bo.filetype == 'fyler' then vim.cmd 'stopinsert' end
+  end,
 })
 
 vim.api.nvim_create_autocmd('WinResized', {
@@ -172,6 +173,92 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('no_auto_comment', {}),
   callback = function() vim.opt_local.formatoptions:remove { 'c', 'r', 'o' } end,
+})
+
+-- -- Don't get rid of autoindent when switching to normal mode
+-- local function apply_ts_indent_if_blank()
+--   local buf = vim.api.nvim_get_current_buf()
+--   local lnum = vim.api.nvim_win_get_cursor(0)[1]
+--
+--   local line = vim.api.nvim_buf_get_lines(buf, lnum - 1, lnum, false)[1]
+--   if line ~= '' then return end
+--
+--   -- get indent from indentexpr (Tree-sitter or fallback)
+--   local old_lnum = vim.v.lnum
+--   vim.v.lnum = lnum
+--   local indent = vim.fn.eval(vim.bo.indentexpr)
+--   vim.v.lnum = old_lnum
+--
+--   if indent > 0 then vim.api.nvim_buf_set_lines(buf, lnum - 1, lnum, false, { string.rep(' ', indent) }) end
+--   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('$', true, false, true), 'n', true)
+-- end
+-- vim.api.nvim_create_autocmd('InsertLeave', {
+--   callback = apply_ts_indent_if_blank,
+-- })
+
+-- Trim trailing whitespace on save, except by ft
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*',
+  callback = function()
+    local exclude_ft = {
+      'markdown', -- Two trailing spaces = line break
+      'diff', -- Trailing space indicators matter
+      'patch', -- Same as diff
+      'snippets', -- Snippet definitions may need exact whitespace
+    }
+
+    for _, ft in ipairs(exclude_ft) do
+      if vim.bo.filetype == ft then return end
+    end
+
+    local save_cursor = vim.fn.getpos '.'
+    vim.cmd [[%s/\s\+$//e]]
+    vim.fn.setpos('.', save_cursor)
+  end,
+})
+
+-- Don't get rid of autoindent when switching to normal mode or moving cursor
+local function apply_ts_indent_if_blank()
+  local buf = vim.api.nvim_get_current_buf()
+  local lnum = vim.api.nvim_win_get_cursor(0)[1]
+  local line = vim.api.nvim_buf_get_lines(buf, lnum - 1, lnum, false)[1]
+  if line ~= '' then return end
+  -- check if indentexpr is set before evaluating
+  local indentexpr = vim.bo.indentexpr
+  if indentexpr == '' or indentexpr == nil then return end
+  -- get indent from indentexpr (Tree-sitter or fallback)
+  local old_lnum = vim.v.lnum
+  vim.v.lnum = lnum
+  local indent = vim.fn.eval(vim.bo.indentexpr)
+  vim.v.lnum = old_lnum
+  if indent > 0 then vim.api.nvim_buf_set_lines(buf, lnum - 1, lnum, false, { string.rep(' ', indent) }) end
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('$', true, false, true), 'n', true)
+end
+-- apply indent on InsertLeave
+vim.api.nvim_create_autocmd('InsertLeave', {
+  callback = apply_ts_indent_if_blank,
+})
+-- apply indent in insert cursor move
+vim.api.nvim_create_autocmd('CursorMovedI', {
+  callback = function()
+    -- stoe the line we're leaving
+    local buf = vim.api.nvim_get_current_buf()
+    local prev_line = vim.b.previous_insert_line or 0
+    local current_line = vim.api.nvim_win_get_cursor(0)[1]
+    -- if moved, restore on previous line
+    if prev_line ~= current_line and prev_line > 0 then
+      local line = vim.api.nvim_buf_get_lines(buf, prev_line - 1, prev_line, false)[1]
+      if line == '' then
+        local old_lnum = vim.v.lnum
+        vim.v.lnum = prev_line
+        local indent = vim.fn.eval(vim.bo.indentexpr)
+        vim.v.lnum = old_lnum
+        if indent > 0 then vim.api.nvim_buf_set_lines(buf, prev_line - 1, prev_line, false, { string.rep(' ', indent) }) end
+      end
+    end
+    -- store current line for future
+    vim.b.previous_insert_line = current_line
+  end,
 })
 
 -- syntax highlighting for dotenv files

@@ -128,7 +128,7 @@ return {
     -- Pickers
     -- Top Pickers & Explorer
     { '<leader>,', function() Snacks.picker.smart() end, desc = 'Smart Find Files' },
-    -- { '<leader><space>', function() Snacks.picker.buffers() end, desc = 'Find Buffers' }, -- disabled in favor of buffer-marks jump
+    { '<leader><space>', function() Snacks.picker.buffers() end, desc = 'Find Buffers' },
     { '<leader>/', function() Snacks.picker.lines { layout = { preview = 'main', preset = 'vertical', }, } end, desc = 'Grep in Buffer' },
     { '<leader>.', function() Snacks.scratch() end, desc = 'Scratch Buffer' },
     -- find
