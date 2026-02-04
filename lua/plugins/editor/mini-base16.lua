@@ -41,6 +41,7 @@ return {
       use_cterm = false,
       plugins = { default = true },
     }
+    vim.api.nvim_set_hl(0, 'FlashLabel', { bg = '#fc0734' })
     -- vim.g.colors_name = 'base16-gruvbox-dark-medium'
   end,
 }

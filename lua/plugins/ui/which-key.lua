@@ -42,6 +42,7 @@ return {
       { '<leader>O', group = '+options' },
       { '<leader>p', group = '+plugins' },
       { '<leader>s', group = '+search' },
+      { '<leader>sr', group = '+replace' },
       { '<leader>S', group = '+session' },
       { '<leader>sn', group = '+neovim' },
       { '<leader>sN', group = '+noice' },

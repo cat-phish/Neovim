@@ -59,6 +59,9 @@ vim.api.nvim_create_autocmd('FileType', {
     'neotest-output-panel',
     'trouble',
     'markdown_floating_win',
+    'grug-far',
+    'grug-far-history',
+    'grug-far-help',
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false

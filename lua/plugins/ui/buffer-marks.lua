@@ -2,6 +2,7 @@ return {
   'cat-phish/buffer-marks.nvim',
   -- dir = '~/source/nvim-plugins/buffer-marks.nvim',
   dev = true,
+  enabled = false,
   event = 'VeryLazy',
   opts = {
     -- default config first

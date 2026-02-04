@@ -47,6 +47,9 @@ return {
         cvs = false,
         ['.'] = false,
         ['*'] = true,
+        ['grug-far'] = false,
+        ['grug-far-history'] = false,
+        ['grug-far-help'] = false,
       },
       copilot_node_command = 'node', -- Node.js version must be > 16.x
       server_opts_overrides = {},

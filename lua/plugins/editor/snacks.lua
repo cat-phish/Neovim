@@ -164,7 +164,7 @@ return {
     { '<leader>sl', function() Snacks.picker.loclist() end, desc = 'Location List' },
     { '<leader>sm', function() Snacks.picker.marks() end, desc = 'Marks' },
     { '<leader>sq', function() Snacks.picker.qflist() end, desc = 'Quickfix List' },
-    { '<leader>sr', function() Snacks.picker.resume() end, desc = 'Resume' },
+    -- { '<leader>sr', function() Snacks.picker.resume() end, desc = 'Resume' },
     { '<leader>s:', function() Snacks.picker.command_history() end, desc = 'Command History' },
     -- Search Neovim
     { '<leader>sna', function() Snacks.picker.autocmds() end, desc = 'Autocmds' },
