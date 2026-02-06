@@ -304,12 +304,12 @@ vim.keymap.set('n', '<leader>n', function()
     -- Switch to static line numbers
     vim.opt_local.relativenumber = false
     temp_relnu_toggle = true
-    Util.info('Temporarily switched to absolute line numbers', { title = 'Option' })
+    -- Util.info('Temporarily switched to absolute line numbers', { title = 'Option' })
   else
     -- Switch to relative line numbers
     vim.opt_local.relativenumber = true
     temp_relnu_toggle = false
-    Util.info('Switched to relative line numbers', { title = 'Option' })
+    -- Util.info('Switched to relative line numbers', { title = 'Option' })
   end
 end, { desc = 'Temp Toggle Rel/Abs Line Numbers' })
 -- Autocommand to re-enable relative line numbers if they were temporarily turned off
@@ -317,7 +317,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave' }, {
   callback = function()
     if temp_relnu_toggle and not vim.opt_local.relativenumber:get() then
       vim.opt_local.relativenumber = true
-      Util.info('Re-enabled relative line numbers', { title = 'Option' })
+      -- Util.info('Re-enabled relative line numbers', { title = 'Option' })
       temp_relnu_toggle = false
     end
   end,
@@ -329,7 +329,7 @@ vim.keymap.set({ 'n' }, '<esc>', function()
     if temp_relnu_toggle and not vim.opt_local.relativenumber:get() then
       vim.opt_local.relativenumber = true
       temp_relnu_toggle = false
-      Util.info('Re-enabled relative line numbers', { title = 'Option' })
+      -- Util.info('Re-enabled relative line numbers', { title = 'Option' })
     end
   end
   return '<esc>'
