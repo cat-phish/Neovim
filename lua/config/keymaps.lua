@@ -322,6 +322,18 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave' }, {
     end
   end,
 })
+-- Clear Rel Numbers and Highlight with Esc
+vim.keymap.set({ 'n' }, '<esc>', function()
+  vim.cmd 'noh'
+  if vim.fn.mode() == 'n' then
+    if temp_relnu_toggle and not vim.opt_local.relativenumber:get() then
+      vim.opt_local.relativenumber = true
+      temp_relnu_toggle = false
+      Util.info('Re-enabled relative line numbers', { title = 'Option' })
+    end
+  end
+  return '<esc>'
+end, { expr = true, desc = 'Escape, clear hlsearch, and restore relativenumber' })
 
 -- Toggle Line Number Visibility
 vim.keymap.set('n', '<leader>ON', function()
@@ -357,7 +369,7 @@ vim.keymap.set('i', ';', ';<c-g>u')
 
 -- Clear search with <esc>
 -- TODO: should this actually clear on insert mode? (case: searching and editing multiple instances. WOuld probably not need the escape command at the end if changed)
-vim.keymap.set({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
+-- vim.keymap.set({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua

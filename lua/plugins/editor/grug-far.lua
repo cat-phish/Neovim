@@ -72,13 +72,14 @@ return {
     require('grug-far').setup {
       -- options, see Configuration section below
       -- there are no required options atm
+      windowCreationCommand = 'vsplit',
       keymaps = {
         replace = { n = 'R' }, -- Replace all
         qflist = { n = 'Q' }, -- Send to quickfix list
         syncLocations = { n = 'S' }, -- Sync all locations
         syncLine = { n = 'sl' }, -- Sync current line
-        syncNextLine = { n = 'sn' }, -- Sync line and go to next
-        syncPrevLine = { n = 'sp' }, -- Sync line and go to prev
+        syncNext = { n = 'sn' }, -- Sync line and go to next
+        syncPrev = { n = 'sp' }, -- Sync line and go to prev
         syncFile = { n = 'sf' }, -- Sync all changes in current file
         close = { n = 'q' }, -- Close
         historyOpen = { n = 'H' }, -- Open history
