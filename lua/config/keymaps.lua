@@ -251,6 +251,22 @@ vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window 
 vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease window width' })
 vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
 
+-- Toggle Floating Window Focus
+vim.keymap.set('n', '<leader>wf', function()
+  local found_float = false
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local config = vim.api.nvim_win_get_config(win)
+    -- Check if window is floating and focusable
+    if config.relative ~= '' and config.focusable then
+      vim.api.nvim_set_current_win(win)
+      found_float = true
+      break
+    end
+  end
+
+  if not found_float then print 'No floating window found' end
+end, { desc = 'Window: Focus floating window' })
+
 -- Zen Mode
 vim.keymap.set('n', '<leader>z', '<cmd>ZenMode<CR>', { desc = 'Zen Mode' })
 

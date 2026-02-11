@@ -1,4 +1,3 @@
--- TODO: go through whole config and add all autocommands from other files as comments
 -- TODO: add autocommand for automatically disabling capslock on mode change or something
 
 -- Check if we need to reload the file when it changed
@@ -178,27 +177,6 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function() vim.opt_local.formatoptions:remove { 'c', 'r', 'o' } end,
 })
 
--- -- Don't get rid of autoindent when switching to normal mode
--- local function apply_ts_indent_if_blank()
---   local buf = vim.api.nvim_get_current_buf()
---   local lnum = vim.api.nvim_win_get_cursor(0)[1]
---
---   local line = vim.api.nvim_buf_get_lines(buf, lnum - 1, lnum, false)[1]
---   if line ~= '' then return end
---
---   -- get indent from indentexpr (Tree-sitter or fallback)
---   local old_lnum = vim.v.lnum
---   vim.v.lnum = lnum
---   local indent = vim.fn.eval(vim.bo.indentexpr)
---   vim.v.lnum = old_lnum
---
---   if indent > 0 then vim.api.nvim_buf_set_lines(buf, lnum - 1, lnum, false, { string.rep(' ', indent) }) end
---   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('$', true, false, true), 'n', true)
--- end
--- vim.api.nvim_create_autocmd('InsertLeave', {
---   callback = apply_ts_indent_if_blank,
--- })
-
 -- Trim trailing whitespace on save, except by ft
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*',
@@ -208,6 +186,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
       'diff', -- Trailing space indicators matter
       'patch', -- Same as diff
       'snippets', -- Snippet definitions may need exact whitespace
+      -- 'bufferline-manager',
     }
 
     for _, ft in ipairs(exclude_ft) do
@@ -217,50 +196,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     local save_cursor = vim.fn.getpos '.'
     vim.cmd [[%s/\s\+$//e]]
     vim.fn.setpos('.', save_cursor)
-  end,
-})
-
--- Don't get rid of autoindent when switching to normal mode or moving cursor
-local function apply_ts_indent_if_blank()
-  local buf = vim.api.nvim_get_current_buf()
-  local lnum = vim.api.nvim_win_get_cursor(0)[1]
-  local line = vim.api.nvim_buf_get_lines(buf, lnum - 1, lnum, false)[1]
-  if line ~= '' then return end
-  -- check if indentexpr is set before evaluating
-  local indentexpr = vim.bo.indentexpr
-  if indentexpr == '' or indentexpr == nil then return end
-  -- get indent from indentexpr (Tree-sitter or fallback)
-  local old_lnum = vim.v.lnum
-  vim.v.lnum = lnum
-  local indent = vim.fn.eval(vim.bo.indentexpr)
-  vim.v.lnum = old_lnum
-  if indent > 0 then vim.api.nvim_buf_set_lines(buf, lnum - 1, lnum, false, { string.rep(' ', indent) }) end
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('$', true, false, true), 'n', true)
-end
--- apply indent on InsertLeave
-vim.api.nvim_create_autocmd('InsertLeave', {
-  callback = apply_ts_indent_if_blank,
-})
--- apply indent in insert cursor move
-vim.api.nvim_create_autocmd('CursorMovedI', {
-  callback = function()
-    -- stoe the line we're leaving
-    local buf = vim.api.nvim_get_current_buf()
-    local prev_line = vim.b.previous_insert_line or 0
-    local current_line = vim.api.nvim_win_get_cursor(0)[1]
-    -- if moved, restore on previous line
-    if prev_line ~= current_line and prev_line > 0 then
-      local line = vim.api.nvim_buf_get_lines(buf, prev_line - 1, prev_line, false)[1]
-      if line == '' then
-        local old_lnum = vim.v.lnum
-        vim.v.lnum = prev_line
-        local indent = vim.fn.eval(vim.bo.indentexpr)
-        vim.v.lnum = old_lnum
-        if indent > 0 then vim.api.nvim_buf_set_lines(buf, prev_line - 1, prev_line, false, { string.rep(' ', indent) }) end
-      end
-    end
-    -- store current line for future
-    vim.b.previous_insert_line = current_line
   end,
 })
 
@@ -282,15 +217,35 @@ vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave' }, {
   callback = function() vim.opt_local.cursorline = false end,
 })
 
--- add to ctrl+o jump list when moving more than one line at a time
+-- Add to ctrl+o jump list when moving more than one line at a time
 local function jump_with_mark(key)
   local count = vim.v.count1
   if count > 1 then return 'm`' .. count .. key end
   return key
 end
 vim.keymap.set('n', 'j', function() return jump_with_mark 'j' end, { expr = true, silent = true, desc = 'jump-aware down' })
-
 vim.keymap.set('n', 'k', function() return jump_with_mark 'k' end, { expr = true, silent = true, desc = 'jump-aware up' })
+
+-- Cursor jail for floating windows
+local float_jail_group = vim.api.nvim_create_augroup('FloatJail', { clear = true })
+vim.api.nvim_create_autocmd('WinLeave', {
+  group = float_jail_group,
+  callback = function()
+    local win_id = vim.api.nvim_get_current_win()
+    local config = vim.api.nvim_win_get_config(win_id)
+
+    -- If window we are leaving is a float and still valid/open
+    if config.relative ~= '' and vim.api.nvim_win_is_valid(win_id) then
+      -- Schedule a jump back into the window
+      vim.schedule(function()
+        if vim.api.nvim_win_is_valid(win_id) then
+          vim.api.nvim_set_current_win(win_id)
+          print "Finish what you're doing in the float first!"
+        end
+      end)
+    end
+  end,
+})
 
 -- try to handle errors with bufferline tabs and windows with winfixbuf set
 -- local last_normal_win = nil

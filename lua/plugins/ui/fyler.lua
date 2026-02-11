@@ -84,7 +84,7 @@ return {
         },
         follow_current_file = true,
         watcher = {
-          enabled = false,
+          enabled = true,
         },
         win = {
           border = vim.o.winborder == '' and 'single' or vim.o.winborder,

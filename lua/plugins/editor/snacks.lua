@@ -124,7 +124,7 @@ return {
 
     -- Buffer Manipulation
     { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
-    { '<leader>bD', function() Snacks.bufdelete.other() end, desc = 'Delete Other Buffers' },
+    -- { '<leader>bD', function() Snacks.bufdelete.other() end, desc = 'Delete Other Buffers' },  -- using delete other in bufferline.lua
     -- Pickers
     -- Top Pickers & Explorer
     { '<leader>,', function() Snacks.picker.smart() end, desc = 'Smart Find Files' },

@@ -13,13 +13,14 @@ vim.g.root_spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
 
 local opt = vim.opt
 
-opt.autoindent = true
+-- opt.autoindent = true
 opt.autowrite = true -- Enable auto write
 opt.clipboard = 'unnamedplus' -- Sync with system clipboard
-opt.completeopt = 'menu,menuone,noselect'
 opt.cmdheight = 1
+opt.completeopt = 'menu,menuone,noselect'
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
+opt.cpoptions:append { I = true } -- disable deleting of indent when moving lines or into normal mode
 opt.cursorline = true -- Enable highlighting of the current line
 -- opt.diffopt = 'internal,filler,closeoff,linematch:60'
 opt.diffopt = 'filler,internal,closeoff,algorithm:histogram,context:5,linematch:60'
@@ -49,7 +50,7 @@ opt.showmode = false -- Dont show mode since we have a statusline
 opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = 'yes' -- Always show the signcolumn, otherwise it would shift the text each time
 opt.smartcase = true -- Don't ignore case with capitals
--- opt.smartindent = true -- Insert indents automatically
+opt.smartindent = true -- Insert indents automatically
 opt.softtabstop = 2 -- Number of spaces tabs count for
 opt.spelllang = { 'en' }
 opt.splitbelow = true -- Put new windows below current
@@ -106,3 +107,9 @@ vim.g.markdown_recommended_style = 0
 
 -- Markdown preview
 vim.g.mkdp_browserfunc = 'OpenMarkdownPreview'
+
+-- TODO: not working
+-- Fix confusion with unfocused floating windows and the cursor
+-- Make the background of the inactive windows slightly darker/different
+-- Note: Your colorscheme must support this, or you can set it manually:
+vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#1e1e2e' }) -- Example: a slightly darker hex

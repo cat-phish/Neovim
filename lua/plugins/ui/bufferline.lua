@@ -20,6 +20,11 @@ return {
     { '<leader>b<', '<cmd>BufferLineMovePrev<cr>', desc = 'Move Buffer Left' },
     { '<C->>', '<cmd>BufferLineMoveNext<cr>', desc = 'Move Buffer Right' },
     { '<C-lt>', '<cmd>BufferLineMovePrev<cr>', desc = 'Move Buffer Left' },
+    -- {
+    --   '<leader>bm',
+    --   function() require('buffer_manager').open() end,
+    --   desc = 'Buffer Manager',
+    -- },
   },
   opts = {
     options = {
