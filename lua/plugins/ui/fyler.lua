@@ -1,7 +1,7 @@
 return {
   'A7Lavinraj/fyler.nvim',
   -- 'cat-phish/fyler.nvim', -- my fork for bug fixes
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  -- dependencies = { 'nvim-tree/nvim-web-devicons' },
   branch = 'main',
   lazy = false,
   opts = {

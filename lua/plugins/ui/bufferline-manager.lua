@@ -1,6 +1,6 @@
 return {
-  -- 'cat-phish/bufferline-manager.nvim',
-  dir = '~/source/nvim-plugins/bufferline-manager.nvim',
+  'cat-phish/bufferline-manager.nvim',
+  -- dir = '~/source/nvim-plugins/bufferline-manager.nvim',
   dependencies = {
     'akinsho/bufferline.nvim',
   },
