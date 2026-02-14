@@ -35,6 +35,24 @@ return {
 
       -- Store the terminal window number
       vim.g.toggleterm_window = term.window
+      
+      -- When toggleterm opens, make sure it takes space from aerial, not fyler
+      vim.schedule(function()
+        local layout_config = require('config.layout')
+        local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
+        
+        -- Find and enforce fyler width
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+          if ft == 'fyler' then
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, fyler_width)
+            vim.wo[win].winfixwidth = true
+            break
+          end
+        end
+      end)
     end,
     on_close = function()
       vim.g.toggleterm_window = nil
