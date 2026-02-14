@@ -45,26 +45,39 @@ return {
         local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
         local aerial_width = math.floor(vim.o.columns * layout_config.aerial_width_percent)
         
-        -- Set aerial first, then fyler
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
-          if ft == 'aerial' then
-            vim.wo[win].winfixwidth = false
-            vim.api.nvim_win_set_width(win, aerial_width)
-            vim.wo[win].winfixwidth = true
-          end
-        end
+        -- Set fyler and aerial (match the pattern from startup and <leader>z)
+        local fyler_win = nil
+        local aerial_win = nil
         
         for _, win in ipairs(vim.api.nvim_list_wins()) do
           local buf = vim.api.nvim_win_get_buf(win)
           local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
           if ft == 'fyler' then
-            vim.wo[win].winfixwidth = false
-            vim.api.nvim_win_set_width(win, fyler_width)
-            vim.wo[win].winfixwidth = true
+            fyler_win = win
+          elseif ft == 'aerial' then
+            aerial_win = win
           end
         end
+        
+        -- Set widths using the same pattern as startup/<leader>z
+        if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+          vim.wo[fyler_win].winfixwidth = false
+          vim.api.nvim_win_set_width(fyler_win, fyler_width)
+          vim.wo[fyler_win].winfixwidth = true
+        end
+        if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then
+          vim.api.nvim_win_set_width(aerial_win, aerial_width)
+          vim.wo[aerial_win].winfixwidth = true
+        end
+        
+        -- Add an extra schedule to ensure fyler width sticks (like startup/<leader>z)
+        vim.schedule(function()
+          if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+            vim.wo[fyler_win].winfixwidth = false
+            vim.api.nvim_win_set_width(fyler_win, fyler_width)
+            vim.wo[fyler_win].winfixwidth = true
+          end
+        end)
       end)
     end,
     -- on_close = fun(t: Terminal), -- function to run when the terminal closes
