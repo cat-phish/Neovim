@@ -150,6 +150,21 @@ vim.api.nvim_create_autocmd('WinEnter', {
 })
 
 -- Open fyler and aerial on startup
+-- Prevent netrw from opening on directory arguments (but keep netrw available for :Ex etc)
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = vim.api.nvim_create_augroup('prevent_netrw_directory', { clear = true }),
+  once = true,
+  callback = function()
+    -- Only run if we're opening a directory
+    local argv = vim.fn.argv()
+    if #argv == 1 and vim.fn.isdirectory(argv[1]) == 1 then
+      -- Disable netrw temporarily
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd('UIEnter', {
   group = vim.api.nvim_create_augroup('open_fyler_aerial', { clear = true }),
   once = true,
@@ -172,6 +187,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
           vim.cmd 'enew' -- Create new empty buffer
           pcall(vim.api.nvim_buf_delete, initial_buf, { force = true })
         end
+
+        -- Re-enable netrw for manual use (if it was disabled)
+        vim.g.loaded_netrw = nil
+        vim.g.loaded_netrwPlugin = nil
 
         -- Use the exact same logic as <leader>z by calling the shared function
         require('config.layout_toggle').open_layout()
