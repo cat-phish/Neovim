@@ -122,11 +122,78 @@ return {
       horizontal_breakpoint = 135,
     },
   },
-  -- vim.api.nvim_create_autocmd('TermOpen', {
-  --   pattern = 'term://*toggleterm#*',
-  --   callback = function()
-  --     vim.wo.winfixbuf = true
-  --     vim.bo.buflisted = false
-  --   end,
-  -- }),
+  config = function(_, opts)
+    require('toggleterm').setup(opts)
+    
+    -- Mark toggleterm buffers as not modified to allow :w and :wqa
+    vim.api.nvim_create_autocmd('TermOpen', {
+      pattern = 'term://*toggleterm#*',
+      callback = function()
+        vim.bo.buflisted = false
+        vim.bo.modified = false
+      end,
+    })
+    
+    -- Also mark as unmodified when entering terminal buffer
+    vim.api.nvim_create_autocmd('BufEnter', {
+      pattern = 'term://*toggleterm#*',
+      callback = function()
+        vim.bo.modified = false
+      end,
+    })
+    
+    -- Helper function to check if any toggleterm jobs are running
+    local function has_running_terminal()
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_valid(buf) then
+          local bufname = vim.api.nvim_buf_get_name(buf)
+          if bufname:match('term://.*toggleterm#') then
+            return true
+          end
+        end
+      end
+      return false
+    end
+    
+    -- Create wrapper commands that auto-add ! for terminal jobs
+    vim.api.nvim_create_user_command('SmartQ', function()
+      if has_running_terminal() then
+        vim.cmd('q!')
+      else
+        vim.cmd('q')
+      end
+    end, {})
+    
+    vim.api.nvim_create_user_command('SmartWq', function()
+      if has_running_terminal() then
+        vim.cmd('wq!')
+      else
+        vim.cmd('wq')
+      end
+    end, {})
+    
+    vim.api.nvim_create_user_command('SmartWqa', function()
+      if has_running_terminal() then
+        vim.cmd('wqa!')
+      else
+        vim.cmd('wqa')
+      end
+    end, {})
+    
+    vim.api.nvim_create_user_command('SmartQa', function()
+      if has_running_terminal() then
+        vim.cmd('qa!')
+      else
+        vim.cmd('qa')
+      end
+    end, {})
+    
+    -- Use command abbreviations to redirect standard commands
+    vim.cmd([[
+      cnoreabbrev <expr> q ((getcmdtype() ==# ':' && getcmdline() ==# 'q') ? 'SmartQ' : 'q')
+      cnoreabbrev <expr> wq ((getcmdtype() ==# ':' && getcmdline() ==# 'wq') ? 'SmartWq' : 'wq')
+      cnoreabbrev <expr> wqa ((getcmdtype() ==# ':' && getcmdline() ==# 'wqa') ? 'SmartWqa' : 'wqa')
+      cnoreabbrev <expr> qa ((getcmdtype() ==# ':' && getcmdline() ==# 'qa') ? 'SmartQa' : 'qa')
+    ]])
+  end,
 }
