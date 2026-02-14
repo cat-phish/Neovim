@@ -318,6 +318,12 @@ vim.keymap.set('n', '<leader>z', function()
     -- Close aerial if open
     if has_aerial then vim.api.nvim_win_close(aerial_win, false) end
   else
+    -- Close toggleterm if it's open before opening fyler/aerial
+    if vim.g.toggleterm_window and vim.api.nvim_win_is_valid(vim.g.toggleterm_window) then
+      vim.api.nvim_win_close(vim.g.toggleterm_window, false)
+      vim.g.toggleterm_window = nil
+    end
+    
     -- Open both: fyler on left, aerial on right
     require('fyler').open { kind = 'split_left_most' }
     
