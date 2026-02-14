@@ -17,7 +17,7 @@ return {
       finder = {
         close_on_select = false,
         confirm_simple = false,
-        default_explorer = true,
+        default_explorer = false,  -- Disabled: we handle directory opening in autocmd
         delete_to_trash = false,
         -- columns_order = { "permission", "size", "git", "diagnostic" },
         columns_order = { 'git', 'diagnostic' },
@@ -197,12 +197,12 @@ return {
         -- Toggle fyler using split_left_most to ensure it's always on the far left
         require('fyler').toggle { kind = 'split_left_most' }
         
-        -- Restore aerial width after fyler toggles
-        vim.schedule(function()
+        -- Use defer_fn to handle timing (mimic startup)
+        vim.defer_fn(function()
+          -- Set aerial width
           for _, win in ipairs(vim.api.nvim_list_wins()) do
             local buf = vim.api.nvim_win_get_buf(win)
             if vim.bo[buf].filetype == 'aerial' then
-              vim.wo[win].winfixwidth = false
               vim.api.nvim_win_set_width(win, aerial_width)
               vim.wo[win].winfixwidth = true
             end
@@ -219,7 +219,19 @@ return {
               end
             end
           end
-        end)
+          
+          -- Add double-pass for fyler to ensure it sticks
+          vim.schedule(function()
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.bo[buf].filetype == 'fyler' then
+                vim.wo[win].winfixwidth = false
+                vim.api.nvim_win_set_width(win, fyler_width)
+                vim.wo[win].winfixwidth = true
+              end
+            end
+          end)
+        end, 20)
       end, 
       desc = 'Explorer Toggle' 
     },

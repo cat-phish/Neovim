@@ -17,13 +17,6 @@ return {
         default_direction = 'right',
         placement = 'edge',
       },
-      -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-      -- disabled in favor of filetype autocmd below
-      -- on_attach = function(bufnr)
-      --   -- Jump forwards/backwards with '{' and '}'
-      --   vim.keymap.set('n', '<C-p>', '<cmd>AerialPrev<CR>', { buffer = bufnr })
-      --   vim.keymap.set('n', '<C-n>', '<cmd>AerialNext<CR>', { buffer = bufnr })
-      -- end,
     }
 
     -- Only map C-n / C-p when we are physically in the Aerial buffer
@@ -68,12 +61,12 @@ return {
       else
         -- Open aerial and set width
         vim.cmd('AerialOpen right')
-        vim.schedule(function()
-          -- Set aerial width
+        -- Use defer_fn instead of schedule to give Aerial time to initialize (mimics startup timing)
+        vim.defer_fn(function()
+          -- Set aerial width (don't disable winfixwidth first - match startup pattern)
           for _, win in ipairs(vim.api.nvim_list_wins()) do
             local buf = vim.api.nvim_win_get_buf(win)
             if vim.bo[buf].filetype == 'aerial' then
-              vim.wo[win].winfixwidth = false
               vim.api.nvim_win_set_width(win, aerial_width)
               vim.wo[win].winfixwidth = true
             end
@@ -87,7 +80,19 @@ return {
               vim.wo[win].winfixwidth = true
             end
           end
-        end)
+          
+          -- Add extra schedule to ensure fyler width sticks
+          vim.schedule(function()
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.bo[buf].filetype == 'fyler' then
+                vim.wo[win].winfixwidth = false
+                vim.api.nvim_win_set_width(win, fyler_width)
+                vim.wo[win].winfixwidth = true
+              end
+            end
+          end)
+        end, 20)
       end
     end, { desc = 'Code Overview' })
   end,
