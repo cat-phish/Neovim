@@ -11,7 +11,7 @@ return {
       keymaps = {},
       backends = { 'treesitter', 'lsp', 'markdown', 'asciidoc', 'man' },
       layout = {
-        max_width = { 65, 0.3 },  -- Allow up to 65 columns or 30% of screen
+        max_width = { 200, 0.4 },  -- Allow up to 200 columns or 40% of screen
         min_width = 25,
         resize_to_content = false,
         default_direction = 'right',
@@ -38,7 +38,7 @@ return {
     -- Toggle keymap with explicit width setting
     vim.keymap.set('n', '<leader>co', function()
       local layout_config = require('config.layout')
-      local aerial_width = layout_config.aerial_width_cols
+      local aerial_width = math.floor(vim.o.columns * layout_config.aerial_width_percent)
       local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
       
       -- Check if aerial is already open

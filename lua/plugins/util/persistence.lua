@@ -56,7 +56,7 @@ local function restore_both()
       local layout_config = require('config.layout')
       local total_width = vim.o.columns
       local fyler_width = math.floor(total_width * layout_config.fyler_width_percent)
-      local aerial_width = layout_config.aerial_width_cols
+      local aerial_width = math.floor(vim.o.columns * layout_config.aerial_width_percent)
 
       -- Move to the main window (not fyler)
       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
