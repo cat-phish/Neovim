@@ -36,7 +36,28 @@ return {
       -- Store the terminal window number
       vim.g.toggleterm_window = term.window
     end,
-    on_close = function() vim.g.toggleterm_window = nil end,
+    on_close = function()
+      vim.g.toggleterm_window = nil
+      
+      -- Restore both fyler and aerial widths after toggleterm closes
+      vim.schedule(function()
+        local layout_config = require('config.layout')
+        local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
+        local aerial_width = layout_config.aerial_width_cols
+        
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+          if ft == 'fyler' then
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, fyler_width)
+            vim.wo[win].winfixwidth = true
+          elseif ft == 'aerial' then
+            vim.api.nvim_win_set_width(win, aerial_width)
+          end
+        end
+      end)
+    end,
     -- on_close = fun(t: Terminal), -- function to run when the terminal closes
     -- on_stdout = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stdout
     -- on_stderr = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stderr

@@ -136,13 +136,13 @@ return {
               },
             },
             split_left = {
-              width = '17%',
+              width = '14%',
               win_opts = {
                 winfixwidth = true,
               },
             },
             split_left_most = {
-              width = '17%',
+              width = '14%',
               win_opts = {
                 winfixwidth = true,
               },

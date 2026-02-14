@@ -215,8 +215,23 @@ vim.api.nvim_create_autocmd('UIEnter', {
           end
 
           -- Set widths
-          if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then vim.api.nvim_win_set_width(fyler_win, fyler_width) end
-          if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then vim.api.nvim_win_set_width(aerial_win, aerial_width) end
+          if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+            vim.wo[fyler_win].winfixwidth = false
+            vim.api.nvim_win_set_width(fyler_win, fyler_width)
+            vim.wo[fyler_win].winfixwidth = true
+          end
+          if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then
+            vim.api.nvim_win_set_width(aerial_win, aerial_width)
+          end
+          
+          -- Add an extra schedule to ensure fyler width sticks
+          vim.schedule(function()
+            if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+              vim.wo[fyler_win].winfixwidth = false
+              vim.api.nvim_win_set_width(fyler_win, fyler_width)
+              vim.wo[fyler_win].winfixwidth = true
+            end
+          end)
 
           -- Make sure we end up in the main editor window (not fyler or aerial)
           for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
@@ -237,19 +252,6 @@ vim.api.nvim_create_autocmd('WinResized', {
   pattern = '*',
   callback = function()
     -- vim.opt.scrolloff = math.floor(vim.fn.winheight(0) / <uint>)
-
-    -- Enforce fyler width when windows are resized
-    local layout_config = require('config.layout')
-    local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      local buf = vim.api.nvim_win_get_buf(win)
-      local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
-      if ft == 'fyler' then
-        local current_width = vim.api.nvim_win_get_width(win)
-        if current_width ~= fyler_width then vim.api.nvim_win_set_width(win, fyler_width) end
-        break
-      end
-    end
   end,
 })
 

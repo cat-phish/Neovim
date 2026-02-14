@@ -363,11 +363,22 @@ vim.keymap.set('n', '<leader>z', function()
         
         -- Set widths
         if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+          vim.wo[fyler_win].winfixwidth = false
           vim.api.nvim_win_set_width(fyler_win, fyler_width)
+          vim.wo[fyler_win].winfixwidth = true
         end
         if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then
           vim.api.nvim_win_set_width(aerial_win, aerial_width)
         end
+        
+        -- Add an extra schedule to ensure fyler width sticks
+        vim.schedule(function()
+          if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+            vim.wo[fyler_win].winfixwidth = false
+            vim.api.nvim_win_set_width(fyler_win, fyler_width)
+            vim.wo[fyler_win].winfixwidth = true
+          end
+        end)
       end)
     end)
   end
