@@ -39,20 +39,30 @@ return {
     on_close = function()
       vim.g.toggleterm_window = nil
       
-      -- Restore both fyler and aerial widths after toggleterm closes
+      -- Restore fyler and aerial widths after a brief delay
       vim.schedule(function()
         local layout_config = require('config.layout')
         local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
         local aerial_width = layout_config.aerial_width_cols
         
+        -- Set aerial first, then fyler
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+          if ft == 'aerial' then
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, aerial_width)
+            vim.wo[win].winfixwidth = true
+          end
+        end
+        
         for _, win in ipairs(vim.api.nvim_list_wins()) do
           local buf = vim.api.nvim_win_get_buf(win)
           local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
           if ft == 'fyler' then
-            -- Don't disable winfixwidth, just set the width directly
-            pcall(vim.api.nvim_win_set_width, win, fyler_width)
-          elseif ft == 'aerial' then
-            vim.api.nvim_win_set_width(win, aerial_width)
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, fyler_width)
+            vim.wo[win].winfixwidth = true
           end
         end
       end)
@@ -84,7 +94,7 @@ return {
     start_in_insert = true,
     insert_mappings = true, -- whether or not the open mapping applies in insert mode
     terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-    persist_size = true,
+    persist_size = false,  -- Don't remember terminal size between toggles
     persist_mode = false, -- if set to true (default) the previous terminal mode will be remembered
     direction = 'vertical', -- 'vertical' | 'horizontal' | 'tab' | 'float',
     close_on_exit = false, -- close the terminal window when the process exits

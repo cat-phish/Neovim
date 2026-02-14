@@ -177,7 +177,52 @@ return {
     },
   },
   keys = {
-    { '<leader>e', function() require('fyler').toggle { kind = 'split_left' } end, desc = 'Explorer Toggle' },
+    { 
+      '<leader>e', 
+      function() 
+        local layout_config = require('config.layout')
+        local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
+        local aerial_width = layout_config.aerial_width_cols
+        
+        -- Check if fyler is already open
+        local fyler_open = false
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype == 'fyler' then
+            fyler_open = true
+            break
+          end
+        end
+        
+        -- Toggle fyler using split_left_most to ensure it's always on the far left
+        require('fyler').toggle { kind = 'split_left_most' }
+        
+        -- Restore aerial width after fyler toggles
+        vim.schedule(function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == 'aerial' then
+              vim.wo[win].winfixwidth = false
+              vim.api.nvim_win_set_width(win, aerial_width)
+              vim.wo[win].winfixwidth = true
+            end
+          end
+          
+          -- Also restore fyler width if it just opened
+          if not fyler_open then
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.bo[buf].filetype == 'fyler' then
+                vim.wo[win].winfixwidth = false
+                vim.api.nvim_win_set_width(win, fyler_width)
+                vim.wo[win].winfixwidth = true
+              end
+            end
+          end
+        end)
+      end, 
+      desc = 'Explorer Toggle' 
+    },
     { '-', function() require('fyler').open { kind = 'float' } end, desc = 'Explorer Float' },
   },
 }

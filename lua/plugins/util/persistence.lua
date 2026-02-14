@@ -88,6 +88,7 @@ local function restore_both()
         end
         if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then
           vim.api.nvim_win_set_width(aerial_win, aerial_width)
+          vim.wo[aerial_win].winfixwidth = true
         end
         
         -- Add an extra schedule to ensure fyler width sticks
