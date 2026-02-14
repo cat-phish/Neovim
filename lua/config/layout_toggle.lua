@@ -73,6 +73,16 @@ function M.open_layout()
           vim.api.nvim_win_set_width(fyler_win, fyler_width)
           vim.wo[fyler_win].winfixwidth = true
         end
+        
+        -- Focus the main window (not fyler or aerial)
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local ft = vim.bo[buf].filetype
+          if ft ~= 'fyler' and ft ~= 'aerial' then
+            vim.api.nvim_set_current_win(win)
+            break
+          end
+        end
       end)
     end, 20)
   end)

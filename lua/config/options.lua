@@ -1,6 +1,37 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
+-- Prevent netrw from hijacking directory arguments on startup only
+-- Disable netrw (we use fyler instead)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Prevent netrw from hijacking directory arguments on startup only
+-- This will be cleared after UIEnter so it doesn't interfere with normal operation
+-- vim.api.nvim_create_augroup('FileExplorerOverride', { clear = true })
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   group = 'FileExplorerOverride',
+--   pattern = '*',
+--   once = false,
+--   callback = function()
+--     -- Only intercept if we haven't finished loading yet
+--     if vim.v.vim_did_enter == 0 then
+--       local bufname = vim.api.nvim_buf_get_name(0)
+--       if vim.fn.isdirectory(bufname) == 1 then
+--         -- Prevent netrw from loading by clearing the buffer
+--         vim.api.nvim_buf_set_name(0, '')
+--         vim.bo.buftype = 'nofile'
+--       end
+--     end
+--   end,
+-- })
+
+-- Clear the autocmd after startup so it doesn't interfere with telescope/picker
+-- vim.api.nvim_create_autocmd('UIEnter', {
+--   once = true,
+--   callback = function() vim.api.nvim_clear_autocmds { group = 'FileExplorerOverride' } end,
+-- })
+
 -- Enable LazyVim auto format
 vim.g.autoformat = true
 
