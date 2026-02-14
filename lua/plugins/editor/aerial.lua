@@ -12,8 +12,10 @@ return {
       backends = { 'treesitter', 'lsp', 'markdown', 'asciidoc', 'man' },
       layout = {
         max_width = { 40, 0.2 },
-        min_width = 15,
-        resize_to_content = true,
+        min_width = 25,
+        resize_to_content = false,
+        default_direction = 'right',
+        placement = 'edge',
       },
       -- optionally use on_attach to set keymaps when aerial has attached to a buffer
       -- disabled in favor of filetype autocmd below

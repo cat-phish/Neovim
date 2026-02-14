@@ -65,7 +65,11 @@ return {
           },
         },
         mappings = {
-          ['q'] = 'CloseView',
+          ['q'] = function()
+            -- Only close the current window, not all fyler instances
+            local win = vim.api.nvim_get_current_win()
+            vim.api.nvim_win_close(win, false)
+          end,
           ['<CR>'] = 'Select',
           ['<2-LeftMouse>'] = 'Select',
           -- ['<C-t>'] = 'SelectTab',
@@ -158,6 +162,7 @@ return {
           },
           win_opts = {
             -- winfixbuf = true,
+            winfixwidth = true,
             concealcursor = 'nvic',
             conceallevel = 3,
             cursorline = false,

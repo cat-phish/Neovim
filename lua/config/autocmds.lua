@@ -149,10 +149,107 @@ vim.api.nvim_create_autocmd('WinEnter', {
   end,
 })
 
+-- Open fyler and aerial on startup
+vim.api.nvim_create_autocmd('UIEnter', {
+  group = vim.api.nvim_create_augroup('open_fyler_aerial', { clear = true }),
+  once = true,
+  callback = function()
+    -- Skip if we're restoring a session (persistence will handle it)
+    if vim.g.restoring_session then return end
+
+    -- Only open if we're not loading a session and not opening a specific file
+    local argv = vim.fn.argv()
+    if #argv == 0 or (#argv == 1 and vim.fn.isdirectory(argv[1]) == 1) then
+      -- Get the initial buffer (might be a directory buffer)
+      local initial_buf = vim.api.nvim_get_current_buf()
+      local bufname = vim.api.nvim_buf_get_name(initial_buf)
+
+      -- Open fyler on the left (this will create a split and move focus to fyler)
+      require('fyler').open { kind = 'split_left_most' }
+
+      -- Clean up directory buffer and open aerial
+      vim.schedule(function()
+        -- Find the fyler window by filetype
+        local fyler_win = nil
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype == 'fyler' then
+            fyler_win = win
+            break
+          end
+        end
+
+        -- Calculate intended widths
+        local layout_config = require('config.layout')
+        local total_width = vim.o.columns
+        local fyler_width = math.floor(total_width * layout_config.fyler_width_percent)
+        local aerial_width = layout_config.aerial_width_cols
+
+        -- Move to the main window (not fyler)
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+          if win ~= fyler_win then
+            vim.api.nvim_set_current_win(win)
+            break
+          end
+        end
+
+        -- If the initial buffer was a directory, delete it and create a new empty buffer
+        if bufname ~= '' and vim.fn.isdirectory(bufname) == 1 then
+          vim.cmd 'enew' -- Create new empty buffer
+          pcall(vim.api.nvim_buf_delete, initial_buf, { force = true })
+        end
+
+        -- Open aerial on the right (from the main editor window)
+        vim.cmd 'AerialOpen right'
+
+        -- Set both widths explicitly after both windows are open
+        vim.schedule(function()
+          -- Find aerial window
+          local aerial_win = nil
+          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == 'aerial' then
+              aerial_win = win
+              break
+            end
+          end
+
+          -- Set widths
+          if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then vim.api.nvim_win_set_width(fyler_win, fyler_width) end
+          if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then vim.api.nvim_win_set_width(aerial_win, aerial_width) end
+
+          -- Make sure we end up in the main editor window (not fyler or aerial)
+          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            local ft = vim.bo[buf].filetype
+            if ft ~= 'fyler' and ft ~= 'aerial' then
+              vim.api.nvim_set_current_win(win)
+              break
+            end
+          end
+        end)
+      end)
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd('WinResized', {
   pattern = '*',
   callback = function()
     -- vim.opt.scrolloff = math.floor(vim.fn.winheight(0) / <uint>)
+
+    -- Enforce fyler width when windows are resized
+    local layout_config = require('config.layout')
+    local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+      if ft == 'fyler' then
+        local current_width = vim.api.nvim_win_get_width(win)
+        if current_width ~= fyler_width then vim.api.nvim_win_set_width(win, fyler_width) end
+        break
+      end
+    end
   end,
 })
 
