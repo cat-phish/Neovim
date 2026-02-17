@@ -27,6 +27,12 @@
       url = "github:nix-community/neovim-nightly-overlay";
     };
 
+    # Plugin Repos
+    "plugins-snacks" = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
+
     # see :help nixCats.flake.inputs
     # If you want your plugin to be loaded by the standard overlay,
     # i.e. if it wasnt on nixpkgs, but doesnt have an extra build step.
@@ -237,6 +243,7 @@
           # friendly-snippets # dependency for nvim-cmp
           # nvim-spectre
           # snacks-nvim
+          # pkgs.neovimPlugins.snacks
           # sqlite-lua # dependency for yanky
           # timber # no nixpkg
           # tiny-inline-diagnostic-nvim
@@ -325,7 +332,7 @@
       # at RUN TIME for plugins. Will be available to path within neovim terminal
       environmentVariables = {
         test = {
-          CATTESTVAR = "It worked!";
+          # CATTESTVAR = "It worked!";
         };
       };
 
@@ -334,7 +341,7 @@
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
       extraWrapperArgs = {
         test = [
-          ''--set CATTESTVAR2 "It worked again!"''
+          # ''--set CATTESTVAR2 "It worked again!"''
         ];
       };
 
@@ -370,9 +377,9 @@
           wrapRc = true;
           # IMPORTANT:
           # your alias may not conflict with your other packages.
-          # aliases = ["nixcats"];
-          # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-          # configDirName = "nixCats-nvim";
+          aliases = ["vvv"];
+          neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+          configDirName = "nixCats-nvim";
         };
         # and a set of categories that you want
         # (and other information to pass to lua)

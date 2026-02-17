@@ -1,5 +1,8 @@
 return {
   'folke/snacks.nvim',
+  dir = nixCats 'pawsible.allPlugins.snacks',
+  -- name = 'snacks', -- Ensure the name matches what nixCats called it
+  -- dev = nixCats 'editor', -- This returns true if the 'editor' category is enabled
   priority = 1000,
   lazy = false,
   opts = {
