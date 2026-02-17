@@ -416,16 +416,16 @@
           };
         };
       };
-      unstable = {pkgs, ...}: {
+      nvim-unstable = {pkgs, ...}: {
         # they contain a settings set defined above
         # see :help nixCats.flake.outputs.settings
         settings = {
           wrapRc = true;
           # IMPORTANT:
           # your alias may not conflict with your other packages.
-          aliases = ["uv"];
+          # aliases = ["uv"];
           neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-          configDirName = "nixCats-nvim";
+          configDirName = "nvim-unstable";
         };
         # and a set of categories that you want
         # (and other information to pass to lua)
