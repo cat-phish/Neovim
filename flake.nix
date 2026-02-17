@@ -377,7 +377,53 @@
           wrapRc = true;
           # IMPORTANT:
           # your alias may not conflict with your other packages.
-          aliases = ["vvv"];
+          # aliases = ["vvv"];
+          # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+          # configDirName = "nixCats-nvim";
+        };
+        # and a set of categories that you want
+        # (and other information to pass to lua)
+        categories = {
+          general = true;
+          lsps = true;
+          formatters = true;
+          linting = true;
+          debug = true;
+          colorschemes = true;
+          core = true;
+          editor = true;
+          fun = true;
+          norgmode = true;
+          orgmode = true;
+          ui = true;
+          util = true;
+          custom = true;
+          gitPlugins = true;
+          test = true;
+
+          # we can pass whatever we want actually.
+          # have_nerd_font = false;
+
+          example = {
+            youCan = "add more than just booleans";
+            toThisSet = [
+              "and the contents of this categories set"
+              "will be accessible to your lua with"
+              "nixCats('path.to.value')"
+              "see :help nixCats"
+              "and type :NixCats to see the categories set in nvim"
+            ];
+          };
+        };
+      };
+      unstable = {pkgs, ...}: {
+        # they contain a settings set defined above
+        # see :help nixCats.flake.outputs.settings
+        settings = {
+          wrapRc = true;
+          # IMPORTANT:
+          # your alias may not conflict with your other packages.
+          aliases = ["uv"];
           neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
           configDirName = "nixCats-nvim";
         };
