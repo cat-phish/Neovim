@@ -281,7 +281,7 @@ return {
     end
     servers.bashls = { -- Bash
       bashIde = {
-        globPattern = '*@(.sh|.inc|.bash|.command)',
+        globPattern = '*@(.sh|.inc|.bash|.command|.zsh)',
       },
     }
     servers.clangd = { -- C/C++
