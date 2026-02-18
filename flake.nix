@@ -27,6 +27,12 @@
       url = "github:nix-community/neovim-nightly-overlay";
     };
 
+    # Plugin Repos
+    "plugins-snacks" = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
+
     # see :help nixCats.flake.inputs
     # If you want your plugin to be loaded by the standard overlay,
     # i.e. if it wasnt on nixpkgs, but doesnt have an extra build step.
@@ -237,6 +243,7 @@
           # friendly-snippets # dependency for nvim-cmp
           # nvim-spectre
           # snacks-nvim
+          # pkgs.neovimPlugins.snacks
           # sqlite-lua # dependency for yanky
           # timber # no nixpkg
           # tiny-inline-diagnostic-nvim
@@ -325,7 +332,7 @@
       # at RUN TIME for plugins. Will be available to path within neovim terminal
       environmentVariables = {
         test = {
-          CATTESTVAR = "It worked!";
+          # CATTESTVAR = "It worked!";
         };
       };
 
@@ -334,7 +341,7 @@
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
       extraWrapperArgs = {
         test = [
-          ''--set CATTESTVAR2 "It worked again!"''
+          # ''--set CATTESTVAR2 "It worked again!"''
         ];
       };
 
@@ -370,9 +377,55 @@
           wrapRc = true;
           # IMPORTANT:
           # your alias may not conflict with your other packages.
-          # aliases = ["nixcats"];
+          # aliases = ["vvv"];
           # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
           # configDirName = "nixCats-nvim";
+        };
+        # and a set of categories that you want
+        # (and other information to pass to lua)
+        categories = {
+          general = true;
+          lsps = true;
+          formatters = true;
+          linting = true;
+          debug = true;
+          colorschemes = true;
+          core = true;
+          editor = true;
+          fun = true;
+          norgmode = true;
+          orgmode = true;
+          ui = true;
+          util = true;
+          custom = true;
+          gitPlugins = true;
+          test = true;
+
+          # we can pass whatever we want actually.
+          # have_nerd_font = false;
+
+          example = {
+            youCan = "add more than just booleans";
+            toThisSet = [
+              "and the contents of this categories set"
+              "will be accessible to your lua with"
+              "nixCats('path.to.value')"
+              "see :help nixCats"
+              "and type :NixCats to see the categories set in nvim"
+            ];
+          };
+        };
+      };
+      nvim-unstable = {pkgs, ...}: {
+        # they contain a settings set defined above
+        # see :help nixCats.flake.outputs.settings
+        settings = {
+          wrapRc = true;
+          # IMPORTANT:
+          # your alias may not conflict with your other packages.
+          # aliases = ["uv"];
+          neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+          configDirName = "nvim-unstable";
         };
         # and a set of categories that you want
         # (and other information to pass to lua)
