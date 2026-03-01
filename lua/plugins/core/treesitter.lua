@@ -31,6 +31,7 @@ return {
       'vimdoc',
       'xml',
       'yaml',
+      'zsh',
     },
     -- Autoinstall languages that are not installed
     auto_install = require('nixCatsUtils').lazyAdd(true, false),

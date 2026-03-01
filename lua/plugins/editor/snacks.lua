@@ -5,6 +5,19 @@ return {
   -- dev = nixCats 'editor', -- This returns true if the 'editor' category is enabled
   priority = 1000,
   lazy = false,
+  dependencies = {
+    'dtormoen/neural-open.nvim',
+    -- dependencies = {
+    --   'folke/snacks.nvim',
+    -- },
+    -- NeuralOpen implements lazy loading internally. It needs to be loaded for recency tracking to work.
+    lazy = false,
+    keys = {
+      { '<leader>ff', '<Plug>(NeuralOpen)', desc = 'Neural Open Files' },
+    },
+    -- opts are optional. NeuralOpen will automatically use the defaults below.
+    opts = {},
+  },
   opts = {
     -- your configuration comes here
     -- or leave it empty to use the default settings
@@ -137,7 +150,7 @@ return {
     -- find
     { '<leader>fb', function() Snacks.picker.buffers() end, desc = 'Buffer' },
     { '<leader>fc', function() Snacks.picker.files { cwd = vim.fn.stdpath 'config' } end, desc = 'Config File' },
-    { '<leader>ff', function() Snacks.picker.files() end, desc = 'File' },
+    -- { '<leader>ff', function() Snacks.picker.files() end, desc = 'File' }, -- TODO: Currently testing nueral open snacks integrations in place of this
     { '<leader>fg', function() Snacks.picker.git_files() end, desc = 'Git File' },
     { '<leader>fp', function() Snacks.picker.projects() end, desc = 'Project' },
     { '<leader>fr', function() Snacks.picker.recent() end, desc = 'Recent' },

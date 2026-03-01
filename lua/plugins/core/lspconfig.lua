@@ -280,8 +280,11 @@ return {
       servers.nil_ls = {}
     end
     servers.bashls = { -- Bash
+      settings = {
+        filetypes = { 'sh', 'zsh' },
+      },
       bashIde = {
-        globPattern = '*@(.sh|.inc|.bash|.command|.zsh)',
+        globPattern = '*@(.sh|.inc|.bash|.command|.zsh|zshrc|zsh_*)',
       },
     }
     servers.clangd = { -- C/C++
