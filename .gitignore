@@ -1,3 +1,11 @@
 tags
 .luarc.json
 /result
+
+# C++ build artifacts
+csv_reader
+*.o
+*.exe
+
+# Generated CSV files
+*.csv
