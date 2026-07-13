@@ -132,7 +132,8 @@
           stdenv.cc.cc
           tree-sitter
           nix-doc
-          nodePackages.nodejs
+          # nodePackages.nodejs
+          nodejs
           lua
           luajitPackages.luarocks-nix
           # neovimPlugins.capslock-nvim
@@ -155,7 +156,8 @@
           beautysh # beautysh
           black # black
           isort # isort
-          nodePackages.prettier # prettier
+          # nodePackages.prettier # prettier
+          prettier
           prettierd # prettierd
           stylua # stylua
         ];
