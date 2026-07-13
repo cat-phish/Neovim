@@ -94,6 +94,11 @@
         # (utils.fixSystemizedOverlay inputs.codeium.overlays
         #   (system: inputs.codeium.overlays.${system}.default)
         # )
+        (self: super: {
+          cpplint = super.cpplint.overrideAttrs (oldAttrs: {
+            doCheck = false;
+          });
+        })
       ];
 
     # see :help nixCats.flake.outputs.categories
