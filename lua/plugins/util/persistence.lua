@@ -2,116 +2,75 @@
 -- keeping track of open buffers, window arrangement, and more.
 -- You can restore sessions when returning through the dashboard.
 
--- Define helper functions to close Fyler and Aerial windows
-local function close_fyler()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    if vim.bo[buf].filetype == 'fyler' then vim.api.nvim_win_close(win, true) end
-  end
-end
-
-local function close_aerial()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    if vim.bo[buf].filetype == 'aerial' then vim.api.nvim_win_close(win, true) end
-  end
-end
-
 local function close_both()
-  close_fyler()
-  close_aerial()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local ft = vim.bo[buf].filetype
+    local name = vim.api.nvim_buf_get_name(buf)
+
+    if ft == 'fyler' or ft == 'aerial' or name:match 'fyler' or name:match 'aerial' then pcall(vim.api.nvim_win_close, win, true) end
+  end
 end
 
--- Helper to reopen fyler and aerial after session restore
 local function restore_both()
-  vim.schedule(function()
-    -- First, close any fyler/aerial windows that might have been restored by the session
-    close_both()
+  local ead_state = vim.o.equalalways
+  vim.o.equalalways = false
 
-    -- Clean up any directory buffers left over
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      if vim.api.nvim_buf_is_valid(buf) then
-        local bufname = vim.api.nvim_buf_get_name(buf)
-        -- Check if it's a directory buffer
-        if bufname ~= '' and vim.fn.isdirectory(bufname) == 1 then pcall(vim.api.nvim_buf_delete, buf, { force = true }) end
-      end
+  close_both()
+
+  -- Clean up any directory buffers left over
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) then
+      local bufname = vim.api.nvim_buf_get_name(buf)
+      if bufname ~= '' and vim.fn.isdirectory(bufname) == 1 then pcall(vim.api.nvim_buf_delete, buf, { force = true }) end
     end
+  end
 
-    -- Reopen fyler on the left
-    require('fyler').open { kind = 'split_left_most' }
+  -- 1. SAVE MAIN TEXT WINDOW
+  local main_win = vim.api.nvim_get_current_win()
 
-    -- Schedule aerial to open on the right after fyler settles
+  -- 2. Open Fyler
+  require('fyler').open { kind = 'split_left_most' }
+
+  -- 3. RETURN FOCUS TO TEXT WINDOW IMMEDIATELY
+  if vim.api.nvim_win_is_valid(main_win) then vim.api.nvim_set_current_win(main_win) end
+
+  -- Defer Aerial slightly so restored file buffers have time to start loading
+  vim.defer_fn(function()
+    -- 4. GUARANTEE FOCUS IS STILL ON TEXT WINDOW
+    if vim.api.nvim_win_is_valid(main_win) then vim.api.nvim_set_current_win(main_win) end
+
+    vim.cmd 'AerialOpen! right'
+
+    -- 5. RETURN FOCUS ONCE MORE
+    if vim.api.nvim_win_is_valid(main_win) then vim.api.nvim_set_current_win(main_win) end
+
     vim.schedule(function()
-      -- Find the fyler window by filetype
-      local fyler_win = nil
-      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-        local buf = vim.api.nvim_win_get_buf(win)
-        if vim.bo[buf].filetype == 'fyler' then
-          fyler_win = win
-          break
-        end
-      end
-
-      -- Calculate intended widths
-      local layout_config = require('config.layout')
-      local total_width = vim.o.columns
-      local fyler_width = math.floor(total_width * layout_config.fyler_width_percent)
+      local layout_config = require 'config.layout'
+      local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
       local aerial_width = math.floor(vim.o.columns * layout_config.aerial_width_percent)
 
-      -- Move to the main window (not fyler)
       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-        if win ~= fyler_win then
-          vim.api.nvim_set_current_win(win)
-          break
+        local buf = vim.api.nvim_win_get_buf(win)
+        local ft = vim.bo[buf].filetype
+        local name = vim.api.nvim_buf_get_name(buf)
+
+        if ft == 'fyler' or name:match 'fyler' then
+          vim.wo[win].winfixwidth = false
+          vim.api.nvim_win_set_width(win, fyler_width)
+          vim.wo[win].winfixwidth = true
+        elseif ft == 'aerial' or name:match 'aerial' then
+          vim.wo[win].winfixwidth = false
+          vim.api.nvim_win_set_width(win, aerial_width)
+          vim.wo[win].winfixwidth = true
         end
       end
 
-      vim.cmd 'AerialOpen right'
-
-      -- Set both widths explicitly after both windows are open
-      vim.schedule(function()
-        -- Find aerial window
-        local aerial_win = nil
-        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          if vim.bo[buf].filetype == 'aerial' then
-            aerial_win = win
-            break
-          end
-        end
-
-        -- Set widths
-        if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
-          vim.wo[fyler_win].winfixwidth = false
-          vim.api.nvim_win_set_width(fyler_win, fyler_width)
-          vim.wo[fyler_win].winfixwidth = true
-        end
-        if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then
-          vim.api.nvim_win_set_width(aerial_win, aerial_width)
-          vim.wo[aerial_win].winfixwidth = true
-        end
-        
-        -- Add an extra schedule to ensure fyler width sticks
-        vim.schedule(function()
-          if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
-            vim.wo[fyler_win].winfixwidth = false
-            vim.api.nvim_win_set_width(fyler_win, fyler_width)
-            vim.wo[fyler_win].winfixwidth = true
-          end
-        end)
-
-        -- Move back to main editor window
-        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          local ft = vim.bo[buf].filetype
-          if ft ~= 'fyler' and ft ~= 'aerial' then
-            vim.api.nvim_set_current_win(win)
-            break
-          end
-        end
-      end)
+      vim.o.equalalways = ead_state
+      vim.cmd 'wincmd ='
+      vim.cmd 'redrawtabline'
     end)
-  end)
+  end, 50)
 end
 
 return {

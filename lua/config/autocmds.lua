@@ -149,7 +149,6 @@ vim.api.nvim_create_autocmd('WinEnter', {
   end,
 })
 
--- Open fyler and aerial on startup
 vim.api.nvim_create_autocmd('UIEnter', {
   group = vim.api.nvim_create_augroup('open_fyler_aerial', { clear = true }),
   once = true,
@@ -160,7 +159,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
     -- Only open if we're not loading a session and not opening a specific file
     local argv = vim.fn.argv()
     if #argv == 0 or (#argv == 1 and vim.fn.isdirectory(argv[1]) == 1) then
-      -- Defer to let UI fully initialize, then do exactly what <leader>z does
       vim.schedule(function()
         -- Get the initial buffer (might be a directory or netrw buffer)
         local initial_buf = vim.api.nvim_get_current_buf()
@@ -173,8 +171,29 @@ vim.api.nvim_create_autocmd('UIEnter', {
           pcall(vim.api.nvim_buf_delete, initial_buf, { force = true })
         end
 
-        -- Use the exact same logic as <leader>z by calling the shared function
-        require('config.layout_toggle').open_layout()
+        -- ONLY open Fyler on startup
+        local layout_config = require 'config.layout'
+        local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
+
+        local ead_state = vim.o.equalalways
+        vim.o.equalalways = false
+
+        require('fyler').open { kind = 'split_left_most' }
+
+        vim.schedule(function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == 'fyler' then
+              vim.wo[win].winfixwidth = false
+              vim.api.nvim_win_set_width(win, fyler_width)
+              vim.wo[win].winfixwidth = true
+            end
+          end
+
+          vim.o.equalalways = ead_state
+          vim.cmd 'wincmd ='
+          vim.cmd 'redrawtabline'
+        end)
       end)
     end
   end,

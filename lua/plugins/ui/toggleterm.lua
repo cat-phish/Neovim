@@ -28,58 +28,123 @@ return {
     --   -- Prevent other buffers from opening in this window
     --   vim.wo[term.window].winfixbuf = true
     -- end,
-    on_open = function(term)
-      -- Prevent other buffers from opening in this window
-      -- vim.wo[term.window].winfixbuf = true
-      vim.wo[term.window].winfixwidth = true
 
-      -- Store the terminal window number
+    -- on_open = function(term)
+    --   -- Prevent other buffers from opening in this window
+    --   -- vim.wo[term.window].winfixbuf = true
+    --   vim.wo[term.window].winfixwidth = true
+    --
+    --   -- Store the terminal window number
+    --   vim.g.toggleterm_window = term.window
+    -- end,
+    -- on_close = function()
+    --   vim.g.toggleterm_window = nil
+    --
+    --   -- Restore fyler and aerial widths after a brief delay
+    --   vim.schedule(function()
+    --     local layout_config = require('config.layout')
+    --     local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
+    --     local aerial_width = math.floor(vim.o.columns * layout_config.aerial_width_percent)
+    --
+    --     -- Set fyler and aerial (match the pattern from startup and <leader>z)
+    --     local fyler_win = nil
+    --     local aerial_win = nil
+    --
+    --     for _, win in ipairs(vim.api.nvim_list_wins()) do
+    --       local buf = vim.api.nvim_win_get_buf(win)
+    --       local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+    --       if ft == 'fyler' then
+    --         fyler_win = win
+    --       elseif ft == 'aerial' then
+    --         aerial_win = win
+    --       end
+    --     end
+    --
+    --     -- Set widths using the same pattern as startup/<leader>z
+    --     if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+    --       vim.wo[fyler_win].winfixwidth = false
+    --       vim.api.nvim_win_set_width(fyler_win, fyler_width)
+    --       vim.wo[fyler_win].winfixwidth = true
+    --     end
+    --     if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then
+    --       vim.api.nvim_win_set_width(aerial_win, aerial_width)
+    --       vim.wo[aerial_win].winfixwidth = true
+    --     end
+    --
+    --     -- Add an extra schedule to ensure fyler width sticks (like startup/<leader>z)
+    --     vim.schedule(function()
+    --       if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
+    --         vim.wo[fyler_win].winfixwidth = false
+    --         vim.api.nvim_win_set_width(fyler_win, fyler_width)
+    --         vim.wo[fyler_win].winfixwidth = true
+    --       end
+    --     end)
+    --   end)
+    -- end,
+    on_open = function(term)
+      vim.wo[term.window].winfixwidth = true
       vim.g.toggleterm_window = term.window
-    end,
-    on_close = function()
-      vim.g.toggleterm_window = nil
-      
-      -- Restore fyler and aerial widths after a brief delay
+
+      -- Instantly fix sidebars after ToggleTerm shifts the layout
       vim.schedule(function()
-        local layout_config = require('config.layout')
+        local layout_config = require 'config.layout'
         local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
         local aerial_width = math.floor(vim.o.columns * layout_config.aerial_width_percent)
-        
-        -- Set fyler and aerial (match the pattern from startup and <leader>z)
-        local fyler_win = nil
-        local aerial_win = nil
-        
+
         for _, win in ipairs(vim.api.nvim_list_wins()) do
           local buf = vim.api.nvim_win_get_buf(win)
           local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+
           if ft == 'fyler' then
-            fyler_win = win
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, fyler_width)
+            vim.wo[win].winfixwidth = true
           elseif ft == 'aerial' then
-            aerial_win = win
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, aerial_width)
+            vim.wo[win].winfixwidth = true
           end
         end
-        
-        -- Set widths using the same pattern as startup/<leader>z
-        if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
-          vim.wo[fyler_win].winfixwidth = false
-          vim.api.nvim_win_set_width(fyler_win, fyler_width)
-          vim.wo[fyler_win].winfixwidth = true
-        end
-        if aerial_win and vim.api.nvim_win_is_valid(aerial_win) then
-          vim.api.nvim_win_set_width(aerial_win, aerial_width)
-          vim.wo[aerial_win].winfixwidth = true
-        end
-        
-        -- Add an extra schedule to ensure fyler width sticks (like startup/<leader>z)
-        vim.schedule(function()
-          if fyler_win and vim.api.nvim_win_is_valid(fyler_win) then
-            vim.wo[fyler_win].winfixwidth = false
-            vim.api.nvim_win_set_width(fyler_win, fyler_width)
-            vim.wo[fyler_win].winfixwidth = true
-          end
-        end)
+
+        -- Force the center to absorb ToggleTerm's size changes, leaving sidebars locked
+        vim.cmd 'wincmd ='
+
+        -- Force Bufferline to recalculate its offsets with the correct widths
+        vim.cmd 'redrawtabline'
       end)
     end,
+    on_close = function()
+      vim.g.toggleterm_window = nil
+
+      -- Re-balance everything when ToggleTerm leaves
+      vim.schedule(function()
+        local layout_config = require 'config.layout'
+        local fyler_width = math.floor(vim.o.columns * layout_config.fyler_width_percent)
+        local aerial_width = math.floor(vim.o.columns * layout_config.aerial_width_percent)
+
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+
+          if ft == 'fyler' then
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, fyler_width)
+            vim.wo[win].winfixwidth = true
+          elseif ft == 'aerial' then
+            vim.wo[win].winfixwidth = false
+            vim.api.nvim_win_set_width(win, aerial_width)
+            vim.wo[win].winfixwidth = true
+          end
+        end
+
+        -- Snap central buffers back to fill empty space
+        vim.cmd 'wincmd ='
+
+        -- Force Bufferline to recalculate its offsets with the correct widths
+        vim.cmd 'redrawtabline'
+      end)
+    end,
+
     -- on_close = fun(t: Terminal), -- function to run when the terminal closes
     -- on_stdout = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stdout
     -- on_stderr = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stderr
@@ -107,7 +172,7 @@ return {
     start_in_insert = true,
     insert_mappings = true, -- whether or not the open mapping applies in insert mode
     terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-    persist_size = false,  -- Don't remember terminal size between toggles
+    persist_size = false, -- Don't remember terminal size between toggles
     persist_mode = false, -- if set to true (default) the previous terminal mode will be remembered
     direction = 'vertical', -- 'vertical' | 'horizontal' | 'tab' | 'float',
     close_on_exit = false, -- close the terminal window when the process exits
@@ -147,7 +212,7 @@ return {
   },
   config = function(_, opts)
     require('toggleterm').setup(opts)
-    
+
     -- Mark toggleterm buffers as not modified to allow :w and :wqa
     vim.api.nvim_create_autocmd('TermOpen', {
       pattern = 'term://*toggleterm#*',
@@ -156,67 +221,63 @@ return {
         vim.bo.modified = false
       end,
     })
-    
+
     -- Also mark as unmodified when entering terminal buffer
     vim.api.nvim_create_autocmd('BufEnter', {
       pattern = 'term://*toggleterm#*',
-      callback = function()
-        vim.bo.modified = false
-      end,
+      callback = function() vim.bo.modified = false end,
     })
-    
+
     -- Helper function to check if any toggleterm jobs are running
     local function has_running_terminal()
       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_is_valid(buf) then
           local bufname = vim.api.nvim_buf_get_name(buf)
-          if bufname:match('term://.*toggleterm#') then
-            return true
-          end
+          if bufname:match 'term://.*toggleterm#' then return true end
         end
       end
       return false
     end
-    
+
     -- Create wrapper commands that auto-add ! for terminal jobs
     vim.api.nvim_create_user_command('SmartQ', function()
       if has_running_terminal() then
-        vim.cmd('q!')
+        vim.cmd 'q!'
       else
-        vim.cmd('q')
+        vim.cmd 'q'
       end
     end, {})
-    
+
     vim.api.nvim_create_user_command('SmartWq', function()
       if has_running_terminal() then
-        vim.cmd('wq!')
+        vim.cmd 'wq!'
       else
-        vim.cmd('wq')
+        vim.cmd 'wq'
       end
     end, {})
-    
+
     vim.api.nvim_create_user_command('SmartWqa', function()
       if has_running_terminal() then
-        vim.cmd('wqa!')
+        vim.cmd 'wqa!'
       else
-        vim.cmd('wqa')
+        vim.cmd 'wqa'
       end
     end, {})
-    
+
     vim.api.nvim_create_user_command('SmartQa', function()
       if has_running_terminal() then
-        vim.cmd('qa!')
+        vim.cmd 'qa!'
       else
-        vim.cmd('qa')
+        vim.cmd 'qa'
       end
     end, {})
-    
+
     -- Use command abbreviations to redirect standard commands
-    vim.cmd([[
+    vim.cmd [[
       cnoreabbrev <expr> q ((getcmdtype() ==# ':' && getcmdline() ==# 'q') ? 'SmartQ' : 'q')
       cnoreabbrev <expr> wq ((getcmdtype() ==# ':' && getcmdline() ==# 'wq') ? 'SmartWq' : 'wq')
       cnoreabbrev <expr> wqa ((getcmdtype() ==# ':' && getcmdline() ==# 'wqa') ? 'SmartWqa' : 'wqa')
       cnoreabbrev <expr> qa ((getcmdtype() ==# ':' && getcmdline() ==# 'qa') ? 'SmartQa' : 'qa')
-    ]])
+    ]]
   end,
 }

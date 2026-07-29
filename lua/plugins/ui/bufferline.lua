@@ -83,7 +83,7 @@ return {
           text_align = 'left',
         },
         {
-          filetype = 'fyler',
+          filetype = 'fyler_finder',
           text = 'Explorer',
           highlight = 'Directory',
           text_align = 'left',
